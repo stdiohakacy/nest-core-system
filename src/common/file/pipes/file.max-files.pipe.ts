@@ -8,7 +8,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
-import { IFile } from 'src/common/file/interfaces/file.interface';
+import { IFile } from '@common/file/interfaces/file.interface';
 import { ENUM_FILE_STATUS_CODE_ERROR } from '../constants/file.status-code.constant';
 
 // only for multiple upload

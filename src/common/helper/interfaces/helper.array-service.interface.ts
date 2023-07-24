@@ -1,4 +1,4 @@
-import { IHelperArrayRemove } from 'src/common/helper/interfaces/helper.interface';
+import { IHelperArrayRemove } from '@common/helper/interfaces/helper.interface';
 
 export interface IHelperArrayService {
     getLeftByIndex<T>(array: T[], index: number): T;

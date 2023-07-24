@@ -1,7 +1,7 @@
 import { Command } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
-import { SettingService } from 'src/common/setting/services/setting.service';
-import { ENUM_SETTING_DATA_TYPE } from 'src/common/setting/constants/setting.enum.constant';
+import { SettingService } from '@common/setting/services/setting.service';
+import { ENUM_SETTING_DATA_TYPE } from '@common/setting/constants/setting.enum.constant';
 
 @Injectable()
 export class MigrationSettingSeed {

@@ -1,17 +1,17 @@
 import { AbilityBuilder, createMongoAbility } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
-import { HelperNumberService } from 'src/common/helper/services/helper.number.service';
-import { ENUM_POLICY_REQUEST_ACTION } from 'src/common/policy/constants/policy.enum.constant';
-import { ENUM_POLICY_ACTION } from 'src/common/policy/constants/policy.enum.constant';
+import { HelperNumberService } from '@common/helper/services/helper.number.service';
+import { ENUM_POLICY_REQUEST_ACTION } from '@common/policy/constants/policy.enum.constant';
+import { ENUM_POLICY_ACTION } from '@common/policy/constants/policy.enum.constant';
 import {
     IPolicyAbility,
     IPolicyRequest,
     IPolicyRule,
     IPolicyRuleAbility,
     PolicyHandler,
-} from 'src/common/policy/interfaces/policy.interface';
-import { ENUM_ROLE_TYPE } from 'src/modules/role/constants/role.enum.constant';
-import { UserPayloadPermissionSerialization } from 'src/modules/user/serializations/user.payload.serialization';
+} from '@common/policy/interfaces/policy.interface';
+import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
+import { UserPayloadPermissionSerialization } from '@modules/user/serializations/user.payload.serialization';
 
 @Injectable()
 export class PolicyAbilityFactory {

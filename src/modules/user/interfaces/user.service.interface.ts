@@ -1,14 +1,14 @@
-import { IAuthPassword } from 'src/common/auth/interfaces/auth.interface';
-import { AwsS3Serialization } from 'src/common/aws/serializations/aws.s3.serialization';
-import { UserCreateDTO } from 'src/modules/user/dtos/user.create.dto';
-import { UserImportDTO } from 'src/modules/user/dtos/user.import.dto';
-import { UserUpdateNameDTO } from 'src/modules/user/dtos/user.update-name.dto';
-import { UserUpdateUsernameDTO } from 'src/modules/user/dtos/user.update-username.dto';
-import { UserPayloadSerialization } from 'src/modules/user/serializations/user.payload.serialization';
+import { IAuthPassword } from '@common/auth/interfaces/auth.interface';
+import { AwsS3Serialization } from '@common/aws/serializations/aws.s3.serialization';
+import { UserCreateDTO } from '@modules/user/dtos/user.create.dto';
+import { UserImportDTO } from '@modules/user/dtos/user.import.dto';
+import { UserUpdateNameDTO } from '@modules/user/dtos/user.update-name.dto';
+import { UserUpdateUsernameDTO } from '@modules/user/dtos/user.update-username.dto';
+import { UserPayloadSerialization } from '@modules/user/serializations/user.payload.serialization';
 import { UserEntity } from '../entities/user.entity';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { UserUpdateGoogleSSODTO } from '../dtos/user.update-google-sso.dto';
-import { PaginationListDTO } from 'src/common/pagination/dtos/pagination.list.dto';
+import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
 
 export interface IUserService {
     findAll(find?: Record<string, any>): Promise<UserEntity[]>;
@@ -35,10 +35,6 @@ export interface IUserService {
         { username }: UserUpdateUsernameDTO
     ): Promise<UpdateResult>;
     updatePhoto(id: string, photo: AwsS3Serialization): Promise<UpdateResult>;
-    updatePassword(
-        user: UserEntity,
-        { passwordHash, passwordExpired, salt, passwordCreated }: IAuthPassword
-    ): Promise<UpdateResult>;
     active(user: UserEntity): Promise<UserEntity>;
     inactive(user: UserEntity): Promise<UserEntity>;
     inactivePermanent(user: UserEntity): Promise<UserEntity>;
@@ -51,7 +47,6 @@ export interface IUserService {
         user: UserEntity,
         passwordExpired: Date
     ): Promise<UserEntity>;
-    // joinWithRole(repository: UserEntity): Promise<IUserDoc>;
     createPhotoFilename(): Promise<Record<string, any>>;
     payloadSerialization(user: UserEntity): Promise<UserPayloadSerialization>;
     deleteMany(find: Record<string, any>): Promise<boolean>;

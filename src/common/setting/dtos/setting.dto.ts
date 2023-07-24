@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEnum, IsOptional, IsString } from 'class-validator';
-import { BaseDTO } from 'src/common/base/dto/base.dto';
+import { BaseDTO } from '@common/base/dto/base.dto';
 import { ENUM_SETTING_DATA_TYPE } from '../constants/setting.enum.constant';
 
 export class SettingDTO extends BaseDTO {

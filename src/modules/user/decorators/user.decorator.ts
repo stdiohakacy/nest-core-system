@@ -5,17 +5,17 @@ import {
     SetMetadata,
     UseGuards,
 } from '@nestjs/common';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
+import { IRequestApp } from '@common/request/interfaces/request.interface';
 import {
     USER_ACTIVE_META_KEY,
     USER_BLOCKED_META_KEY,
     USER_INACTIVE_PERMANENT_META_KEY,
-} from 'src/modules/user/constants/user.constant';
-import { UserPayloadPutToRequestGuard } from 'src/modules/user/guards/payload/user.payload.put-to-request.guard';
-import { UserActiveGuard } from 'src/modules/user/guards/user.active.guard';
-import { UserBlockedGuard } from 'src/modules/user/guards/user.blocked.guard';
-import { UserInactivePermanentGuard } from 'src/modules/user/guards/user.inactive-permanent.guard';
-import { UserNotFoundGuard } from 'src/modules/user/guards/user.not-found.guard';
+} from '@modules/user/constants/user.constant';
+import { UserPayloadPutToRequestGuard } from '@modules/user/guards/payload/user.payload.put-to-request.guard';
+import { UserActiveGuard } from '@modules/user/guards/user.active.guard';
+import { UserBlockedGuard } from '@modules/user/guards/user.blocked.guard';
+import { UserInactivePermanentGuard } from '@modules/user/guards/user.inactive-permanent.guard';
+import { UserNotFoundGuard } from '@modules/user/guards/user.not-found.guard';
 import { UserEntity } from '../entities/user.entity';
 import { instanceToPlain } from 'class-transformer';
 export const GetUser = createParamDecorator(

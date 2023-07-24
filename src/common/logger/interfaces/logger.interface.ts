@@ -1,4 +1,4 @@
-import { ENUM_LOGGER_LEVEL } from 'src/common/logger/constants/logger.enum.constant';
+import { ENUM_LOGGER_LEVEL } from '@common/logger/constants/logger.enum.constant';
 
 export interface ILoggerOptions {
     description?: string;

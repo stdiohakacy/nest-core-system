@@ -2,13 +2,13 @@ import { applyDecorators, HttpStatus } from '@nestjs/common';
 import {
     ApiKeyDocParamsId,
     ApiKeyDocQueryIsActive,
-} from 'src/common/api-key/constants/api-key.doc.constant';
-import { ENUM_API_KEY_STATUS_CODE_ERROR } from 'src/common/api-key/constants/api-key.status-code.constant';
-import { ApiKeyCreateSerialization } from 'src/common/api-key/serializations/api-key.create.serialization';
-import { ApiKeyGetSerialization } from 'src/common/api-key/serializations/api-key.get.serialization';
-import { ApiKeyListSerialization } from 'src/common/api-key/serializations/api-key.list.serialization';
-import { ApiKeyResetSerialization } from 'src/common/api-key/serializations/api-key.reset.serialization';
-import { ENUM_DOC_REQUEST_BODY_TYPE } from 'src/common/doc/constants/doc.enum.constant';
+} from '@common/api-key/constants/api-key.doc.constant';
+import { ENUM_API_KEY_STATUS_CODE_ERROR } from '@common/api-key/constants/api-key.status-code.constant';
+import { ApiKeyCreateSerialization } from '@common/api-key/serializations/api-key.create.serialization';
+import { ApiKeyGetSerialization } from '@common/api-key/serializations/api-key.get.serialization';
+import { ApiKeyListSerialization } from '@common/api-key/serializations/api-key.list.serialization';
+import { ApiKeyResetSerialization } from '@common/api-key/serializations/api-key.reset.serialization';
+import { ENUM_DOC_REQUEST_BODY_TYPE } from '@common/doc/constants/doc.enum.constant';
 import {
     Doc,
     DocAuth,
@@ -19,8 +19,8 @@ import {
     DocGuard,
     DocResponse,
     DocResponsePaging,
-} from 'src/common/doc/decorators/doc.decorator';
-import { ResponseIdSerialization } from 'src/common/response/serializations/response.id.serialization';
+} from '@common/doc/decorators/doc.decorator';
+import { ResponseIdSerialization } from '@common/response/serializations/response.id.serialization';
 
 export function ApiKeyAdminListDoc(): MethodDecorator {
     return applyDecorators(

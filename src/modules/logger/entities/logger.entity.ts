@@ -1,12 +1,15 @@
-import { BaseEntity, IBaseEntity } from 'src/common/base/entity/base.entity';
-import { UseDTO } from 'src/common/decorators/use-dto.decorator';
+import {
+    BaseEntity,
+    IBaseEntity,
+} from '../../../common/base/entity/base.entity';
+import { UseDTO } from '../../../common/decorators/use-dto.decorator';
 import {
     ENUM_LOGGER_ACTION,
     ENUM_LOGGER_LEVEL,
-} from 'src/common/logger/constants/logger.enum.constant';
-import { LoggerDTO } from 'src/common/logger/dtos/logger.dto';
-import { ENUM_REQUEST_METHOD } from 'src/common/request/constants/request.enum.constant';
-import { ENUM_ROLE_TYPE } from 'src/modules/role/constants/role.enum.constant';
+} from '@common/logger/constants/logger.enum.constant';
+import { LoggerDTO } from '@common/logger/dtos/logger.dto';
+import { ENUM_REQUEST_METHOD } from '@common/request/constants/request.enum.constant';
+import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
 import { Column, Entity } from 'typeorm';
 
 export interface ILoggerEntity extends IBaseEntity<LoggerDTO> {

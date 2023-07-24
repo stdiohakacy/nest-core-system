@@ -4,8 +4,8 @@ import {
     ExecutionContext,
     BadRequestException,
 } from '@nestjs/common';
-import { ENUM_API_KEY_STATUS_CODE_ERROR } from 'src/common/api-key/constants/api-key.status-code.constant';
-import { HelperDateService } from 'src/common/helper/services/helper.date.service';
+import { ENUM_API_KEY_STATUS_CODE_ERROR } from '@common/api-key/constants/api-key.status-code.constant';
+import { HelperDateService } from '@common/helper/services/helper.date.service';
 
 @Injectable()
 export class ApiKeyExpiredGuard implements CanActivate {

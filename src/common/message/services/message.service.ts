@@ -6,14 +6,14 @@ import {
     IErrors,
     IErrorsImport,
     IValidationErrorImport,
-} from 'src/common/error/interfaces/error.interface';
-import { HelperArrayService } from 'src/common/helper/services/helper.array.service';
+} from '@common/error/interfaces/error.interface';
+import { HelperArrayService } from '@common/helper/services/helper.array.service';
 import {
     IMessageErrorOptions,
     IMessageOptions,
     IMessageSetOptions,
-} from 'src/common/message/interfaces/message.interface';
-import { IMessageService } from 'src/common/message/interfaces/message.service.interface';
+} from '@common/message/interfaces/message.interface';
+import { IMessageService } from '@common/message/interfaces/message.service.interface';
 
 @Injectable()
 export class MessageService implements IMessageService {

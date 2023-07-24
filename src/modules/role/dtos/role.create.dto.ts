@@ -14,9 +14,9 @@ import {
 import {
     ENUM_POLICY_ACTION,
     ENUM_POLICY_SUBJECT,
-} from 'src/common/policy/constants/policy.enum.constant';
-import { ENUM_ROLE_TYPE } from 'src/modules/role/constants/role.enum.constant';
-import { RoleUpdateDTO } from 'src/modules/role/dtos/role.update.dto';
+} from '@common/policy/constants/policy.enum.constant';
+import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
+import { RoleUpdateDTO } from '@modules/role/dtos/role.update.dto';
 
 class RolePermissionsDTO {
     @ApiProperty({

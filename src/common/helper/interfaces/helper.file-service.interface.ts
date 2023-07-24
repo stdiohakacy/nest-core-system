@@ -3,7 +3,7 @@ import {
     IHelperFileReadExcelOptions,
     IHelperFileRows,
     IHelperFileCreateExcelWorkbookOptions,
-} from 'src/common/helper/interfaces/helper.interface';
+} from '@common/helper/interfaces/helper.interface';
 import { WorkBook } from 'xlsx';
 
 export interface IHelperFileService {

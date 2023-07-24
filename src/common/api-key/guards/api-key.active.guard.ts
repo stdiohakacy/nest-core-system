@@ -5,8 +5,8 @@ import {
     BadRequestException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { API_KEY_ACTIVE_META_KEY } from 'src/common/api-key/constants/api-key.constant';
-import { ENUM_API_KEY_STATUS_CODE_ERROR } from 'src/common/api-key/constants/api-key.status-code.constant';
+import { API_KEY_ACTIVE_META_KEY } from '@common/api-key/constants/api-key.constant';
+import { ENUM_API_KEY_STATUS_CODE_ERROR } from '@common/api-key/constants/api-key.status-code.constant';
 
 @Injectable()
 export class ApiKeyActiveGuard implements CanActivate {

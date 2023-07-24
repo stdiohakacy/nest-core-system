@@ -1,23 +1,23 @@
 import { BadRequestException, Body, Controller, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthJwtAdminAccessProtected } from 'src/common/auth/decorators/auth.jwt.decorator';
+import { AuthJwtAdminAccessProtected } from '@common/auth/decorators/auth.jwt.decorator';
 import {
     ENUM_POLICY_ACTION,
     ENUM_POLICY_SUBJECT,
-} from 'src/common/policy/constants/policy.enum.constant';
-import { PolicyAbilityProtected } from 'src/common/policy/decorators/policy.decorator';
-import { RequestParamGuard } from 'src/common/request/decorators/request.decorator';
-import { Response } from 'src/common/response/decorators/response.decorator';
-import { IResponse } from 'src/common/response/interfaces/response.interface';
-import { ResponseIdSerialization } from 'src/common/response/serializations/response.id.serialization';
-import { ENUM_SETTING_STATUS_CODE_ERROR } from 'src/common/setting/constants/setting.status-code.constant';
-import { SettingAdminUpdateGuard } from 'src/common/setting/decorators/setting.admin.decorator';
-import { GetSetting } from 'src/common/setting/decorators/setting.decorator';
-import { SettingAdminUpdateDoc } from 'src/common/setting/docs/setting.admin.doc';
-import { SettingRequestDTO } from 'src/common/setting/dtos/setting.request.dto';
-import { SettingUpdateValueDTO } from 'src/common/setting/dtos/setting.update-value.dto';
-import { SettingService } from 'src/common/setting/services/setting.service';
-import { SettingEntity } from 'src/modules/setting/entities/setting.entity';
+} from '@common/policy/constants/policy.enum.constant';
+import { PolicyAbilityProtected } from '@common/policy/decorators/policy.decorator';
+import { RequestParamGuard } from '@common/request/decorators/request.decorator';
+import { Response } from '@common/response/decorators/response.decorator';
+import { IResponse } from '@common/response/interfaces/response.interface';
+import { ResponseIdSerialization } from '@common/response/serializations/response.id.serialization';
+import { ENUM_SETTING_STATUS_CODE_ERROR } from '@common/setting/constants/setting.status-code.constant';
+import { SettingAdminUpdateGuard } from '@common/setting/decorators/setting.admin.decorator';
+import { GetSetting } from '@common/setting/decorators/setting.decorator';
+import { SettingAdminUpdateDoc } from '@common/setting/docs/setting.admin.doc';
+import { SettingRequestDTO } from '@common/setting/dtos/setting.request.dto';
+import { SettingUpdateValueDTO } from '@common/setting/dtos/setting.update-value.dto';
+import { SettingService } from '@common/setting/services/setting.service';
+import { SettingEntity } from '@modules/setting/entities/setting.entity';
 
 @ApiTags('common.admin.setting')
 @Controller({

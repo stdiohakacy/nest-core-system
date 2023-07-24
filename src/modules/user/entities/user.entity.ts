@@ -1,9 +1,12 @@
 import { Column, Entity } from 'typeorm';
-import { UseDTO } from 'src/common/decorators/use-dto.decorator';
-import { BaseEntity, IBaseEntity } from 'src/common/base/entity/base.entity';
+import { UseDTO } from '../../../common/decorators/use-dto.decorator';
+import {
+    BaseEntity,
+    IBaseEntity,
+} from '../../../common/base/entity/base.entity';
 import { UserDTO } from '../dtos/user.dto';
 import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
-import { AwsS3Serialization } from 'src/common/aws/serializations/aws.s3.serialization';
+import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 import { IUserGoogleEntity } from '../interfaces/user.interface';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {

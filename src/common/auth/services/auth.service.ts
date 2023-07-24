@@ -4,12 +4,12 @@ import {
     IAuthPassword,
     IAuthPayloadOptions,
     IAuthRefreshTokenOptions,
-} from 'src/common/auth/interfaces/auth.interface';
-import { IAuthService } from 'src/common/auth/interfaces/auth.service.interface';
-import { HelperDateService } from 'src/common/helper/services/helper.date.service';
-import { HelperEncryptionService } from 'src/common/helper/services/helper.encryption.service';
-import { HelperHashService } from 'src/common/helper/services/helper.hash.service';
-import { HelperStringService } from 'src/common/helper/services/helper.string.service';
+} from '@common/auth/interfaces/auth.interface';
+import { IAuthService } from '@common/auth/interfaces/auth.service.interface';
+import { HelperDateService } from '@common/helper/services/helper.date.service';
+import { HelperEncryptionService } from '@common/helper/services/helper.encryption.service';
+import { HelperHashService } from '@common/helper/services/helper.hash.service';
+import { HelperStringService } from '@common/helper/services/helper.string.service';
 
 @Injectable()
 export class AuthService implements IAuthService {

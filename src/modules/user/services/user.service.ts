@@ -1,22 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { IUserService } from 'src/modules/user/interfaces/user.service.interface';
+import { IUserService } from '@modules/user/interfaces/user.service.interface';
 
-import { HelperDateService } from 'src/common/helper/services/helper.date.service';
+import { HelperDateService } from '@common/helper/services/helper.date.service';
 import { ConfigService } from '@nestjs/config';
-import { HelperStringService } from 'src/common/helper/services/helper.string.service';
-import { UserCreateDTO } from 'src/modules/user/dtos/user.create.dto';
-import { IAuthPassword } from 'src/common/auth/interfaces/auth.interface';
-import { AwsS3Serialization } from 'src/common/aws/serializations/aws.s3.serialization';
-import { UserUpdateNameDTO } from 'src/modules/user/dtos/user.update-name.dto';
-import { UserPayloadSerialization } from 'src/modules/user/serializations/user.payload.serialization';
+import { HelperStringService } from '@common/helper/services/helper.string.service';
+import { UserCreateDTO } from '@modules/user/dtos/user.create.dto';
+import { IAuthPassword } from '@common/auth/interfaces/auth.interface';
+import { AwsS3Serialization } from '@common/aws/serializations/aws.s3.serialization';
+import { UserUpdateNameDTO } from '@modules/user/dtos/user.update-name.dto';
+import { UserPayloadSerialization } from '@modules/user/serializations/user.payload.serialization';
 import { plainToInstance } from 'class-transformer';
-import { UserImportDTO } from 'src/modules/user/dtos/user.import.dto';
-import { UserUpdateUsernameDTO } from 'src/modules/user/dtos/user.update-username.dto';
-import { UserUpdateGoogleSSODTO } from 'src/modules/user/dtos/user.update-google-sso.dto';
+import { UserImportDTO } from '@modules/user/dtos/user.import.dto';
+import { UserUpdateUsernameDTO } from '@modules/user/dtos/user.update-username.dto';
+import { UserUpdateGoogleSSODTO } from '@modules/user/dtos/user.update-google-sso.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../entities/user.entity';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { PaginationListDTO } from 'src/common/pagination/dtos/pagination.list.dto';
+import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
 
 @Injectable()
 export class UserService implements IUserService {

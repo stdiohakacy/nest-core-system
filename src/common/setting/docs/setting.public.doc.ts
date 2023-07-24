@@ -1,16 +1,16 @@
 import { HttpStatus, applyDecorators } from '@nestjs/common';
-import { DocDefault } from 'src/common/doc/decorators/doc.decorator';
+import { DocDefault } from '@common/doc/decorators/doc.decorator';
 import {
     Doc,
     DocErrorGroup,
     DocRequest,
     DocResponse,
     DocResponsePaging,
-} from 'src/common/doc/decorators/doc.decorator';
-import { SettingDocParamsId } from 'src/common/setting/constants/setting.doc.constant';
-import { ENUM_SETTING_STATUS_CODE_ERROR } from 'src/common/setting/constants/setting.status-code.constant';
-import { SettingGetSerialization } from 'src/common/setting/serializations/setting.get.serialization';
-import { SettingListSerialization } from 'src/common/setting/serializations/setting.list.serialization';
+} from '@common/doc/decorators/doc.decorator';
+import { SettingDocParamsId } from '@common/setting/constants/setting.doc.constant';
+import { ENUM_SETTING_STATUS_CODE_ERROR } from '@common/setting/constants/setting.status-code.constant';
+import { SettingGetSerialization } from '@common/setting/serializations/setting.get.serialization';
+import { SettingListSerialization } from '@common/setting/serializations/setting.list.serialization';
 
 export function SettingPublicListDoc(): MethodDecorator {
     return applyDecorators(

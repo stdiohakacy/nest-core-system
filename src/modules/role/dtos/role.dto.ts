@@ -1,4 +1,4 @@
-import { BaseDTO } from 'src/common/base/dto/base.dto';
+import { BaseDTO } from '@common/base/dto/base.dto';
 import { ENUM_ROLE_TYPE } from '../constants/role.enum.constant';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {

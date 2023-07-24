@@ -3,12 +3,12 @@ import {
     HeadBucketCommandOutput,
     UploadPartRequest,
 } from '@aws-sdk/client-s3';
-import { IAwsS3PutItemOptions } from 'src/common/aws/interfaces/aws.interface';
+import { IAwsS3PutItemOptions } from '@common/aws/interfaces/aws.interface';
 import {
     AwsS3MultipartPartsSerialization,
     AwsS3MultipartSerialization,
-} from 'src/common/aws/serializations/aws.s3-multipart.serialization';
-import { AwsS3Serialization } from 'src/common/aws/serializations/aws.s3.serialization';
+} from '@common/aws/serializations/aws.s3-multipart.serialization';
+import { AwsS3Serialization } from '@common/aws/serializations/aws.s3.serialization';
 import { Readable } from 'stream';
 
 export interface IAwsS3Service {

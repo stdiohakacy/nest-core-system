@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { instanceToPlain } from 'class-transformer';
-import { ENUM_API_KEY_TYPE } from 'src/common/api-key/constants/api-key.enum.constant';
 import {
     API_KEY_DEFAULT_AVAILABLE_ORDER_BY,
     API_KEY_DEFAULT_AVAILABLE_SEARCH,
@@ -18,7 +17,7 @@ import {
     API_KEY_DEFAULT_ORDER_DIRECTION,
     API_KEY_DEFAULT_PER_PAGE,
     API_KEY_DEFAULT_TYPE,
-} from 'src/common/api-key/constants/api-key.list.constant';
+} from '@common/api-key/constants/api-key.list.constant';
 import {
     ApiKeyAdminDeleteGuard,
     ApiKeyAdminGetGuard,
@@ -26,11 +25,11 @@ import {
     ApiKeyAdminUpdateGuard,
     ApiKeyAdminUpdateInactiveGuard,
     ApiKeyAdminUpdateResetGuard,
-} from 'src/common/api-key/decorators/api-key.admin.decorator';
+} from '@common/api-key/decorators/api-key.admin.decorator';
 import {
     ApiKeyPublicProtected,
     GetApiKey,
-} from 'src/common/api-key/decorators/api-key.decorator';
+} from '@common/api-key/decorators/api-key.decorator';
 import {
     ApiKeyAdminActiveDoc,
     ApiKeyAdminCreateDoc,
@@ -40,41 +39,42 @@ import {
     ApiKeyAdminListDoc,
     ApiKeyAdminResetDoc,
     ApiKeyAdminUpdateDoc,
-} from 'src/common/api-key/docs/api-key.admin.doc';
-import { ApiKeyCreateDTO } from 'src/common/api-key/dtos/api-key.create.dto';
-import { ApiKeyRequestDto } from 'src/common/api-key/dtos/api-key.request.dto';
-import { ApiKeyUpdateDateDTO } from 'src/common/api-key/dtos/api-key.update-date.dto';
-import { ApiKeyUpdateDTO } from 'src/common/api-key/dtos/api-key.update.dto';
-import { IApiKeyCreated } from 'src/common/api-key/interfaces/api-key.interface';
-import { ApiKeyCreateSerialization } from 'src/common/api-key/serializations/api-key.create.serialization';
-import { ApiKeyGetSerialization } from 'src/common/api-key/serializations/api-key.get.serialization';
-import { ApiKeyListSerialization } from 'src/common/api-key/serializations/api-key.list.serialization';
-import { ApiKeyResetSerialization } from 'src/common/api-key/serializations/api-key.reset.serialization';
-import { ApiKeyService } from 'src/common/api-key/services/api-key.service';
-import { AuthJwtAdminAccessProtected } from 'src/common/auth/decorators/auth.jwt.decorator';
+} from '@common/api-key/docs/api-key.admin.doc';
+import { ApiKeyCreateDTO } from '@common/api-key/dtos/api-key.create.dto';
+import { ApiKeyRequestDto } from '@common/api-key/dtos/api-key.request.dto';
+import { ApiKeyUpdateDateDTO } from '@common/api-key/dtos/api-key.update-date.dto';
+import { ApiKeyUpdateDTO } from '@common/api-key/dtos/api-key.update.dto';
+import { IApiKeyCreated } from '@common/api-key/interfaces/api-key.interface';
+import { ApiKeyCreateSerialization } from '@common/api-key/serializations/api-key.create.serialization';
+import { ApiKeyGetSerialization } from '@common/api-key/serializations/api-key.get.serialization';
+import { ApiKeyListSerialization } from '@common/api-key/serializations/api-key.list.serialization';
+import { ApiKeyResetSerialization } from '@common/api-key/serializations/api-key.reset.serialization';
+import { ApiKeyService } from '@common/api-key/services/api-key.service';
+import { AuthJwtAdminAccessProtected } from '@common/auth/decorators/auth.jwt.decorator';
 import {
     PaginationQuery,
     PaginationQueryFilterInBoolean,
     PaginationQueryFilterInEnum,
-} from 'src/common/pagination/decorators/pagination.decorator';
-import { PaginationListDTO } from 'src/common/pagination/dtos/pagination.list.dto';
-import { PaginationService } from 'src/common/pagination/services/pagination.service';
+} from '@common/pagination/decorators/pagination.decorator';
+import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
+import { PaginationService } from '@common/pagination/services/pagination.service';
 import {
     ENUM_POLICY_ACTION,
     ENUM_POLICY_SUBJECT,
-} from 'src/common/policy/constants/policy.enum.constant';
-import { PolicyAbilityProtected } from 'src/common/policy/decorators/policy.decorator';
-import { RequestParamGuard } from 'src/common/request/decorators/request.decorator';
+} from '@common/policy/constants/policy.enum.constant';
+import { PolicyAbilityProtected } from '@common/policy/decorators/policy.decorator';
+import { RequestParamGuard } from '@common/request/decorators/request.decorator';
 import {
     Response,
     ResponsePaging,
-} from 'src/common/response/decorators/response.decorator';
+} from '@common/response/decorators/response.decorator';
 import {
     IResponse,
     IResponsePaging,
-} from 'src/common/response/interfaces/response.interface';
-import { ResponseIdSerialization } from 'src/common/response/serializations/response.id.serialization';
-import { ApiKeyEntity } from 'src/modules/api-key/entities/api-key.entity';
+} from '@common/response/interfaces/response.interface';
+import { ResponseIdSerialization } from '@common/response/serializations/response.id.serialization';
+import { ApiKeyEntity } from '@modules/api-key/entities/api-key.entity';
+import { ENUM_API_KEY_TYPE } from '@common/api-key/constants/api-key.enum.constant';
 
 @ApiTags('common.admin.apiKey')
 @Controller({

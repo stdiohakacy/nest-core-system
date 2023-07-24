@@ -1,5 +1,5 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
+import { IRequestApp } from '@common/request/interfaces/request.interface';
 import { RoleEntity } from '../entities/role.entity';
 import { RoleService } from '../services/role.service';
 

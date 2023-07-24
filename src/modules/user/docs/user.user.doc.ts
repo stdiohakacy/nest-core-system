@@ -4,7 +4,7 @@ import {
     DocAuth,
     DocGuard,
     DocResponse,
-} from 'src/common/doc/decorators/doc.decorator';
+} from '@common/doc/decorators/doc.decorator';
 
 export function UserUserDeleteSelfDoc(): MethodDecorator {
     return applyDecorators(

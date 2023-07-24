@@ -1,10 +1,10 @@
 import { Inject, Injectable, mixin, Type } from '@nestjs/common';
 import { PipeTransform, Scope } from '@nestjs/common/interfaces';
 import { REQUEST } from '@nestjs/core';
-import { PAGINATION_AVAILABLE_ORDER_DIRECTION } from 'src/common/pagination/constants/pagination.constant';
-import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from 'src/common/pagination/constants/pagination.enum.constant';
-import { PaginationService } from 'src/common/pagination/services/pagination.service';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
+import { PAGINATION_AVAILABLE_ORDER_DIRECTION } from '@common/pagination/constants/pagination.constant';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '@common/pagination/constants/pagination.enum.constant';
+import { PaginationService } from '@common/pagination/services/pagination.service';
+import { IRequestApp } from '@common/request/interfaces/request.interface';
 
 export function PaginationOrderPipe(
     defaultOrderBy: string,

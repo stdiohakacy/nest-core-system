@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator';
-import { ENUM_API_KEY_TYPE } from 'src/common/api-key/constants/api-key.enum.constant';
-import { ApiKeyUpdateDateDTO } from 'src/common/api-key/dtos/api-key.update-date.dto';
+import { ENUM_API_KEY_TYPE } from '@common/api-key/constants/api-key.enum.constant';
+import { ApiKeyUpdateDateDTO } from '@common/api-key/dtos/api-key.update-date.dto';
 
 export class ApiKeyCreateDTO extends PartialType(ApiKeyUpdateDateDTO) {
     @ApiProperty({

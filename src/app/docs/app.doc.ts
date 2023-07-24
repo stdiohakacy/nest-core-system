@@ -5,7 +5,7 @@ import {
     DocAuth,
     DocGuard,
     DocResponse,
-} from 'src/common/doc/decorators/doc.decorator';
+} from '@common/doc/decorators/doc.decorator';
 
 export function AppHelloDoc(): MethodDecorator {
     return applyDecorators(

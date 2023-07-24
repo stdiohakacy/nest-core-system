@@ -13,28 +13,28 @@ import {
     HttpStatus,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthService } from 'src/common/auth/services/auth.service';
-import { UploadFileSingle } from 'src/common/file/decorators/file.decorator';
-import { IFileExtract } from 'src/common/file/interfaces/file.interface';
-import { FileExtractPipe } from 'src/common/file/pipes/file.extract.pipe';
-import { FileRequiredPipe } from 'src/common/file/pipes/file.required.pipe';
-import { FileSizeExcelPipe } from 'src/common/file/pipes/file.size.pipe';
-import { FileTypeExcelPipe } from 'src/common/file/pipes/file.type.pipe';
-import { FileValidationPipe } from 'src/common/file/pipes/file.validation.pipe';
-import { ENUM_HELPER_FILE_TYPE } from 'src/common/helper/constants/helper.enum.constant';
-import { PaginationService } from 'src/common/pagination/services/pagination.service';
-import { RequestParamGuard } from 'src/common/request/decorators/request.decorator';
+import { AuthService } from '@common/auth/services/auth.service';
+import { UploadFileSingle } from '@common/file/decorators/file.decorator';
+import { IFileExtract } from '@common/file/interfaces/file.interface';
+import { FileExtractPipe } from '@common/file/pipes/file.extract.pipe';
+import { FileRequiredPipe } from '@common/file/pipes/file.required.pipe';
+import { FileSizeExcelPipe } from '@common/file/pipes/file.size.pipe';
+import { FileTypeExcelPipe } from '@common/file/pipes/file.type.pipe';
+import { FileValidationPipe } from '@common/file/pipes/file.validation.pipe';
+import { ENUM_HELPER_FILE_TYPE } from '@common/helper/constants/helper.enum.constant';
+import { PaginationService } from '@common/pagination/services/pagination.service';
+import { RequestParamGuard } from '@common/request/decorators/request.decorator';
 import {
     Response,
     ResponseFile,
     ResponsePaging,
-} from 'src/common/response/decorators/response.decorator';
+} from '@common/response/decorators/response.decorator';
 import {
     IResponse,
     IResponsePaging,
-} from 'src/common/response/interfaces/response.interface';
-import { ResponseIdSerialization } from 'src/common/response/serializations/response.id.serialization';
-import { ENUM_USER_STATUS_CODE_ERROR } from 'src/modules/user/constants/user.status-code.constant';
+} from '@common/response/interfaces/response.interface';
+import { ResponseIdSerialization } from '@common/response/serializations/response.id.serialization';
+import { ENUM_USER_STATUS_CODE_ERROR } from '@modules/user/constants/user.status-code.constant';
 import {
     UserAdminDeleteGuard,
     UserAdminGetGuard,
@@ -42,17 +42,16 @@ import {
     UserAdminUpdateBlockedGuard,
     UserAdminUpdateGuard,
     UserAdminUpdateInactiveGuard,
-} from 'src/modules/user/decorators/user.admin.decorator';
-import { GetUser } from 'src/modules/user/decorators/user.decorator';
-import { UserCreateDTO } from 'src/modules/user/dtos/user.create.dto';
-import { UserImportDTO } from 'src/modules/user/dtos/user.import.dto';
-import { UserRequestDto } from 'src/modules/user/dtos/user.request.dto';
-import { IUserEntity } from 'src/modules/user/interfaces/user.interface';
-import { UserGetSerialization } from 'src/modules/user/serializations/user.get.serialization';
-import { UserListSerialization } from 'src/modules/user/serializations/user.list.serialization';
-import { UserService } from 'src/modules/user/services/user.service';
-import { AuthJwtAdminAccessProtected } from 'src/common/auth/decorators/auth.jwt.decorator';
-import { UserUpdateNameDTO } from 'src/modules/user/dtos/user.update-name.dto';
+} from '@modules/user/decorators/user.admin.decorator';
+import { GetUser } from '@modules/user/decorators/user.decorator';
+import { UserCreateDTO } from '@modules/user/dtos/user.create.dto';
+import { UserImportDTO } from '@modules/user/dtos/user.import.dto';
+import { UserRequestDto } from '@modules/user/dtos/user.request.dto';
+import { UserGetSerialization } from '@modules/user/serializations/user.get.serialization';
+import { UserListSerialization } from '@modules/user/serializations/user.list.serialization';
+import { UserService } from '@modules/user/services/user.service';
+import { AuthJwtAdminAccessProtected } from '@common/auth/decorators/auth.jwt.decorator';
+import { UserUpdateNameDTO } from '@modules/user/dtos/user.update-name.dto';
 import {
     USER_DEFAULT_AVAILABLE_ORDER_BY,
     USER_DEFAULT_AVAILABLE_SEARCH,
@@ -62,21 +61,21 @@ import {
     USER_DEFAULT_ORDER_BY,
     USER_DEFAULT_ORDER_DIRECTION,
     USER_DEFAULT_PER_PAGE,
-} from 'src/modules/user/constants/user.list.constant';
-import { PaginationListDTO } from 'src/common/pagination/dtos/pagination.list.dto';
+} from '@modules/user/constants/user.list.constant';
+import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
 import {
     PaginationQuery,
     PaginationQueryFilterEqualObjectId,
     PaginationQueryFilterInBoolean,
-} from 'src/common/pagination/decorators/pagination.decorator';
-import { IAuthPassword } from 'src/common/auth/interfaces/auth.interface';
-import { RoleService } from 'src/modules/role/services/role.service';
-import { ENUM_ROLE_STATUS_CODE_ERROR } from 'src/modules/role/constants/role.status-code.constant';
-import { PolicyAbilityProtected } from 'src/common/policy/decorators/policy.decorator';
+} from '@common/pagination/decorators/pagination.decorator';
+import { IAuthPassword } from '@common/auth/interfaces/auth.interface';
+import { RoleService } from '@modules/role/services/role.service';
+import { ENUM_ROLE_STATUS_CODE_ERROR } from '@modules/role/constants/role.status-code.constant';
+import { PolicyAbilityProtected } from '@common/policy/decorators/policy.decorator';
 import {
     ENUM_POLICY_ACTION,
     ENUM_POLICY_SUBJECT,
-} from 'src/common/policy/constants/policy.enum.constant';
+} from '@common/policy/constants/policy.enum.constant';
 import {
     UserAdminActiveDoc,
     UserAdminBlockedDoc,
@@ -88,8 +87,8 @@ import {
     UserAdminInactiveDoc,
     UserAdminListDoc,
     UserAdminUpdateDoc,
-} from 'src/modules/user/docs/user.admin.doc';
-import { ENUM_USER_SIGN_UP_FROM } from 'src/modules/user/constants/user.enum.constant';
+} from '@modules/user/docs/user.admin.doc';
+import { ENUM_USER_SIGN_UP_FROM } from '@modules/user/constants/user.enum.constant';
 import { UserEntity } from '../entities/user.entity';
 import { instanceToPlain } from 'class-transformer';
 

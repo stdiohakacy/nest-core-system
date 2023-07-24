@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import bytes from 'bytes';
-import { ENUM_HELPER_FILE_TYPE } from 'src/common/helper/constants/helper.enum.constant';
-import { IHelperFileService } from 'src/common/helper/interfaces/helper.file-service.interface';
+import { ENUM_HELPER_FILE_TYPE } from '@common/helper/constants/helper.enum.constant';
+import { IHelperFileService } from '@common/helper/interfaces/helper.file-service.interface';
 import {
     IHelperFileWriteExcelOptions,
     IHelperFileReadExcelOptions,
     IHelperFileRows,
     IHelperFileCreateExcelWorkbookOptions,
-} from 'src/common/helper/interfaces/helper.interface';
+} from '@common/helper/interfaces/helper.interface';
 import { utils, write, read, WorkBook } from 'xlsx';
 import { writeFileSync, readFileSync } from 'fs';
 

@@ -3,8 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { LoggerOptions } from 'winston';
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
-import { DEBUGGER_NAME } from 'src/common/debugger/constants/debugger.constant';
-import { IDebuggerOptionService } from 'src/common/debugger/interfaces/debugger.options-service.interface';
+import { DEBUGGER_NAME } from '@common/debugger/constants/debugger.constant';
+import { IDebuggerOptionService } from '@common/debugger/interfaces/debugger.options-service.interface';
 
 @Injectable()
 export class DebuggerOptionService implements IDebuggerOptionService {

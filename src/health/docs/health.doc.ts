@@ -3,7 +3,7 @@ import {
     Doc,
     DocAuth,
     DocResponse,
-} from 'src/common/doc/decorators/doc.decorator';
+} from '@common/doc/decorators/doc.decorator';
 import { HealthSerialization } from 'src/health/serializations/health.serialization';
 
 export function HealthCheckDoc(): MethodDecorator {

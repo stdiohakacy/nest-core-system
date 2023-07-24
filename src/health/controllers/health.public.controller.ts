@@ -6,8 +6,8 @@ import {
     HealthCheckService,
     MemoryHealthIndicator,
 } from '@nestjs/terminus';
-import { Response } from 'src/common/response/decorators/response.decorator';
-import { IResponse } from 'src/common/response/interfaces/response.interface';
+import { Response } from '@common/response/decorators/response.decorator';
+import { IResponse } from '@common/response/interfaces/response.interface';
 import { HealthCheckDoc } from 'src/health/docs/health.doc';
 import { HealthAwsS3Indicator } from 'src/health/indicators/health.aws-s3.indicator';
 import { HealthSerialization } from 'src/health/serializations/health.serialization';

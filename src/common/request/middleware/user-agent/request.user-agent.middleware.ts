@@ -1,6 +1,6 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Response, NextFunction } from 'express';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
+import { IRequestApp } from '@common/request/interfaces/request.interface';
 import { UAParser, IResult } from 'ua-parser-js';
 
 @Injectable()

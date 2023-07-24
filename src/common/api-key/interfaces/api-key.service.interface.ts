@@ -1,12 +1,12 @@
 import {
     ApiKeyCreateDTO,
     ApiKeyCreateRawDTO,
-} from 'src/common/api-key/dtos/api-key.create.dto';
-import { ApiKeyUpdateDateDTO } from 'src/common/api-key/dtos/api-key.update-date.dto';
-import { ApiKeyUpdateDTO } from 'src/common/api-key/dtos/api-key.update.dto';
-import { IApiKeyCreated } from 'src/common/api-key/interfaces/api-key.interface';
-import { PaginationListDTO } from 'src/common/pagination/dtos/pagination.list.dto';
-import { ApiKeyEntity } from 'src/modules/api-key/entities/api-key.entity';
+} from '@common/api-key/dtos/api-key.create.dto';
+import { ApiKeyUpdateDateDTO } from '@common/api-key/dtos/api-key.update-date.dto';
+import { ApiKeyUpdateDTO } from '@common/api-key/dtos/api-key.update.dto';
+import { IApiKeyCreated } from '@common/api-key/interfaces/api-key.interface';
+import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
+import { ApiKeyEntity } from '@modules/api-key/entities/api-key.entity';
 import { UpdateResult } from 'typeorm';
 
 export interface IApiKeyService {

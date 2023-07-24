@@ -7,10 +7,10 @@ import {
     DocRequest,
     DocGuard,
     DocResponse,
-} from 'src/common/doc/decorators/doc.decorator';
-import { ResponseIdSerialization } from 'src/common/response/serializations/response.id.serialization';
-import { SettingDocParamsId } from 'src/common/setting/constants/setting.doc.constant';
-import { ENUM_SETTING_STATUS_CODE_ERROR } from 'src/common/setting/constants/setting.status-code.constant';
+} from '@common/doc/decorators/doc.decorator';
+import { ResponseIdSerialization } from '@common/response/serializations/response.id.serialization';
+import { SettingDocParamsId } from '@common/setting/constants/setting.doc.constant';
+import { ENUM_SETTING_STATUS_CODE_ERROR } from '@common/setting/constants/setting.status-code.constant';
 
 export function SettingAdminUpdateDoc(): MethodDecorator {
     return applyDecorators(

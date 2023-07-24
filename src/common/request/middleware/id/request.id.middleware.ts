@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Response, NextFunction } from 'express';
-import { DatabaseDefaultUUID } from 'src/common/database/constants/database.function.constant';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
+import { DatabaseDefaultUUID } from '@common/database/constants/database.function.constant';
+import { IRequestApp } from '@common/request/interfaces/request.interface';
 
 @Injectable()
 export class RequestIdMiddleware implements NestMiddleware {

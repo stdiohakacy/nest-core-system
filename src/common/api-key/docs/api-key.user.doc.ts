@@ -2,11 +2,11 @@ import { applyDecorators, HttpStatus } from '@nestjs/common';
 import {
     ApiKeyDocParamsId,
     ApiKeyDocQueryIsActive,
-} from 'src/common/api-key/constants/api-key.doc.constant';
-import { ApiKeyCreateSerialization } from 'src/common/api-key/serializations/api-key.create.serialization';
-import { ApiKeyGetSerialization } from 'src/common/api-key/serializations/api-key.get.serialization';
-import { ApiKeyListSerialization } from 'src/common/api-key/serializations/api-key.list.serialization';
-import { ApiKeyResetSerialization } from 'src/common/api-key/serializations/api-key.reset.serialization';
+} from '@common/api-key/constants/api-key.doc.constant';
+import { ApiKeyCreateSerialization } from '@common/api-key/serializations/api-key.create.serialization';
+import { ApiKeyGetSerialization } from '@common/api-key/serializations/api-key.get.serialization';
+import { ApiKeyListSerialization } from '@common/api-key/serializations/api-key.list.serialization';
+import { ApiKeyResetSerialization } from '@common/api-key/serializations/api-key.reset.serialization';
 import {
     Doc,
     DocAuth,
@@ -14,8 +14,8 @@ import {
     DocGuard,
     DocResponse,
     DocResponsePaging,
-} from 'src/common/doc/decorators/doc.decorator';
-import { ResponseIdSerialization } from 'src/common/response/serializations/response.id.serialization';
+} from '@common/doc/decorators/doc.decorator';
+import { ResponseIdSerialization } from '@common/response/serializations/response.id.serialization';
 
 export function ApiKeyUserListDoc(): MethodDecorator {
     return applyDecorators(

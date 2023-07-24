@@ -4,8 +4,8 @@ import {
     ExecutionContext,
     NotFoundException,
 } from '@nestjs/common';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
-import { ENUM_ROLE_STATUS_CODE_ERROR } from 'src/modules/role/constants/role.status-code.constant';
+import { IRequestApp } from '@common/request/interfaces/request.interface';
+import { ENUM_ROLE_STATUS_CODE_ERROR } from '@modules/role/constants/role.status-code.constant';
 import { RoleEntity } from '../entities/role.entity';
 
 @Injectable()

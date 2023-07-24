@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
+import { IRequestApp } from '@common/request/interfaces/request.interface';
 import { RoleEntity } from '../entities/role.entity';
 import { instanceToPlain } from 'class-transformer';
 

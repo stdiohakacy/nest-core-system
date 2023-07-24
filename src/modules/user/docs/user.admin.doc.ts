@@ -1,5 +1,5 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common';
-import { ENUM_DOC_REQUEST_BODY_TYPE } from 'src/common/doc/constants/doc.enum.constant';
+import { ENUM_DOC_REQUEST_BODY_TYPE } from '@common/doc/constants/doc.enum.constant';
 import {
     Doc,
     DocAuth,
@@ -9,17 +9,17 @@ import {
     DocResponse,
     DocResponseFile,
     DocResponsePaging,
-} from 'src/common/doc/decorators/doc.decorator';
-import { ResponseIdSerialization } from 'src/common/response/serializations/response.id.serialization';
+} from '@common/doc/decorators/doc.decorator';
+import { ResponseIdSerialization } from '@common/response/serializations/response.id.serialization';
 import {
     UserDocParamsId,
     UserDocQueryBlocked,
     UserDocQueryInactivePermanent,
     UserDocQueryIsActive,
     UserDocQueryRole,
-} from 'src/modules/user/constants/user.doc.constant';
-import { UserGetSerialization } from 'src/modules/user/serializations/user.get.serialization';
-import { UserListSerialization } from 'src/modules/user/serializations/user.list.serialization';
+} from '@modules/user/constants/user.doc.constant';
+import { UserGetSerialization } from '@modules/user/serializations/user.get.serialization';
+import { UserListSerialization } from '@modules/user/serializations/user.list.serialization';
 
 export function UserAdminListDoc(): MethodDecorator {
     return applyDecorators(

@@ -4,7 +4,7 @@ import {
     ExecutionContext,
     NotFoundException,
 } from '@nestjs/common';
-import { ENUM_API_KEY_STATUS_CODE_ERROR } from 'src/common/api-key/constants/api-key.status-code.constant';
+import { ENUM_API_KEY_STATUS_CODE_ERROR } from '@common/api-key/constants/api-key.status-code.constant';
 
 @Injectable()
 export class ApiKeyNotFoundGuard implements CanActivate {

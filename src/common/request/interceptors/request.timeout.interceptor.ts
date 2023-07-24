@@ -10,11 +10,11 @@ import { Reflector } from '@nestjs/core';
 import { Observable, throwError, TimeoutError } from 'rxjs';
 import { catchError, timeout } from 'rxjs/operators';
 import ms from 'ms';
-import { ENUM_ERROR_STATUS_CODE_ERROR } from 'src/common/error/constants/error.status-code.constant';
+import { ENUM_ERROR_STATUS_CODE_ERROR } from '@common/error/constants/error.status-code.constant';
 import {
     REQUEST_CUSTOM_TIMEOUT_META_KEY,
     REQUEST_CUSTOM_TIMEOUT_VALUE_META_KEY,
-} from 'src/common/request/constants/request.constant';
+} from '@common/request/constants/request.constant';
 
 @Injectable()
 export class RequestTimeoutInterceptor

@@ -10,23 +10,23 @@ import { HttpArgumentsHost } from '@nestjs/common/interfaces';
 import { ConfigService } from '@nestjs/config';
 import { ValidationError } from 'class-validator';
 import { Response } from 'express';
-import { DatabaseDefaultUUID } from 'src/common/database/constants/database.function.constant';
-import { DebuggerService } from 'src/common/debugger/services/debugger.service';
-import { ERROR_TYPE } from 'src/common/error/constants/error.enum.constant';
+import { DatabaseDefaultUUID } from '@common/database/constants/database.function.constant';
+import { DebuggerService } from '@common/debugger/services/debugger.service';
+import { ERROR_TYPE } from '@common/error/constants/error.enum.constant';
 import {
     IErrorException,
     IErrors,
     IErrorsImport,
     IValidationErrorImport,
-} from 'src/common/error/interfaces/error.interface';
-import { ErrorMetadataSerialization } from 'src/common/error/serializations/error.serialization';
-import { HelperDateService } from 'src/common/helper/services/helper.date.service';
+} from '@common/error/interfaces/error.interface';
+import { ErrorMetadataSerialization } from '@common/error/serializations/error.serialization';
+import { HelperDateService } from '@common/helper/services/helper.date.service';
 import {
     IMessage,
     IMessageOptionsProperties,
-} from 'src/common/message/interfaces/message.interface';
-import { MessageService } from 'src/common/message/services/message.service';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
+} from '@common/message/interfaces/message.interface';
+import { MessageService } from '@common/message/services/message.service';
+import { IRequestApp } from '@common/request/interfaces/request.interface';
 
 // If we throw error with HttpException, there will always return object
 // The exception filter only catch HttpException

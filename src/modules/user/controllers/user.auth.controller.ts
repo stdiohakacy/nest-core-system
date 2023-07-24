@@ -17,26 +17,26 @@ import {
     AuthJwtPayload,
     AuthJwtRefreshProtected,
     AuthJwtToken,
-} from 'src/common/auth/decorators/auth.jwt.decorator';
-import { IAuthPassword } from 'src/common/auth/interfaces/auth.interface';
-import { AuthService } from 'src/common/auth/services/auth.service';
-import { AwsS3Serialization } from 'src/common/aws/serializations/aws.s3.serialization';
-import { AwsS3Service } from 'src/common/aws/services/aws.s3.service';
-import { UploadFileSingle } from 'src/common/file/decorators/file.decorator';
-import { IFile } from 'src/common/file/interfaces/file.interface';
-import { FileRequiredPipe } from 'src/common/file/pipes/file.required.pipe';
-import { FileSizeImagePipe } from 'src/common/file/pipes/file.size.pipe';
-import { FileTypeImagePipe } from 'src/common/file/pipes/file.type.pipe';
-import { Response } from 'src/common/response/decorators/response.decorator';
-import { IResponse } from 'src/common/response/interfaces/response.interface';
-import { ENUM_ROLE_STATUS_CODE_ERROR } from 'src/modules/role/constants/role.status-code.constant';
-import { SettingService } from 'src/common/setting/services/setting.service';
-import { ENUM_USER_STATUS_CODE_ERROR } from 'src/modules/user/constants/user.status-code.constant';
+} from '@common/auth/decorators/auth.jwt.decorator';
+import { IAuthPassword } from '@common/auth/interfaces/auth.interface';
+import { AuthService } from '@common/auth/services/auth.service';
+import { AwsS3Serialization } from '@common/aws/serializations/aws.s3.serialization';
+import { AwsS3Service } from '@common/aws/services/aws.s3.service';
+import { UploadFileSingle } from '@common/file/decorators/file.decorator';
+import { IFile } from '@common/file/interfaces/file.interface';
+import { FileRequiredPipe } from '@common/file/pipes/file.required.pipe';
+import { FileSizeImagePipe } from '@common/file/pipes/file.size.pipe';
+import { FileTypeImagePipe } from '@common/file/pipes/file.type.pipe';
+import { Response } from '@common/response/decorators/response.decorator';
+import { IResponse } from '@common/response/interfaces/response.interface';
+import { ENUM_ROLE_STATUS_CODE_ERROR } from '@modules/role/constants/role.status-code.constant';
+import { SettingService } from '@common/setting/services/setting.service';
+import { ENUM_USER_STATUS_CODE_ERROR } from '@modules/user/constants/user.status-code.constant';
 import {
     GetUser,
     UserAuthProtected,
     UserProtected,
-} from 'src/modules/user/decorators/user.decorator';
+} from '@modules/user/decorators/user.decorator';
 import {
     UserAuthChangePasswordDoc,
     UserAuthClaimUsernameDoc,
@@ -45,14 +45,14 @@ import {
     UserAuthRefreshDoc,
     UserAuthUpdateProfileDoc,
     UserAuthUploadProfileDoc,
-} from 'src/modules/user/docs/user.auth.doc';
-import { UserChangePasswordDto } from 'src/modules/user/dtos/user.change-password.dto';
-import { UserUpdateNameDTO } from 'src/modules/user/dtos/user.update-name.dto';
-import { UserUpdateUsernameDTO } from 'src/modules/user/dtos/user.update-username.dto';
-import { UserPayloadSerialization } from 'src/modules/user/serializations/user.payload.serialization';
-import { UserProfileSerialization } from 'src/modules/user/serializations/user.profile.serialization';
-import { UserService } from 'src/modules/user/services/user.service';
-import { UserRefreshSerialization } from 'src/modules/user/serializations/user.refresh.serialization';
+} from '@modules/user/docs/user.auth.doc';
+import { UserChangePasswordDto } from '@modules/user/dtos/user.change-password.dto';
+import { UserUpdateNameDTO } from '@modules/user/dtos/user.update-name.dto';
+import { UserUpdateUsernameDTO } from '@modules/user/dtos/user.update-username.dto';
+import { UserPayloadSerialization } from '@modules/user/serializations/user.payload.serialization';
+import { UserProfileSerialization } from '@modules/user/serializations/user.profile.serialization';
+import { UserService } from '@modules/user/services/user.service';
+import { UserRefreshSerialization } from '@modules/user/serializations/user.refresh.serialization';
 import { UserEntity } from '../entities/user.entity';
 
 @ApiTags('modules.auth.user')

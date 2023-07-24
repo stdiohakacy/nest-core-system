@@ -16,7 +16,11 @@
     "allowJs": false,
     "esModuleInterop": true,
     "moduleResolution": "node",     
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@common/*": ["src/common/*"],
+      "@modules/*": ["src/modules/*"]
+   }
   },
   "include": [
     "src",

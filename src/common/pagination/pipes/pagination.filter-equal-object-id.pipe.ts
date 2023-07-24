@@ -3,8 +3,8 @@ import { PipeTransform, Scope } from '@nestjs/common/interfaces';
 import { REQUEST } from '@nestjs/core';
 import { isUUID } from 'class-validator';
 // import { Types } from 'mongoose';
-import { PaginationService } from 'src/common/pagination/services/pagination.service';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
+import { PaginationService } from '@common/pagination/services/pagination.service';
+import { IRequestApp } from '@common/request/interfaces/request.interface';
 
 export function PaginationFilterEqualObjectIdPipe(
     field: string,

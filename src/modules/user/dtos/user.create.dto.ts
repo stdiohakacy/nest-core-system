@@ -12,9 +12,9 @@ import {
     ValidateIf,
     IsEnum,
 } from 'class-validator';
-import { IsPasswordStrong } from 'src/common/request/validations/request.is-password-strong.validation';
-import { MobileNumberAllowed } from 'src/common/request/validations/request.mobile-number-allowed.validation';
-import { ENUM_USER_SIGN_UP_FROM } from 'src/modules/user/constants/user.enum.constant';
+import { IsPasswordStrong } from '@common/request/validations/request.is-password-strong.validation';
+import { MobileNumberAllowed } from '@common/request/validations/request.mobile-number-allowed.validation';
+import { ENUM_USER_SIGN_UP_FROM } from '@modules/user/constants/user.enum.constant';
 
 export class UserCreateDTO {
     @ApiProperty({

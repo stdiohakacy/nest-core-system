@@ -1,5 +1,5 @@
-import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from 'src/common/pagination/constants/pagination.enum.constant';
-import { ENUM_ROLE_TYPE } from 'src/modules/role/constants/role.enum.constant';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '@common/pagination/constants/pagination.enum.constant';
+import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
 
 export const ROLE_DEFAULT_ORDER_BY = 'createdAt';
 export const ROLE_DEFAULT_ORDER_DIRECTION =

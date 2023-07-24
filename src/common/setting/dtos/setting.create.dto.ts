@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
-import { SafeString } from 'src/common/request/validations/request.safe-string.validation';
-import { ENUM_SETTING_DATA_TYPE } from 'src/common/setting/constants/setting.enum.constant';
+import { SafeString } from '@common/request/validations/request.safe-string.validation';
+import { ENUM_SETTING_DATA_TYPE } from '@common/setting/constants/setting.enum.constant';
 
 export class SettingCreateDTO {
     @IsString()

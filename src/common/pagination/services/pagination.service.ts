@@ -7,9 +7,9 @@ import {
     PAGINATION_ORDER_DIRECTION,
     PAGINATION_PAGE,
     PAGINATION_PER_PAGE,
-} from 'src/common/pagination/constants/pagination.constant';
-import { IPaginationOrder } from 'src/common/pagination/interfaces/pagination.interface';
-import { IPaginationService } from 'src/common/pagination/interfaces/pagination.service.interface';
+} from '@common/pagination/constants/pagination.constant';
+import { IPaginationOrder } from '@common/pagination/interfaces/pagination.interface';
+import { IPaginationService } from '@common/pagination/interfaces/pagination.service.interface';
 
 @Injectable()
 export class PaginationService implements IPaginationService {

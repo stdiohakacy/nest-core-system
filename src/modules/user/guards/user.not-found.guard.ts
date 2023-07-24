@@ -4,8 +4,8 @@ import {
     ExecutionContext,
     NotFoundException,
 } from '@nestjs/common';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
-import { ENUM_USER_STATUS_CODE_ERROR } from 'src/modules/user/constants/user.status-code.constant';
+import { IRequestApp } from '@common/request/interfaces/request.interface';
+import { ENUM_USER_STATUS_CODE_ERROR } from '@modules/user/constants/user.status-code.constant';
 import { UserEntity } from '../entities/user.entity';
 
 @Injectable()

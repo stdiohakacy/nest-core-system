@@ -4,7 +4,7 @@ import {
     MiddlewareConsumer,
     RequestMethod,
 } from '@nestjs/common';
-import { SettingMaintenanceMiddleware } from 'src/common/setting/middleware/maintenance/setting.maintenance.middleware';
+import { SettingMaintenanceMiddleware } from '@common/setting/middleware/maintenance/setting.maintenance.middleware';
 
 @Module({})
 export class SettingMiddlewareModule implements NestModule {

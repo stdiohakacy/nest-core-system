@@ -7,8 +7,8 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { REQUEST } from '@nestjs/core';
-import { IFile } from 'src/common/file/interfaces/file.interface';
-import { HelperFileService } from 'src/common/helper/services/helper.file.service';
+import { IFile } from '@common/file/interfaces/file.interface';
+import { HelperFileService } from '@common/helper/services/helper.file.service';
 import { ENUM_FILE_STATUS_CODE_ERROR } from '../constants/file.status-code.constant';
 
 @Injectable({ scope: Scope.REQUEST })

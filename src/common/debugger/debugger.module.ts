@@ -7,10 +7,10 @@ import {
     Type,
 } from '@nestjs/common';
 import { WinstonModule } from 'nest-winston';
-import { DebuggerOptionsModule } from 'src/common/debugger/debugger.options.module';
-import { DebuggerMiddlewareModule } from 'src/common/debugger/middleware/debugger.middleware.module';
-import { DebuggerOptionService } from 'src/common/debugger/services/debugger.options.service';
-import { DebuggerService } from 'src/common/debugger/services/debugger.service';
+import { DebuggerOptionsModule } from '@common/debugger/debugger.options.module';
+import { DebuggerMiddlewareModule } from '@common/debugger/middleware/debugger.middleware.module';
+import { DebuggerOptionService } from '@common/debugger/services/debugger.options.service';
+import { DebuggerService } from '@common/debugger/services/debugger.service';
 
 @Global()
 @Module({})

@@ -5,10 +5,10 @@ import {
     ForbiddenException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { HelperArrayService } from 'src/common/helper/services/helper.array.service';
-import { ROLE_TYPE_META_KEY } from 'src/modules/role/constants/role.constant';
-import { ENUM_ROLE_TYPE } from 'src/modules/role/constants/role.enum.constant';
-import { ENUM_ROLE_STATUS_CODE_ERROR } from 'src/modules/role/constants/role.status-code.constant';
+import { HelperArrayService } from '@common/helper/services/helper.array.service';
+import { ROLE_TYPE_META_KEY } from '@modules/role/constants/role.constant';
+import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
+import { ENUM_ROLE_STATUS_CODE_ERROR } from '@modules/role/constants/role.status-code.constant';
 
 @Injectable()
 export class RolePayloadTypeGuard implements CanActivate {

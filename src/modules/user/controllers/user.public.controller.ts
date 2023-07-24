@@ -12,34 +12,34 @@ import {
     Post,
 } from '@nestjs/common';
 import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
-import { ENUM_AUTH_LOGIN_WITH } from 'src/common/auth/constants/auth.enum.constant';
+import { ENUM_AUTH_LOGIN_WITH } from '@common/auth/constants/auth.enum.constant';
 import {
     AuthGoogleOAuth2LoginProtected,
     AuthGoogleOAuth2SignUpProtected,
-} from 'src/common/auth/decorators/auth.google.decorator';
-import { AuthJwtPayload } from 'src/common/auth/decorators/auth.jwt.decorator';
-import { IAuthGooglePayload } from 'src/common/auth/interfaces/auth.interface';
-import { AuthService } from 'src/common/auth/services/auth.service';
-import { ENUM_ERROR_STATUS_CODE_ERROR } from 'src/common/error/constants/error.status-code.constant';
-import { Response } from 'src/common/response/decorators/response.decorator';
-import { IResponse } from 'src/common/response/interfaces/response.interface';
-import { ENUM_ROLE_STATUS_CODE_ERROR } from 'src/modules/role/constants/role.status-code.constant';
-import { RoleService } from 'src/modules/role/services/role.service';
-import { SettingService } from 'src/common/setting/services/setting.service';
-import { ENUM_USER_SIGN_UP_FROM } from 'src/modules/user/constants/user.enum.constant';
+} from '@common/auth/decorators/auth.google.decorator';
+import { AuthJwtPayload } from '@common/auth/decorators/auth.jwt.decorator';
+import { IAuthGooglePayload } from '@common/auth/interfaces/auth.interface';
+import { AuthService } from '@common/auth/services/auth.service';
+import { ENUM_ERROR_STATUS_CODE_ERROR } from '@common/error/constants/error.status-code.constant';
+import { Response } from '@common/response/decorators/response.decorator';
+import { IResponse } from '@common/response/interfaces/response.interface';
+import { ENUM_ROLE_STATUS_CODE_ERROR } from '@modules/role/constants/role.status-code.constant';
+import { RoleService } from '@modules/role/services/role.service';
+import { SettingService } from '@common/setting/services/setting.service';
+import { ENUM_USER_SIGN_UP_FROM } from '@modules/user/constants/user.enum.constant';
 import {
     ENUM_USER_STATUS_CODE_ERROR,
     ENUM_USER_STATUS_CODE_SUCCESS,
-} from 'src/modules/user/constants/user.status-code.constant';
+} from '@modules/user/constants/user.status-code.constant';
 import {
     UserPublicLoginDoc,
     UserPublicSignUpDoc,
-} from 'src/modules/user/docs/user.public.doc';
-import { UserLoginDto } from 'src/modules/user/dtos/user.login.dto';
-import { UserSignUpDTO } from 'src/modules/user/dtos/user.sign-up.dto';
-import { UserLoginSerialization } from 'src/modules/user/serializations/user.login.serialization';
-import { UserPayloadSerialization } from 'src/modules/user/serializations/user.payload.serialization';
-import { UserService } from 'src/modules/user/services/user.service';
+} from '@modules/user/docs/user.public.doc';
+import { UserLoginDto } from '@modules/user/dtos/user.login.dto';
+import { UserSignUpDTO } from '@modules/user/dtos/user.sign-up.dto';
+import { UserLoginSerialization } from '@modules/user/serializations/user.login.serialization';
+import { UserPayloadSerialization } from '@modules/user/serializations/user.payload.serialization';
+import { UserService } from '@modules/user/services/user.service';
 import { UserEntity } from '../entities/user.entity';
 
 @ApiTags('modules.public.user')

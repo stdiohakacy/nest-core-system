@@ -1,15 +1,15 @@
 import { faker } from '@faker-js/faker';
 import { ApiHideProperty, ApiProperty, OmitType } from '@nestjs/swagger';
 import { Exclude, Expose, Transform } from 'class-transformer';
-import { AwsS3Serialization } from 'src/common/aws/serializations/aws.s3.serialization';
+import { AwsS3Serialization } from '@common/aws/serializations/aws.s3.serialization';
 import {
     ENUM_POLICY_REQUEST_ACTION,
     ENUM_POLICY_SUBJECT,
-} from 'src/common/policy/constants/policy.enum.constant';
-import { IPolicyRule } from 'src/common/policy/interfaces/policy.interface';
-import { ENUM_ROLE_TYPE } from 'src/modules/role/constants/role.enum.constant';
-import { ENUM_USER_SIGN_UP_FROM } from 'src/modules/user/constants/user.enum.constant';
-import { UserProfileSerialization } from 'src/modules/user/serializations/user.profile.serialization';
+} from '@common/policy/constants/policy.enum.constant';
+import { IPolicyRule } from '@common/policy/interfaces/policy.interface';
+import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
+import { ENUM_USER_SIGN_UP_FROM } from '@modules/user/constants/user.enum.constant';
+import { UserProfileSerialization } from '@modules/user/serializations/user.profile.serialization';
 export class UserPayloadPermissionSerialization {
     @ApiProperty({
         required: true,

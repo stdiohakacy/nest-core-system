@@ -1,5 +1,5 @@
 import { OmitType } from '@nestjs/swagger';
-import { RoleCreateDTO } from 'src/modules/role/dtos/role.create.dto';
+import { RoleCreateDTO } from '@modules/role/dtos/role.create.dto';
 
 export class RoleUpdatePermissionDTO extends OmitType(RoleCreateDTO, [
     'name',

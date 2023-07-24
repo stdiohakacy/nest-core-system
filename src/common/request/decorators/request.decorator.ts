@@ -11,12 +11,12 @@ import {
     REQUEST_CUSTOM_TIMEOUT_META_KEY,
     REQUEST_CUSTOM_TIMEOUT_VALUE_META_KEY,
     REQUEST_PARAM_CLASS_DTOS_META_KEY,
-} from 'src/common/request/constants/request.constant';
-import { RequestParamRawGuard } from 'src/common/request/guards/request.param.guard';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
+} from '@common/request/constants/request.constant';
+import { RequestParamRawGuard } from '@common/request/guards/request.param.guard';
+import { IRequestApp } from '@common/request/interfaces/request.interface';
 import { IResult } from 'ua-parser-js';
-import { RequestTimestampInterceptor } from 'src/common/request/interceptors/request.timestamp.interceptor';
-import { RequestUserAgentInterceptor } from 'src/common/request/interceptors/request.user-agent.interceptor';
+import { RequestTimestampInterceptor } from '@common/request/interceptors/request.timestamp.interceptor';
+import { RequestUserAgentInterceptor } from '@common/request/interceptors/request.user-agent.interceptor';
 
 export const RequestUserAgent: () => ParameterDecorator = createParamDecorator(
     (data: string, ctx: ExecutionContext): IResult => {

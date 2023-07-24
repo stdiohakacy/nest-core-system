@@ -9,6 +9,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "typeorm": "typeorm-ts-node-esm",
     "upgrade:package": "ncu -u",
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -40,7 +41,9 @@
     "@casl/ability": "^6.5.0",
     "@faker-js/faker": "^8.0.2",
     "@joi/date": "^2.1.0",
+    "@nestjs-modules/mailer": "^1.9.1",
     "@nestjs/axios": "^2.0.0",
+    "@nestjs/bull": "^10.0.1",
     "@nestjs/common": "^9.4.3",
     "@nestjs/config": "^2.3.4",
     "@nestjs/core": "^9.4.3",

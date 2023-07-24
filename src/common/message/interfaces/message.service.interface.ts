@@ -3,12 +3,12 @@ import {
     IErrors,
     IErrorsImport,
     IValidationErrorImport,
-} from 'src/common/error/interfaces/error.interface';
+} from '@common/error/interfaces/error.interface';
 import {
     IMessageErrorOptions,
     IMessageOptions,
     IMessageSetOptions,
-} from 'src/common/message/interfaces/message.interface';
+} from '@common/message/interfaces/message.interface';
 
 export interface IMessageService {
     getAvailableLanguages(): string[];

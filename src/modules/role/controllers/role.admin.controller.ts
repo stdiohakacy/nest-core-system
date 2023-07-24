@@ -9,30 +9,30 @@ import {
     Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthJwtAdminAccessProtected } from 'src/common/auth/decorators/auth.jwt.decorator';
+import { AuthJwtAdminAccessProtected } from '@common/auth/decorators/auth.jwt.decorator';
 import {
     PaginationQuery,
     PaginationQueryFilterInBoolean,
     PaginationQueryFilterInEnum,
-} from 'src/common/pagination/decorators/pagination.decorator';
-import { PaginationListDTO } from 'src/common/pagination/dtos/pagination.list.dto';
-import { PaginationService } from 'src/common/pagination/services/pagination.service';
+} from '@common/pagination/decorators/pagination.decorator';
+import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
+import { PaginationService } from '@common/pagination/services/pagination.service';
 import {
     ENUM_POLICY_ACTION,
     ENUM_POLICY_SUBJECT,
-} from 'src/common/policy/constants/policy.enum.constant';
-import { PolicyAbilityProtected } from 'src/common/policy/decorators/policy.decorator';
-import { RequestParamGuard } from 'src/common/request/decorators/request.decorator';
+} from '@common/policy/constants/policy.enum.constant';
+import { PolicyAbilityProtected } from '@common/policy/decorators/policy.decorator';
+import { RequestParamGuard } from '@common/request/decorators/request.decorator';
 import {
     Response,
     ResponsePaging,
-} from 'src/common/response/decorators/response.decorator';
+} from '@common/response/decorators/response.decorator';
 import {
     IResponse,
     IResponsePaging,
-} from 'src/common/response/interfaces/response.interface';
-import { ResponseIdSerialization } from 'src/common/response/serializations/response.id.serialization';
-import { ENUM_ROLE_TYPE } from 'src/modules/role/constants/role.enum.constant';
+} from '@common/response/interfaces/response.interface';
+import { ResponseIdSerialization } from '@common/response/serializations/response.id.serialization';
+import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
 import {
     ROLE_DEFAULT_AVAILABLE_ORDER_BY,
     ROLE_DEFAULT_AVAILABLE_SEARCH,
@@ -41,16 +41,16 @@ import {
     ROLE_DEFAULT_ORDER_DIRECTION,
     ROLE_DEFAULT_PER_PAGE,
     ROLE_DEFAULT_TYPE,
-} from 'src/modules/role/constants/role.list.constant';
-import { ENUM_ROLE_STATUS_CODE_ERROR } from 'src/modules/role/constants/role.status-code.constant';
+} from '@modules/role/constants/role.list.constant';
+import { ENUM_ROLE_STATUS_CODE_ERROR } from '@modules/role/constants/role.status-code.constant';
 import {
     RoleAdminDeleteGuard,
     RoleAdminGetGuard,
     RoleAdminUpdateActiveGuard,
     RoleAdminUpdateGuard,
     RoleAdminUpdateInactiveGuard,
-} from 'src/modules/role/decorators/role.admin.decorator';
-import { GetRole } from 'src/modules/role/decorators/role.decorator';
+} from '@modules/role/decorators/role.admin.decorator';
+import { GetRole } from '@modules/role/decorators/role.decorator';
 import {
     RoleAdminActiveDoc,
     RoleAdminCreateDoc,
@@ -59,15 +59,15 @@ import {
     RoleAdminInactiveDoc,
     RoleAdminListDoc,
     RoleAdminUpdateDoc,
-} from 'src/modules/role/docs/role.admin.doc';
-import { RoleCreateDTO } from 'src/modules/role/dtos/role.create.dto';
-import { RoleRequestDto } from 'src/modules/role/dtos/role.request.dto';
-import { RoleUpdatePermissionDTO } from 'src/modules/role/dtos/role.update-permission.dto';
-import { RoleUpdateDTO } from 'src/modules/role/dtos/role.update.dto';
-import { RoleGetSerialization } from 'src/modules/role/serializations/role.get.serialization';
-import { RoleListSerialization } from 'src/modules/role/serializations/role.list.serialization';
-import { RoleService } from 'src/modules/role/services/role.service';
-import { UserService } from 'src/modules/user/services/user.service';
+} from '@modules/role/docs/role.admin.doc';
+import { RoleCreateDTO } from '@modules/role/dtos/role.create.dto';
+import { RoleRequestDto } from '@modules/role/dtos/role.request.dto';
+import { RoleUpdatePermissionDTO } from '@modules/role/dtos/role.update-permission.dto';
+import { RoleUpdateDTO } from '@modules/role/dtos/role.update.dto';
+import { RoleGetSerialization } from '@modules/role/serializations/role.get.serialization';
+import { RoleListSerialization } from '@modules/role/serializations/role.list.serialization';
+import { RoleService } from '@modules/role/services/role.service';
+import { UserService } from '@modules/user/services/user.service';
 import { RoleEntity } from '../entities/role.entity';
 
 @ApiTags('modules.admin.role')

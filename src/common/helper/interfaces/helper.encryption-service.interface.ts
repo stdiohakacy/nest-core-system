@@ -1,7 +1,7 @@
 import {
     IHelperJwtOptions,
     IHelperJwtVerifyOptions,
-} from 'src/common/helper/interfaces/helper.interface';
+} from '@common/helper/interfaces/helper.interface';
 
 export interface IHelperEncryptionService {
     base64Encrypt(data: string): string;

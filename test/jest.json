@@ -11,7 +11,7 @@
     "collectCoverage": true,
     "coverageDirectory": "coverage",
     "collectCoverageFrom": [
-        "./src/common/**/services/*.service.ts"
+        "./@common/**/services/*.service.ts"
     ],
     "coverageThreshold": {
       "global": {

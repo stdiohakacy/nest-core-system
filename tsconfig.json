@@ -18,9 +18,9 @@
     "moduleResolution": "node",     
     "resolveJsonModule": true,
     "paths": {
-      "@common/*": ["src/common/*"],
-      "@modules/*": ["src/modules/*"]
-   }
+      "@common/*": ["./src/common/*"], // Add a dot (.) before "/src" to make the path relative
+      "@modules/*": ["./src/modules/*"] // Optional: You might need to update other path mappings if similar issues arise
+    }
   },
   "include": [
     "src",

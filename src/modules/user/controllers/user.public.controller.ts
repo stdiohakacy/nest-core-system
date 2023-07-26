@@ -48,7 +48,6 @@ import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/er
 })
 export class UserPublicController {
     constructor(
-        // @DatabaseConnection() private readonly databaseConnection: Connection,
         private readonly userService: UserService,
         private readonly authService: AuthService,
         private readonly roleService: RoleService,
@@ -181,16 +180,17 @@ export class UserPublicController {
     @Post('/sign-up')
     async signUp(
         @Body()
-        { email, mobileNumber, ...body }: UserSignUpDTO
+        { email, mobileNumber, username, ...body }: UserSignUpDTO
     ): Promise<void> {
         const promises: Promise<any>[] = [this.userService.existByEmail(email)];
-
         if (mobileNumber) {
             promises.push(this.userService.existByMobileNumber(mobileNumber));
         }
-
-        const [emailExist, mobileNumberExist] = await Promise.all(promises);
-
+        if (username) {
+            promises.push(this.userService.existByUsername(username));
+        }
+        const [emailExist, mobileNumberExist, usernameExist] =
+            await Promise.all(promises);
         if (emailExist) {
             throw new ConflictException({
                 statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_EMAIL_EXIST_ERROR,
@@ -202,12 +202,17 @@ export class UserPublicController {
                     ENUM_USER_STATUS_CODE_ERROR.USER_MOBILE_NUMBER_EXIST_ERROR,
                 message: 'user.error.mobileNumberExist',
             });
+        } else if (usernameExist) {
+            throw new ConflictException({
+                statusCode:
+                    ENUM_USER_STATUS_CODE_ERROR.USER_USERNAME_EXISTS_ERROR,
+                message: 'user.error.usernameExist',
+            });
         }
-
         const password = await this.authService.createPassword(body.password);
-
         await this.userService.create(
             {
+                username,
                 email,
                 mobileNumber,
                 signUpFrom: ENUM_USER_SIGN_UP_FROM.LOCAL,

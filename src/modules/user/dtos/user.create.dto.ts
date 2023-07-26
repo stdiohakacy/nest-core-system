@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
     IsString,
@@ -47,6 +47,17 @@ export class UserCreateDTO {
     @MaxLength(30)
     @Type(() => String)
     readonly lastName: string;
+
+    @ApiPropertyOptional({
+        example: faker.internet.userName(),
+        required: true,
+    })
+    @IsString()
+    @IsOptional()
+    @MinLength(1)
+    @MaxLength(30)
+    @Type(() => String)
+    readonly username?: string;
 
     @ApiProperty({
         example: faker.phone.number('62812#########'),

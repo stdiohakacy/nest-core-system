@@ -10,7 +10,7 @@ import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.se
 import { IUserGoogleEntity } from '../interfaces/user.interface';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
-    username: string;
+    username?: string;
     firstName: string;
     lastName: string;
     mobileNumber?: string;
@@ -35,8 +35,8 @@ export interface IUserEntity extends IBaseEntity<UserDTO> {
 @Entity({ name: 'users' })
 @UseDTO(UserDTO)
 export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
-    @Column({ name: 'username' })
-    username: string;
+    @Column({ name: 'username', nullable: true })
+    username?: string;
 
     @Column({ name: 'firstName' })
     firstName: string;

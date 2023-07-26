@@ -22,6 +22,7 @@ import { LoggerModule } from './logger/logger.module';
 import { ApiKeyModule } from './api-key/api-key.module';
 import { DebuggerModule } from './debugger/debugger.module';
 import { AuthModule } from './auth/auth.module';
+import { IntegrationModule } from './integrations/integration.module';
 @Module({
     controllers: [],
     providers: [],
@@ -172,6 +173,7 @@ import { AuthModule } from './auth/auth.module';
         SettingModule,
         LoggerModule,
         ApiKeyModule,
+        IntegrationModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],
@@ -187,6 +189,7 @@ import { AuthModule } from './auth/auth.module';
         SettingModule,
         LoggerModule,
         ApiKeyModule,
+        IntegrationModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],

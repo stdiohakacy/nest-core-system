@@ -40,6 +40,7 @@ import {
 import { AuthJwtPayload } from '../../../common/auth/decorators/auth.jwt.decorator';
 import { IAuthGooglePayload } from '../../../common/auth/interfaces/auth.interface';
 import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/error.status-code.constant';
+import { MailService } from 'src/common/integrations/mail/mail.service';
 
 @ApiTags('modules.public.user')
 @Controller({
@@ -51,7 +52,8 @@ export class UserPublicController {
         private readonly userService: UserService,
         private readonly authService: AuthService,
         private readonly roleService: RoleService,
-        private readonly settingService: SettingService
+        private readonly settingService: SettingService,
+        private readonly mailService: MailService
     ) {}
 
     @UserPublicLoginDoc()
@@ -182,44 +184,52 @@ export class UserPublicController {
         @Body()
         { email, mobileNumber, username, ...body }: UserSignUpDTO
     ): Promise<void> {
-        const promises: Promise<any>[] = [this.userService.existByEmail(email)];
-        if (mobileNumber) {
-            promises.push(this.userService.existByMobileNumber(mobileNumber));
-        }
-        if (username) {
-            promises.push(this.userService.existByUsername(username));
-        }
-        const [emailExist, mobileNumberExist, usernameExist] =
-            await Promise.all(promises);
-        if (emailExist) {
-            throw new ConflictException({
-                statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_EMAIL_EXIST_ERROR,
-                message: 'user.error.emailExist',
-            });
-        } else if (mobileNumberExist) {
-            throw new ConflictException({
-                statusCode:
-                    ENUM_USER_STATUS_CODE_ERROR.USER_MOBILE_NUMBER_EXIST_ERROR,
-                message: 'user.error.mobileNumberExist',
-            });
-        } else if (usernameExist) {
-            throw new ConflictException({
-                statusCode:
-                    ENUM_USER_STATUS_CODE_ERROR.USER_USERNAME_EXISTS_ERROR,
-                message: 'user.error.usernameExist',
-            });
-        }
-        const password = await this.authService.createPassword(body.password);
-        await this.userService.create(
-            {
-                username,
-                email,
-                mobileNumber,
-                signUpFrom: ENUM_USER_SIGN_UP_FROM.LOCAL,
-                ...body,
-            },
-            password
-        );
+        const result = await this.mailService.sendWelcomeEmail({
+            from: '',
+            to: '',
+            subject: '',
+            text: '',
+            test: '',
+        });
+        console.log(result);
+        // const promises: Promise<any>[] = [this.userService.existByEmail(email)];
+        // if (mobileNumber) {
+        //     promises.push(this.userService.existByMobileNumber(mobileNumber));
+        // }
+        // if (username) {
+        //     promises.push(this.userService.existByUsername(username));
+        // }
+        // const [emailExist, mobileNumberExist, usernameExist] =
+        //     await Promise.all(promises);
+        // if (emailExist) {
+        //     throw new ConflictException({
+        //         statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_EMAIL_EXIST_ERROR,
+        //         message: 'user.error.emailExist',
+        //     });
+        // } else if (mobileNumberExist) {
+        //     throw new ConflictException({
+        //         statusCode:
+        //             ENUM_USER_STATUS_CODE_ERROR.USER_MOBILE_NUMBER_EXIST_ERROR,
+        //         message: 'user.error.mobileNumberExist',
+        //     });
+        // } else if (usernameExist) {
+        //     throw new ConflictException({
+        //         statusCode:
+        //             ENUM_USER_STATUS_CODE_ERROR.USER_USERNAME_EXISTS_ERROR,
+        //         message: 'user.error.usernameExist',
+        //     });
+        // }
+        // const password = await this.authService.createPassword(body.password);
+        // await this.userService.create(
+        //     {
+        //         username,
+        //         email,
+        //         mobileNumber,
+        //         signUpFrom: ENUM_USER_SIGN_UP_FROM.LOCAL,
+        //         ...body,
+        //     },
+        //     password
+        // );
     }
 
     @ApiExcludeEndpoint()

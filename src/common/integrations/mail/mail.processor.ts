@@ -4,13 +4,19 @@ import { IMail } from './mail.interface';
 import { SentMessageInfo } from 'nodemailer';
 import nodemailer from 'nodemailer';
 import SibTransport from 'nodemailer-sendinblue-transport';
+import { ConfigService } from '@nestjs/config';
 
 @Processor('mail')
 export class MailProcessor {
     private readonly transporter: nodemailer.Transporter;
-    constructor() {
+
+    constructor(private readonly configService: ConfigService) {
         this.transporter = nodemailer.createTransport(
-            new SibTransport({ apiKey: process.env.SIB_API_KEY })
+            new SibTransport({
+                apiKey: this.configService.get<string>(
+                    'integration.mail.sib.apiKey'
+                ),
+            })
         );
     }
 

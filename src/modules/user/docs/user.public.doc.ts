@@ -1,17 +1,15 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common';
-import { ENUM_DOC_REQUEST_BODY_TYPE } from '@common/doc/constants/doc.enum.constant';
 import {
     Doc,
     DocRequest,
     DocResponse,
-} from '@common/doc/decorators/doc.decorator';
-import { UserLoginSerialization } from '@modules/user/serializations/user.login.serialization';
+} from '../../../common/doc/decorators/doc.decorator';
+import { UserLoginSerialization } from '../serializations/user.login.serialization';
+import { ENUM_DOC_REQUEST_BODY_TYPE } from '../../../common/doc/constants/doc.enum.constant';
 
 export function UserPublicLoginDoc(): MethodDecorator {
     return applyDecorators(
-        Doc({
-            operation: 'modules.public.user',
-        }),
+        Doc({ operation: 'modules.public.user' }),
         DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
         DocResponse<UserLoginSerialization>('user.login', {
             serialization: UserLoginSerialization,
@@ -21,12 +19,8 @@ export function UserPublicLoginDoc(): MethodDecorator {
 
 export function UserPublicSignUpDoc(): MethodDecorator {
     return applyDecorators(
-        Doc({
-            operation: 'modules.public.user',
-        }),
+        Doc({ operation: 'modules.public.user' }),
         DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
-        DocResponse('user.signUp', {
-            httpStatus: HttpStatus.CREATED,
-        })
+        DocResponse('user.signUp', { httpStatus: HttpStatus.CREATED })
     );
 }

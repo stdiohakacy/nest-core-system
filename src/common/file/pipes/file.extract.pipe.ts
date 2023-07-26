@@ -1,9 +1,9 @@
 import { Injectable, UnsupportedMediaTypeException } from '@nestjs/common';
 import { PipeTransform } from '@nestjs/common/interfaces';
-import { ENUM_FILE_EXCEL_MIME } from '@common/file/constants/file.enum.constant';
-import { ENUM_FILE_STATUS_CODE_ERROR } from '@common/file/constants/file.status-code.constant';
-import { IFile, IFileExtract } from '@common/file/interfaces/file.interface';
-import { HelperFileService } from '@common/helper/services/helper.file.service';
+import { HelperFileService } from '../../../common/helper/services/helper.file.service';
+import { IFile, IFileExtract } from '../interfaces/file.interface';
+import { ENUM_FILE_EXCEL_MIME } from '../constants/file.enum.constant';
+import { ENUM_FILE_STATUS_CODE_ERROR } from '../constants/file.status-code.constant';
 
 // only for excel
 @Injectable()

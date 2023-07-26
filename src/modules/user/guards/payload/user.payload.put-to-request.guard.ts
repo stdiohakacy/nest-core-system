@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
-import { UserService } from '@modules/user/services/user.service';
 import { UserEntity } from '../../entities/user.entity';
+import { IRequestApp } from '../../../../common/request/interfaces/request.interface';
+import { UserService } from '../../services/user.service';
 
 @Injectable()
 export class UserPayloadPutToRequestGuard implements CanActivate {

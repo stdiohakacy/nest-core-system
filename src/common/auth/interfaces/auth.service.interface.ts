@@ -2,7 +2,7 @@ import {
     IAuthPassword,
     IAuthPayloadOptions,
     IAuthRefreshTokenOptions,
-} from '@common/auth/interfaces/auth.interface';
+} from './auth.interface';
 
 export interface IAuthService {
     encryptAccessToken(payload: Record<string, any>): Promise<string>;

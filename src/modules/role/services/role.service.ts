@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IRoleService } from '@modules/role/interfaces/role.service.interface';
 import { RoleEntity } from '../entities/role.entity';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { RoleCreateDTO } from '../dtos/role.create.dto';
 import { RoleUpdateDTO } from '../dtos/role.update.dto';
-import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
+import { IRoleService } from '../interfaces/role.service.interface';
+import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
 
 @Injectable()
 export class RoleService implements IRoleService {

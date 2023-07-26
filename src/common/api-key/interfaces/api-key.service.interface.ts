@@ -1,13 +1,13 @@
+import { ApiKeyEntity } from '../../../modules/api-key/entities/api-key.entity';
+import { UpdateResult } from 'typeorm';
 import {
     ApiKeyCreateDTO,
     ApiKeyCreateRawDTO,
-} from '@common/api-key/dtos/api-key.create.dto';
-import { ApiKeyUpdateDateDTO } from '@common/api-key/dtos/api-key.update-date.dto';
-import { ApiKeyUpdateDTO } from '@common/api-key/dtos/api-key.update.dto';
-import { IApiKeyCreated } from '@common/api-key/interfaces/api-key.interface';
-import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
-import { ApiKeyEntity } from '@modules/api-key/entities/api-key.entity';
-import { UpdateResult } from 'typeorm';
+} from '../dtos/api-key.create.dto';
+import { IApiKeyCreated } from './api-key.interface';
+import { ApiKeyUpdateDTO } from '../dtos/api-key.update.dto';
+import { ApiKeyUpdateDateDTO } from '../dtos/api-key.update-date.dto';
+import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
 
 export interface IApiKeyService {
     findAll(find?: Record<string, any>): Promise<ApiKeyEntity[]>;

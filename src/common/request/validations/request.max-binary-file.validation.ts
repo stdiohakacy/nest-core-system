@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
-    registerDecorator,
     ValidationArguments,
     ValidationOptions,
     ValidatorConstraint,
     ValidatorConstraintInterface,
+    registerDecorator,
 } from 'class-validator';
-import { ENUM_FILE_TYPE } from '@common/file/constants/file.enum.constant';
+import { ENUM_FILE_TYPE } from '../../../common/file/constants/file.enum.constant';
 
 @ValidatorConstraint({ async: true })
 @Injectable()

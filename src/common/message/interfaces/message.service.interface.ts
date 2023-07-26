@@ -1,14 +1,14 @@
 import { ValidationError } from '@nestjs/common';
 import {
-    IErrors,
-    IErrorsImport,
-    IValidationErrorImport,
-} from '@common/error/interfaces/error.interface';
-import {
     IMessageErrorOptions,
     IMessageOptions,
     IMessageSetOptions,
-} from '@common/message/interfaces/message.interface';
+} from './message.interface';
+import {
+    IErrors,
+    IErrorsImport,
+    IValidationErrorImport,
+} from '../../../common/error/interfaces/error.interface';
 
 export interface IMessageService {
     getAvailableLanguages(): string[];

@@ -4,9 +4,9 @@ import {
     ExecutionContext,
     NotFoundException,
 } from '@nestjs/common';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
-import { ENUM_USER_STATUS_CODE_ERROR } from '@modules/user/constants/user.status-code.constant';
 import { UserEntity } from '../entities/user.entity';
+import { IRequestApp } from '../../../common/request/interfaces/request.interface';
+import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
 
 @Injectable()
 export class UserCanNotOurSelfGuard implements CanActivate {

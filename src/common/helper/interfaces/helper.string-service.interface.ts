@@ -1,4 +1,4 @@
-import { IHelperStringRandomOptions } from '@common/helper/interfaces/helper.interface';
+import { IHelperStringRandomOptions } from './helper.interface';
 
 export interface IHelperStringService {
     checkEmail(email: string): boolean;

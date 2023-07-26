@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { REQUEST } from '@nestjs/core';
-import { IFile } from '@common/file/interfaces/file.interface';
-import { HelperFileService } from '@common/helper/services/helper.file.service';
 import { ENUM_FILE_STATUS_CODE_ERROR } from '../constants/file.status-code.constant';
+import { HelperFileService } from '../../../common/helper/services/helper.file.service';
+import { IFile } from '../interfaces/file.interface';
 
 @Injectable({ scope: Scope.REQUEST })
 export class FileSizeImagePipe implements PipeTransform {

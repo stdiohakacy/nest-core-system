@@ -1,6 +1,6 @@
 import { UseGuards, applyDecorators } from '@nestjs/common';
-import { AuthGoogleOauth2LoginGuard } from '@common/auth/guards/google-oauth2/auth.google-oauth2-login.guard';
-import { AuthGoogleOauth2SignUpGuard } from '@common/auth/guards/google-oauth2/auth.google-oauth2-sign-up.guard';
+import { AuthGoogleOauth2SignUpGuard } from '../guards/google-oauth2/auth.google-oauth2-sign-up.guard';
+import { AuthGoogleOauth2LoginGuard } from '../guards/google-oauth2/auth.google-oauth2-login.guard';
 
 export function AuthGoogleOAuth2SignUpProtected(): MethodDecorator {
     return applyDecorators(UseGuards(AuthGoogleOauth2SignUpGuard));

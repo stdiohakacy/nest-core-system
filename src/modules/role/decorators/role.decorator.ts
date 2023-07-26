@@ -1,7 +1,7 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
 import { RoleEntity } from '../entities/role.entity';
 import { instanceToPlain } from 'class-transformer';
+import { IRequestApp } from '../../../common/request/interfaces/request.interface';
 
 export const GetRole = createParamDecorator(
     (returnPlain: boolean, ctx: ExecutionContext): any | RoleEntity => {

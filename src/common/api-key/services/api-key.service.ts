@@ -1,21 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { IApiKeyService } from '@common/api-key/interfaces/api-key.service.interface';
-import { IApiKeyCreated } from '@common/api-key/interfaces/api-key.interface';
-import { ApiKeyActiveDto } from '@common/api-key/dtos/api-key.active.dto';
-import { HelperStringService } from '@common/helper/services/helper.string.service';
+import { Repository, UpdateResult } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
-import { HelperHashService } from '@common/helper/services/helper.hash.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { IApiKeyService } from '../interfaces/api-key.service.interface';
+import { ApiKeyEntity } from '../../../modules/api-key/entities/api-key.entity';
+import { HelperStringService } from '../../../common/helper/services/helper.string.service';
+import { HelperHashService } from '../../../common/helper/services/helper.hash.service';
+import { HelperDateService } from '../../../common/helper/services/helper.date.service';
+import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
 import {
     ApiKeyCreateDTO,
     ApiKeyCreateRawDTO,
-} from '@common/api-key/dtos/api-key.create.dto';
-import { ApiKeyUpdateDTO } from '@common/api-key/dtos/api-key.update.dto';
-import { ApiKeyUpdateDateDTO } from '@common/api-key/dtos/api-key.update-date.dto';
-import { HelperDateService } from '@common/helper/services/helper.date.service';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ApiKeyEntity } from '@modules/api-key/entities/api-key.entity';
-import { Repository, UpdateResult } from 'typeorm';
-import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
+} from '../dtos/api-key.create.dto';
+import { IApiKeyCreated } from '../interfaces/api-key.interface';
+import { ApiKeyUpdateDTO } from '../dtos/api-key.update.dto';
+import { ApiKeyUpdateDateDTO } from '../dtos/api-key.update-date.dto';
 
 @Injectable()
 export class ApiKeyService implements IApiKeyService {

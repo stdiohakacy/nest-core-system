@@ -2,9 +2,9 @@ import { InferSubjects, MongoAbility } from '@casl/ability';
 import {
     ENUM_POLICY_ACTION,
     ENUM_POLICY_SUBJECT,
-} from '@common/policy/constants/policy.enum.constant';
-import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
-import { UserPayloadPermissionSerialization } from '@modules/user/serializations/user.payload.serialization';
+} from '../constants/policy.enum.constant';
+import { ENUM_ROLE_TYPE } from '../../../modules/role/constants/role.enum.constant';
+import { UserPayloadPermissionSerialization } from '../../../modules/user/serializations/user.payload.serialization';
 
 export interface IPolicyRule {
     subject: ENUM_POLICY_SUBJECT;

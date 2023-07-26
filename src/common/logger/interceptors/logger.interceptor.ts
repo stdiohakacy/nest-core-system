@@ -8,18 +8,18 @@ import { Observable, tap } from 'rxjs';
 import { Response } from 'express';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces';
 import { Reflector } from '@nestjs/core';
-import { ENUM_REQUEST_METHOD } from '@common/request/constants/request.enum.constant';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
-import { LoggerService } from '@common/logger/services/logger.service';
+import { LoggerService } from '../services/logger.service';
+import { IRequestApp } from '../../../common/request/interfaces/request.interface';
 import {
     ENUM_LOGGER_ACTION,
     ENUM_LOGGER_LEVEL,
-} from '@common/logger/constants/logger.enum.constant';
+} from '../constants/logger.enum.constant';
 import {
     LOGGER_ACTION_META_KEY,
     LOGGER_OPTIONS_META_KEY,
-} from '@common/logger/constants/logger.constant';
-import { ILoggerOptions } from '@common/logger/interfaces/logger.interface';
+} from '../constants/logger.constant';
+import { ILoggerOptions } from '../interfaces/logger.interface';
+import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
 
 @Injectable()
 export class LoggerInterceptor implements NestInterceptor<any> {

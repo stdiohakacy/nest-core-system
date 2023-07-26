@@ -9,23 +9,24 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces';
 import { Response } from 'express';
-import { HelperFileService } from '@common/helper/services/helper.file.service';
 import {
     ClassConstructor,
     ClassTransformOptions,
     plainToInstance,
 } from 'class-transformer';
 import { Reflector } from '@nestjs/core';
-import { IResponseFile } from '@common/response/interfaces/response.interface';
+
+import { WorkBook } from 'xlsx';
+import { HelperFileService } from '../../../common/helper/services/helper.file.service';
+import { HelperDateService } from '../../../common/helper/services/helper.date.service';
+import { ENUM_HELPER_FILE_TYPE } from '../../../common/helper/constants/helper.enum.constant';
 import {
     RESPONSE_FILE_TYPE_META_KEY,
     RESPONSE_SERIALIZATION_META_KEY,
     RESPONSE_SERIALIZATION_OPTIONS_META_KEY,
-} from '@common/response/constants/response.constant';
-import { WorkBook } from 'xlsx';
-import { ENUM_HELPER_FILE_TYPE } from '@common/helper/constants/helper.enum.constant';
-import { ENUM_FILE_EXCEL_MIME } from '@common/file/constants/file.enum.constant';
-import { HelperDateService } from '@common/helper/services/helper.date.service';
+} from '../constants/response.constant';
+import { IResponseFile } from '../interfaces/response.interface';
+import { ENUM_FILE_EXCEL_MIME } from '../../../common/file/constants/file.enum.constant';
 
 @Injectable()
 export class ResponseFileInterceptor implements NestInterceptor<Promise<any>> {

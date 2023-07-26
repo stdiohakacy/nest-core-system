@@ -4,16 +4,12 @@ import {
     DocAuth,
     DocGuard,
     DocResponse,
-} from '@common/doc/decorators/doc.decorator';
+} from '../../../common/doc/decorators/doc.decorator';
 
 export function UserUserDeleteSelfDoc(): MethodDecorator {
     return applyDecorators(
-        Doc({
-            operation: 'modules.user.user',
-        }),
-        DocAuth({
-            jwtAccessToken: true,
-        }),
+        Doc({ operation: 'modules.user.user' }),
+        DocAuth({ jwtAccessToken: true }),
         DocGuard({ role: true }),
         DocResponse('user.deleteSelf')
     );

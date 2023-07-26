@@ -15,33 +15,31 @@ import {
     getSchemaPath,
 } from '@nestjs/swagger';
 import { APP_LANGUAGE } from 'src/app/constants/app.constant';
-import { ENUM_API_KEY_STATUS_CODE_ERROR } from '@common/api-key/constants/api-key.status-code.constant';
-import { ENUM_AUTH_STATUS_CODE_ERROR } from '@common/auth/constants/auth.status-code.constant';
-import { ENUM_DOC_REQUEST_BODY_TYPE } from '@common/doc/constants/doc.enum.constant';
 import {
+    IDocAuthOptions,
+    IDocDefaultOptions,
     IDocGuardOptions,
+    IDocOfOptions,
     IDocOptions,
     IDocRequestFileOptions,
     IDocRequestOptions,
     IDocResponseFileOptions,
-    IDocResponsePagingOptions,
-} from '@common/doc/interfaces/doc.interface';
-import {
-    IDocAuthOptions,
-    IDocDefaultOptions,
-    IDocOfOptions,
     IDocResponseOptions,
-} from '@common/doc/interfaces/doc.interface';
-import { ENUM_ERROR_STATUS_CODE_ERROR } from '@common/error/constants/error.status-code.constant';
-import { ENUM_FILE_EXCEL_MIME } from '@common/file/constants/file.enum.constant';
-import { FileMultipleDto } from '@common/file/dtos/file.multiple.dto';
-import { FileSingleDto } from '@common/file/dtos/file.single.dto';
-import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '@common/pagination/constants/pagination.enum.constant';
-import { ENUM_POLICY_STATUS_CODE_ERROR } from '@common/policy/constants/policy.status-code.constant';
-import { ENUM_REQUEST_STATUS_CODE_ERROR } from '@common/request/constants/request.status-code.constant';
-import { ResponseDefaultSerialization } from '@common/response/serializations/response.default.serialization';
-import { ResponsePagingSerialization } from '@common/response/serializations/response.paging.serialization';
-import { ENUM_ROLE_STATUS_CODE_ERROR } from '@modules/role/constants/role.status-code.constant';
+    IDocResponsePagingOptions,
+} from '../interfaces/doc.interface';
+import { ResponseDefaultSerialization } from '../../../common/response/serializations/response.default.serialization';
+import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/error.status-code.constant';
+import { ENUM_DOC_REQUEST_BODY_TYPE } from '../constants/doc.enum.constant';
+import { ENUM_REQUEST_STATUS_CODE_ERROR } from '../../../common/request/constants/request.status-code.constant';
+import { FileMultipleDto } from '../../../common/file/dtos/file.multiple.dto';
+import { FileSingleDto } from '../../../common/file/dtos/file.single.dto';
+import { ENUM_AUTH_STATUS_CODE_ERROR } from '../../../common/auth/constants/auth.status-code.constant';
+import { ENUM_API_KEY_STATUS_CODE_ERROR } from '../../../common/api-key/constants/api-key.status-code.constant';
+import { ENUM_FILE_EXCEL_MIME } from '../../../common/file/constants/file.enum.constant';
+import { ENUM_ROLE_STATUS_CODE_ERROR } from '../../../modules/role/constants/role.status-code.constant';
+import { ENUM_POLICY_STATUS_CODE_ERROR } from '../../../common/policy/constants/policy.status-code.constant';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../../common/pagination/constants/pagination.enum.constant';
+import { ResponsePagingSerialization } from '../../../common/response/serializations/response.paging.serialization';
 
 export function DocDefault<T>(options: IDocDefaultOptions): MethodDecorator {
     const docs = [];

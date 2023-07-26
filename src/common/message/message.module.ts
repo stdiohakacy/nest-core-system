@@ -4,7 +4,7 @@ import { I18nModule, HeaderResolver, I18nJsonLoader } from 'nestjs-i18n';
 import { ConfigService } from '@nestjs/config';
 import { MessageService } from './services/message.service';
 import { ENUM_MESSAGE_LANGUAGE } from './constants/message.enum.constant';
-import { MessageMiddlewareModule } from '@common/message/middleware/message.middleware.module';
+import { MessageMiddlewareModule } from './middleware/message.middleware.module';
 
 @Global()
 @Module({

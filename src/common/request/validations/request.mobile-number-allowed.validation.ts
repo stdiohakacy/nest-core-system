@@ -5,7 +5,7 @@ import {
     ValidatorConstraint,
     ValidatorConstraintInterface,
 } from 'class-validator';
-import { SettingService } from '@common/setting/services/setting.service';
+import { SettingService } from '../../../common/setting/services/setting.service';
 
 @ValidatorConstraint({ async: true })
 @Injectable()

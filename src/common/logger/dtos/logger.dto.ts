@@ -1,5 +1,4 @@
-import { BaseDTO } from '@common/base/dto/base.dto';
-import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
+import { BaseDTO } from '../../base/dto/base.dto';
 import {
     ENUM_LOGGER_ACTION,
     ENUM_LOGGER_LEVEL,
@@ -14,8 +13,9 @@ import {
     IsString,
     IsUUID,
 } from 'class-validator';
-import { ENUM_REQUEST_METHOD } from '@common/request/constants/request.enum.constant';
 import { faker } from '@faker-js/faker';
+import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
+import { ENUM_ROLE_TYPE } from '../../../modules/role/constants/role.enum.constant';
 
 export class LoggerDTO extends BaseDTO {
     @ApiProperty({

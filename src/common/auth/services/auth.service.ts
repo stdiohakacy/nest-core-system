@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { IAuthService } from '../interfaces/auth.service.interface';
+import { HelperHashService } from '../../../common/helper/services/helper.hash.service';
+import { HelperDateService } from '../../../common/helper/services/helper.date.service';
+import { HelperStringService } from '../../../common/helper/services/helper.string.service';
+import { HelperEncryptionService } from '../../../common/helper/services/helper.encryption.service';
 import {
     IAuthPassword,
     IAuthPayloadOptions,
     IAuthRefreshTokenOptions,
-} from '@common/auth/interfaces/auth.interface';
-import { IAuthService } from '@common/auth/interfaces/auth.service.interface';
-import { HelperDateService } from '@common/helper/services/helper.date.service';
-import { HelperEncryptionService } from '@common/helper/services/helper.encryption.service';
-import { HelperHashService } from '@common/helper/services/helper.hash.service';
-import { HelperStringService } from '@common/helper/services/helper.string.service';
+} from '../interfaces/auth.interface';
 
 @Injectable()
 export class AuthService implements IAuthService {

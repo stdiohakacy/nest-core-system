@@ -1,7 +1,7 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { instanceToPlain } from 'class-transformer';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
-import { SettingEntity } from '@modules/setting/entities/setting.entity';
+import { IRequestApp } from '../../../common/request/interfaces/request.interface';
+import { SettingEntity } from '../../../modules/setting/entities/setting.entity';
 
 export const GetSetting = createParamDecorator(
     (returnPlain: boolean, ctx: ExecutionContext): any | SettingEntity => {

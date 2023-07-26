@@ -1,5 +1,5 @@
-import { DashboardDto } from '@common/dashboard/dtos/dashboard';
-import { IDashboardStartAndEndDate } from '@common/dashboard/interfaces/dashboard.interface';
+import { DashboardDto } from '../dtos/dashboard';
+import { IDashboardStartAndEndDate } from './dashboard.interface';
 
 export interface IDashboardService {
     getStartAndEndDate(date?: DashboardDto): IDashboardStartAndEndDate;

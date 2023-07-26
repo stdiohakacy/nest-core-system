@@ -1,19 +1,19 @@
 import { Query } from '@nestjs/common';
-import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '@common/pagination/constants/pagination.enum.constant';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../constants/pagination.enum.constant';
+import { PaginationSearchPipe } from '../pipes/pagination.search.pipe';
+import { PaginationPagingPipe } from '../pipes/pagination.paging.pipe';
+import { PaginationOrderPipe } from '../pipes/pagination.order.pipe';
+import { PaginationFilterInBooleanPipe } from '../pipes/pagination.filter-in-boolean.pipe';
+import { PaginationFilterInEnumPipe } from '../pipes/pagination.filter-in-enum.pipe';
 import {
     IPaginationFilterDateOptions,
     IPaginationFilterStringContainOptions,
     IPaginationFilterStringEqualOptions,
-} from '@common/pagination/interfaces/pagination.interface';
-import { PaginationFilterContainPipe } from '@common/pagination/pipes/pagination.filter-contain.pipe';
-import { PaginationFilterDatePipe } from '@common/pagination/pipes/pagination.filter-date.pipe';
-import { PaginationFilterEqualObjectIdPipe } from '@common/pagination/pipes/pagination.filter-equal-object-id.pipe';
-import { PaginationFilterEqualPipe } from '@common/pagination/pipes/pagination.filter-equal.pipe';
-import { PaginationFilterInBooleanPipe } from '@common/pagination/pipes/pagination.filter-in-boolean.pipe';
-import { PaginationFilterInEnumPipe } from '@common/pagination/pipes/pagination.filter-in-enum.pipe';
-import { PaginationOrderPipe } from '@common/pagination/pipes/pagination.order.pipe';
-import { PaginationPagingPipe } from '@common/pagination/pipes/pagination.paging.pipe';
-import { PaginationSearchPipe } from '@common/pagination/pipes/pagination.search.pipe';
+} from '../interfaces/pagination.interface';
+import { PaginationFilterEqualPipe } from '../pipes/pagination.filter-equal.pipe';
+import { PaginationFilterContainPipe } from '../pipes/pagination.filter-contain.pipe';
+import { PaginationFilterDatePipe } from '../pipes/pagination.filter-date.pipe';
+import { PaginationFilterEqualObjectIdPipe } from '../pipes/pagination.filter-equal-object-id.pipe';
 
 export function PaginationQuery(
     defaultPerPage: number,

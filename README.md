@@ -548,7 +548,7 @@ If your code behind commit with the original, please update your code and resolv
 -   Always make `service` for every module is independently.
 -   Do not put `controller` into service modules, cause this will break the dependency. Only put the controller into `router` and then inject the dependency.
 -   Put the config in `/configs` folder, and for dynamic config put as `environment variable`
--   `CommonModule` only for main package, and put the module that related of service/project into `/src/modules`. So, if we want to clear the unnecessary module, we just need to delete the `src/modules/**`
+-   `CommonModule` only for main package, and put the module that related of service/project into `/../../../modules`. So, if we want to clear the unnecessary module, we just need to delete the `../../../modules/**`
 -   If there a new service in CommonModule. Make sure to create the unit test in `/unit`.
 
 ## Contact

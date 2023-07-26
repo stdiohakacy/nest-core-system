@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { HelperNumberService } from '@common/helper/services/helper.number.service';
-import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
-import { ENUM_SETTING_DATA_TYPE } from '@common/setting/constants/setting.enum.constant';
-import { SettingCreateDTO } from '@common/setting/dtos/setting.create.dto';
-import { SettingUpdateValueDTO } from '@common/setting/dtos/setting.update-value.dto';
-import { ISettingService } from '@common/setting/interfaces/setting.service.interface';
-import { SettingEntity } from '@modules/setting/entities/setting.entity';
 import { Repository, UpdateResult } from 'typeorm';
+import { ISettingService } from '../interfaces/setting.service.interface';
+import { SettingEntity } from '../../../modules/setting/entities/setting.entity';
+import { HelperNumberService } from '../../../common/helper/services/helper.number.service';
+import { SettingCreateDTO } from '../dtos/setting.create.dto';
+import { SettingUpdateValueDTO } from '../dtos/setting.update-value.dto';
+import { ENUM_SETTING_DATA_TYPE } from '../constants/setting.enum.constant';
+import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
 
 @Injectable()
 export class SettingService implements ISettingService {

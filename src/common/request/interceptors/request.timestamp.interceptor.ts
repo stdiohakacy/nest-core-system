@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Observable } from 'rxjs';
-import { HelperDateService } from '@common/helper/services/helper.date.service';
-import { ENUM_REQUEST_STATUS_CODE_ERROR } from '@common/request/constants/request.status-code.constant';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
+import { HelperDateService } from '../../../common/helper/services/helper.date.service';
+import { IRequestApp } from '../interfaces/request.interface';
+import { ENUM_REQUEST_STATUS_CODE_ERROR } from '../constants/request.status-code.constant';
 
 @Injectable()
 export class RequestTimestampInterceptor

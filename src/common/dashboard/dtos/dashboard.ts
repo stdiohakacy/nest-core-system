@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsDate, IsOptional, ValidateIf } from 'class-validator';
-import { MinGreaterThan } from '@common/request/validations/request.min-greater-than.validation';
+import { MinGreaterThan } from '../../../common/request/validations/request.min-greater-than.validation';
 
 export class DashboardDto {
     @ApiProperty({

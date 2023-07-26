@@ -5,15 +5,15 @@ import {
     Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { POLICY_RULE_META_KEY } from '@common/policy/constants/policy.constant';
-import { ENUM_POLICY_STATUS_CODE_ERROR } from '@common/policy/constants/policy.status-code.constant';
-import { PolicyAbilityFactory } from '@common/policy/factories/policy.ability.factory';
+import { PolicyAbilityFactory } from '../factories/policy.ability.factory';
 import {
     IPolicyAbility,
     IPolicyRule,
     PolicyHandler,
-} from '@common/policy/interfaces/policy.interface';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
+} from '../interfaces/policy.interface';
+import { POLICY_RULE_META_KEY } from '../constants/policy.constant';
+import { IRequestApp } from '../../../common/request/interfaces/request.interface';
+import { ENUM_POLICY_STATUS_CODE_ERROR } from '../constants/policy.status-code.constant';
 
 @Injectable()
 export class PolicyGuard implements CanActivate {

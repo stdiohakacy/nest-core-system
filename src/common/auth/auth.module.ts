@@ -1,9 +1,9 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
-import { AuthGoogleOAuth2LoginStrategy } from '@common/auth/guards/google-oauth2/auth.google-oauth2-login.strategy';
-import { AuthGoogleOAuth2SignUpStrategy } from '@common/auth/guards/google-oauth2/auth.google-oauth2-sign-up.strategy';
-import { AuthJwtAccessStrategy } from '@common/auth/guards/jwt-access/auth.jwt-access.strategy';
-import { AuthJwtRefreshStrategy } from '@common/auth/guards/jwt-refresh/auth.jwt-refresh.strategy';
-import { AuthService } from '@common/auth/services/auth.service';
+import { AuthService } from './services/auth.service';
+import { AuthJwtAccessStrategy } from './guards/jwt-access/auth.jwt-access.strategy';
+import { AuthJwtRefreshStrategy } from './guards/jwt-refresh/auth.jwt-refresh.strategy';
+import { AuthGoogleOAuth2LoginStrategy } from './guards/google-oauth2/auth.google-oauth2-login.strategy';
+import { AuthGoogleOAuth2SignUpStrategy } from './guards/google-oauth2/auth.google-oauth2-sign-up.strategy';
 
 @Module({
     providers: [AuthService],

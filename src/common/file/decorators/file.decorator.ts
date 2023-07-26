@@ -6,13 +6,13 @@ import {
     UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { FileCustomMaxFilesInterceptor } from '../interceptors/file.custom-max-files.interceptor';
 import {
     FILE_CUSTOM_MAX_FILES_META_KEY,
     FILE_CUSTOM_MAX_SIZE_META_KEY,
-} from '@common/file/constants/file.constant';
-import { FileCustomMaxFilesInterceptor } from '@common/file/interceptors/file.custom-max-files.interceptor';
-import { FileCustomMaxSizeInterceptor } from '@common/file/interceptors/file.custom-max-size.interceptor';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
+} from '../constants/file.constant';
+import { FileCustomMaxSizeInterceptor } from '../interceptors/file.custom-max-size.interceptor';
+import { IRequestApp } from '../../../common/request/interfaces/request.interface';
 
 export function UploadFileSingle(field: string): MethodDecorator {
     return applyDecorators(UseInterceptors(FileInterceptor(field)));

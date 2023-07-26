@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core';
 import {
     ERROR_CLASS_META_KEY,
     ERROR_FUNCTION_META_KEY,
-} from '@common/error/constants/error.constant';
+} from '../constants/error.constant';
 
 @Injectable()
 export class ErrorMetaGuard implements CanActivate {

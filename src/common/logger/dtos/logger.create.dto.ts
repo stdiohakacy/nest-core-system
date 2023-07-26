@@ -1,9 +1,9 @@
+import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
 import {
     ENUM_LOGGER_ACTION,
     ENUM_LOGGER_LEVEL,
-} from '@common/logger/constants/logger.enum.constant';
-import { ENUM_REQUEST_METHOD } from '@common/request/constants/request.enum.constant';
-import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
+} from '../constants/logger.enum.constant';
+import { ENUM_ROLE_TYPE } from '../../../modules/role/constants/role.enum.constant';
 
 export class LoggerCreateDTO {
     action: ENUM_LOGGER_ACTION;

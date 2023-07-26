@@ -5,13 +5,11 @@ import {
     DocAuth,
     DocGuard,
     DocResponse,
-} from '@common/doc/decorators/doc.decorator';
+} from '../../common/doc/decorators/doc.decorator';
 
 export function AppHelloDoc(): MethodDecorator {
     return applyDecorators(
-        Doc({
-            operation: 'hello',
-        }),
+        Doc({ operation: 'hello' }),
         DocResponse<AppHelloSerialization>('app.hello', {
             serialization: AppHelloSerialization,
         })
@@ -20,9 +18,7 @@ export function AppHelloDoc(): MethodDecorator {
 
 export function AppHelloApiKeyDoc(): MethodDecorator {
     return applyDecorators(
-        Doc({
-            operation: 'hello',
-        }),
+        Doc({ operation: 'hello' }),
         DocAuth({ apiKey: true }),
         DocGuard({ timestamp: true, userAgent: true }),
         DocResponse<AppHelloSerialization>('app.helloApiKey', {

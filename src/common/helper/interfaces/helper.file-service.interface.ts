@@ -1,10 +1,10 @@
+import { WorkBook } from 'xlsx';
 import {
-    IHelperFileWriteExcelOptions,
+    IHelperFileCreateExcelWorkbookOptions,
     IHelperFileReadExcelOptions,
     IHelperFileRows,
-    IHelperFileCreateExcelWorkbookOptions,
-} from '@common/helper/interfaces/helper.interface';
-import { WorkBook } from 'xlsx';
+    IHelperFileWriteExcelOptions,
+} from './helper.interface';
 
 export interface IHelperFileService {
     createExcelWorkbook(

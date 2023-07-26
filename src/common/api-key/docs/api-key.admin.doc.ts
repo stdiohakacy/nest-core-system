@@ -1,36 +1,32 @@
 import { applyDecorators, HttpStatus } from '@nestjs/common';
 import {
-    ApiKeyDocParamsId,
-    ApiKeyDocQueryIsActive,
-} from '@common/api-key/constants/api-key.doc.constant';
-import { ENUM_API_KEY_STATUS_CODE_ERROR } from '@common/api-key/constants/api-key.status-code.constant';
-import { ApiKeyCreateSerialization } from '@common/api-key/serializations/api-key.create.serialization';
-import { ApiKeyGetSerialization } from '@common/api-key/serializations/api-key.get.serialization';
-import { ApiKeyListSerialization } from '@common/api-key/serializations/api-key.list.serialization';
-import { ApiKeyResetSerialization } from '@common/api-key/serializations/api-key.reset.serialization';
-import { ENUM_DOC_REQUEST_BODY_TYPE } from '@common/doc/constants/doc.enum.constant';
-import {
     Doc,
     DocAuth,
     DocDefault,
     DocErrorGroup,
+    DocGuard,
     DocOneOf,
     DocRequest,
-    DocGuard,
     DocResponse,
     DocResponsePaging,
-} from '@common/doc/decorators/doc.decorator';
-import { ResponseIdSerialization } from '@common/response/serializations/response.id.serialization';
+} from '../../../common/doc/decorators/doc.decorator';
+import {
+    ApiKeyDocParamsId,
+    ApiKeyDocQueryIsActive,
+} from '../constants/api-key.doc.constant';
+import { ApiKeyListSerialization } from '../serializations/api-key.list.serialization';
+import { ApiKeyGetSerialization } from '../serializations/api-key.get.serialization';
+import { ENUM_API_KEY_STATUS_CODE_ERROR } from '../constants/api-key.status-code.constant';
+import { ENUM_DOC_REQUEST_BODY_TYPE } from '../../../common/doc/constants/doc.enum.constant';
+import { ApiKeyCreateSerialization } from '../serializations/api-key.create.serialization';
+import { ApiKeyResetSerialization } from '../serializations/api-key.reset.serialization';
+import { ResponseIdSerialization } from '../../../common/response/serializations/response.id.serialization';
 
 export function ApiKeyAdminListDoc(): MethodDecorator {
     return applyDecorators(
         Doc({ operation: 'common.admin.apiKey' }),
-        DocRequest({
-            queries: ApiKeyDocQueryIsActive,
-        }),
-        DocAuth({
-            jwtAccessToken: true,
-        }),
+        DocRequest({ queries: ApiKeyDocQueryIsActive }),
+        DocAuth({ jwtAccessToken: true }),
         DocGuard({ role: true, policy: true }),
         DocResponsePaging<ApiKeyListSerialization>('apiKey.list', {
             serialization: ApiKeyListSerialization,
@@ -41,12 +37,8 @@ export function ApiKeyAdminListDoc(): MethodDecorator {
 export function ApiKeyAdminGetDoc(): MethodDecorator {
     return applyDecorators(
         Doc({ operation: 'common.admin.apiKey' }),
-        DocRequest({
-            params: ApiKeyDocParamsId,
-        }),
-        DocAuth({
-            jwtAccessToken: true,
-        }),
+        DocRequest({ params: ApiKeyDocParamsId }),
+        DocAuth({ jwtAccessToken: true }),
         DocResponse<ApiKeyGetSerialization>('apiKey.get', {
             serialization: ApiKeyGetSerialization,
         }),
@@ -65,9 +57,7 @@ export function ApiKeyAdminGetDoc(): MethodDecorator {
 export function ApiKeyAdminCreateDoc(): MethodDecorator {
     return applyDecorators(
         Doc({ operation: 'common.admin.apiKey' }),
-        DocAuth({
-            jwtAccessToken: true,
-        }),
+        DocAuth({ jwtAccessToken: true }),
         DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
         DocGuard({ role: true, policy: true }),
         DocResponse<ApiKeyCreateSerialization>('apiKey.create', {
@@ -80,12 +70,8 @@ export function ApiKeyAdminCreateDoc(): MethodDecorator {
 export function ApiKeyAdminActiveDoc(): MethodDecorator {
     return applyDecorators(
         Doc({ operation: 'common.admin.apiKey' }),
-        DocRequest({
-            params: ApiKeyDocParamsId,
-        }),
-        DocAuth({
-            jwtAccessToken: true,
-        }),
+        DocRequest({ params: ApiKeyDocParamsId }),
+        DocAuth({ jwtAccessToken: true }),
         DocResponse('apiKey.active'),
         DocGuard({ role: true, policy: true }),
         DocErrorGroup([
@@ -115,12 +101,8 @@ export function ApiKeyAdminActiveDoc(): MethodDecorator {
 export function ApiKeyAdminInactiveDoc(): MethodDecorator {
     return applyDecorators(
         Doc({ operation: 'common.admin.apiKey' }),
-        DocRequest({
-            params: ApiKeyDocParamsId,
-        }),
-        DocAuth({
-            jwtAccessToken: true,
-        }),
+        DocRequest({ params: ApiKeyDocParamsId }),
+        DocAuth({ jwtAccessToken: true }),
         DocResponse('apiKey.inactive'),
         DocGuard({ role: true, policy: true }),
         DocErrorGroup([
@@ -150,12 +132,8 @@ export function ApiKeyAdminInactiveDoc(): MethodDecorator {
 export function ApiKeyAdminResetDoc(): MethodDecorator {
     return applyDecorators(
         Doc({ operation: 'common.admin.apiKey' }),
-        DocRequest({
-            params: ApiKeyDocParamsId,
-        }),
-        DocAuth({
-            jwtAccessToken: true,
-        }),
+        DocRequest({ params: ApiKeyDocParamsId }),
+        DocAuth({ jwtAccessToken: true }),
         DocGuard({ role: true, policy: true }),
         DocResponse<ApiKeyResetSerialization>('apiKey.reset', {
             serialization: ApiKeyResetSerialization,
@@ -191,9 +169,7 @@ export function ApiKeyAdminUpdateDoc(): MethodDecorator {
             params: ApiKeyDocParamsId,
             bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON,
         }),
-        DocAuth({
-            jwtAccessToken: true,
-        }),
+        DocAuth({ jwtAccessToken: true }),
         DocGuard({ role: true, policy: true }),
         DocResponse<ResponseIdSerialization>('apiKey.update', {
             serialization: ResponseIdSerialization,
@@ -225,12 +201,8 @@ export function ApiKeyAdminUpdateDoc(): MethodDecorator {
 export function ApiKeyAdminDeleteDoc(): MethodDecorator {
     return applyDecorators(
         Doc({ operation: 'common.admin.apiKey' }),
-        DocRequest({
-            params: ApiKeyDocParamsId,
-        }),
-        DocAuth({
-            jwtAccessToken: true,
-        }),
+        DocRequest({ params: ApiKeyDocParamsId }),
+        DocAuth({ jwtAccessToken: true }),
         DocGuard({ role: true, policy: true }),
         DocResponse('apiKey.delete')
     );

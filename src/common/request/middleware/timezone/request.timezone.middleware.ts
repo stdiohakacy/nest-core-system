@@ -1,6 +1,6 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Response, NextFunction } from 'express';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
+import { IRequestApp } from '../../interfaces/request.interface';
 
 @Injectable()
 export class RequestTimezoneMiddleware implements NestMiddleware {

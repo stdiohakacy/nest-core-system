@@ -3,14 +3,14 @@ import {
     Injectable,
     UnsupportedMediaTypeException,
 } from '@nestjs/common';
+import { IFile } from '../interfaces/file.interface';
 import {
     ENUM_FILE_AUDIO_MIME,
     ENUM_FILE_EXCEL_MIME,
     ENUM_FILE_IMAGE_MIME,
     ENUM_FILE_VIDEO_MIME,
-} from '@common/file/constants/file.enum.constant';
-import { ENUM_FILE_STATUS_CODE_ERROR } from '@common/file/constants/file.status-code.constant';
-import { IFile } from '@common/file/interfaces/file.interface';
+} from '../constants/file.enum.constant';
+import { ENUM_FILE_STATUS_CODE_ERROR } from '../constants/file.status-code.constant';
 
 @Injectable()
 export class FileTypeImagePipe implements PipeTransform {

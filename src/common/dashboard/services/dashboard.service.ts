@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { DashboardDto } from '@common/dashboard/dtos/dashboard';
-import { IDashboardStartAndEndDate } from '@common/dashboard/interfaces/dashboard.interface';
-import { IDashboardService } from '@common/dashboard/interfaces/dashboard.service.interface';
-import { HelperDateService } from '@common/helper/services/helper.date.service';
-import { HelperNumberService } from '@common/helper/services/helper.number.service';
+import { IDashboardService } from '../interfaces/dashboard.service.interface';
+import { HelperDateService } from '../../../common/helper/services/helper.date.service';
+import { HelperNumberService } from '../../../common/helper/services/helper.number.service';
+import { DashboardDto } from '../dtos/dashboard';
+import { IDashboardStartAndEndDate } from '../interfaces/dashboard.interface';
 
 @Injectable()
 export class DashboardService implements IDashboardService {

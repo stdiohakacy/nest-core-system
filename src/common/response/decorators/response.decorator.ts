@@ -4,21 +4,21 @@ import {
     SetMetadata,
     UseInterceptors,
 } from '@nestjs/common';
-import { ENUM_HELPER_FILE_TYPE } from '@common/helper/constants/helper.enum.constant';
+import {
+    IResponseFileOptions,
+    IResponseOptions,
+    IResponsePagingOptions,
+} from '../interfaces/response.interface';
+import { ResponseDefaultInterceptor } from '../interceptors/response.default.interceptor';
 import {
     RESPONSE_FILE_TYPE_META_KEY,
     RESPONSE_MESSAGE_PATH_META_KEY,
     RESPONSE_MESSAGE_PROPERTIES_META_KEY,
     RESPONSE_SERIALIZATION_META_KEY,
-} from '@common/response/constants/response.constant';
-import { ResponseDefaultInterceptor } from '@common/response/interceptors/response.default.interceptor';
-import { ResponseFileInterceptor } from '@common/response/interceptors/response.file.interceptor';
-import { ResponsePagingInterceptor } from '@common/response/interceptors/response.paging.interceptor';
-import {
-    IResponseOptions,
-    IResponsePagingOptions,
-    IResponseFileOptions,
-} from '@common/response/interfaces/response.interface';
+} from '../constants/response.constant';
+import { ResponseFileInterceptor } from '../interceptors/response.file.interceptor';
+import { ENUM_HELPER_FILE_TYPE } from '../../../common/helper/constants/helper.enum.constant';
+import { ResponsePagingInterceptor } from '../interceptors/response.paging.interceptor';
 
 export function Response<T>(
     messagePath: string,

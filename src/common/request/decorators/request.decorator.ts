@@ -7,16 +7,16 @@ import {
     UseInterceptors,
 } from '@nestjs/common';
 import { ClassConstructor } from 'class-transformer';
+import { IResult } from 'ua-parser-js';
+import { IRequestApp } from '../interfaces/request.interface';
+import { RequestParamRawGuard } from '../guards/request.param.guard';
 import {
     REQUEST_CUSTOM_TIMEOUT_META_KEY,
     REQUEST_CUSTOM_TIMEOUT_VALUE_META_KEY,
     REQUEST_PARAM_CLASS_DTOS_META_KEY,
-} from '@common/request/constants/request.constant';
-import { RequestParamRawGuard } from '@common/request/guards/request.param.guard';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
-import { IResult } from 'ua-parser-js';
-import { RequestTimestampInterceptor } from '@common/request/interceptors/request.timestamp.interceptor';
-import { RequestUserAgentInterceptor } from '@common/request/interceptors/request.user-agent.interceptor';
+} from '../constants/request.constant';
+import { RequestUserAgentInterceptor } from '../interceptors/request.user-agent.interceptor';
+import { RequestTimestampInterceptor } from '../interceptors/request.timestamp.interceptor';
 
 export const RequestUserAgent: () => ParameterDecorator = createParamDecorator(
     (data: string, ctx: ExecutionContext): IResult => {

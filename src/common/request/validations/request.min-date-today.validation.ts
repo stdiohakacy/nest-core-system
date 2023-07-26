@@ -5,7 +5,7 @@ import {
     ValidatorConstraint,
     ValidatorConstraintInterface,
 } from 'class-validator';
-import { HelperDateService } from '@common/helper/services/helper.date.service';
+import { HelperDateService } from '../../../common/helper/services/helper.date.service';
 
 @ValidatorConstraint({ async: true })
 @Injectable()

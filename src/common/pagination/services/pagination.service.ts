@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { IPaginationService } from '../interfaces/pagination.service.interface';
 import {
     PAGINATION_AVAILABLE_ORDER_BY,
     PAGINATION_MAX_PAGE,
@@ -7,9 +8,8 @@ import {
     PAGINATION_ORDER_DIRECTION,
     PAGINATION_PAGE,
     PAGINATION_PER_PAGE,
-} from '@common/pagination/constants/pagination.constant';
-import { IPaginationOrder } from '@common/pagination/interfaces/pagination.interface';
-import { IPaginationService } from '@common/pagination/interfaces/pagination.service.interface';
+} from '../constants/pagination.constant';
+import { IPaginationOrder } from '../interfaces/pagination.interface';
 
 @Injectable()
 export class PaginationService implements IPaginationService {

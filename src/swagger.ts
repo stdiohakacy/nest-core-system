@@ -3,15 +3,15 @@ import { ConfigService } from '@nestjs/config';
 import { NestApplication } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ENUM_APP_ENVIRONMENT } from 'src/app/constants/app.enum.constant';
+import { SwaggerTheme } from 'swagger-themes';
+import { writeFileSync } from 'fs';
+import { ResponseDefaultSerialization } from './common/response/serializations/response.default.serialization';
+import { ResponsePagingSerialization } from './common/response/serializations/response.paging.serialization';
 import {
     AwsS3MultipartPartsSerialization,
     AwsS3MultipartSerialization,
-} from '@common/aws/serializations/aws.s3-multipart.serialization';
-import { AwsS3Serialization } from '@common/aws/serializations/aws.s3.serialization';
-import { ResponseDefaultSerialization } from '@common/response/serializations/response.default.serialization';
-import { ResponsePagingSerialization } from '@common/response/serializations/response.paging.serialization';
-import { SwaggerTheme } from 'swagger-themes';
-import { writeFileSync } from 'fs';
+} from './common/aws/serializations/aws.s3-multipart.serialization';
+import { AwsS3Serialization } from './common/aws/serializations/aws.s3.serialization';
 
 export default async function (app: NestApplication) {
     const configService = app.get(ConfigService);

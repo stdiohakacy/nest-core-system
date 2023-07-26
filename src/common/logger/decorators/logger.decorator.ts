@@ -1,11 +1,11 @@
 import { applyDecorators, SetMetadata, UseInterceptors } from '@nestjs/common';
+import { ENUM_LOGGER_ACTION } from '../constants/logger.enum.constant';
+import { ILoggerOptions } from '../interfaces/logger.interface';
+import { LoggerInterceptor } from '../interceptors/logger.interceptor';
 import {
     LOGGER_ACTION_META_KEY,
     LOGGER_OPTIONS_META_KEY,
-} from '@common/logger/constants/logger.constant';
-import { ENUM_LOGGER_ACTION } from '@common/logger/constants/logger.enum.constant';
-import { LoggerInterceptor } from '@common/logger/interceptors/logger.interceptor';
-import { ILoggerOptions } from '@common/logger/interfaces/logger.interface';
+} from '../constants/logger.constant';
 
 export function Logger(
     action: ENUM_LOGGER_ACTION,

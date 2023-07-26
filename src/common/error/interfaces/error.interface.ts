@@ -1,7 +1,7 @@
 import { ValidationError } from 'class-validator';
-import { ERROR_TYPE } from '@common/error/constants/error.enum.constant';
-import { IMessage } from '@common/message/interfaces/message.interface';
-import { IResponseCustomPropertyMetadata } from '@common/response/interfaces/response.interface';
+import { IMessage } from '../../../common/message/interfaces/message.interface';
+import { IResponseCustomPropertyMetadata } from '../../../common/response/interfaces/response.interface';
+import { ERROR_TYPE } from '../constants/error.enum.constant';
 
 // error default
 export interface IErrors {

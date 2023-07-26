@@ -1,13 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ENUM_LOGGER_LEVEL } from '@common/logger/constants/logger.enum.constant';
-import {
-    LoggerCreateDTO,
-    LoggerCreateRawDTO,
-} from '@common/logger/dtos/logger.create.dto';
-import { ILoggerService } from '@common/logger/interfaces/logger.service.interface';
-import { LoggerEntity } from '@modules/logger/entities/logger.entity';
 import { Repository } from 'typeorm';
+import { ILoggerService } from '../interfaces/logger.service.interface';
+import { LoggerEntity } from '../../../modules/logger/entities/logger.entity';
+import { LoggerCreateDTO, LoggerCreateRawDTO } from '../dtos/logger.create.dto';
+import { ENUM_LOGGER_LEVEL } from '../constants/logger.enum.constant';
 
 @Injectable()
 export class LoggerService implements ILoggerService {

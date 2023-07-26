@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
 import { RoleEntity } from '../entities/role.entity';
 import { RoleService } from '../services/role.service';
+import { IRequestApp } from '../../../common/request/interfaces/request.interface';
 
 @Injectable()
 export class RolePutToRequestGuard implements CanActivate {

@@ -1,9 +1,9 @@
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
-import { API_KEY_ACTIVE_META_KEY } from '@common/api-key/constants/api-key.constant';
-import { ApiKeyActiveGuard } from '@common/api-key/guards/api-key.active.guard';
-import { ApiKeyExpiredGuard } from '@common/api-key/guards/api-key.expired.guard';
-import { ApiKeyNotFoundGuard } from '@common/api-key/guards/api-key.not-found.guard';
-import { ApiKeyPutToRequestGuard } from '@common/api-key/guards/api-key.put-to-request.guard';
+import { ApiKeyPutToRequestGuard } from '../guards/api-key.put-to-request.guard';
+import { ApiKeyNotFoundGuard } from '../guards/api-key.not-found.guard';
+import { ApiKeyActiveGuard } from '../guards/api-key.active.guard';
+import { ApiKeyExpiredGuard } from '../guards/api-key.expired.guard';
+import { API_KEY_ACTIVE_META_KEY } from '../constants/api-key.constant';
 
 export function ApiKeyAdminGetGuard(): MethodDecorator {
     return applyDecorators(

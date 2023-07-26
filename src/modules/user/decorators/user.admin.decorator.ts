@@ -1,15 +1,15 @@
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
+import { UserPutToRequestGuard } from '../guards/user.put-to-request.guard';
+import { UserNotFoundGuard } from '../guards/user.not-found.guard';
+import { UserCanNotOurSelfGuard } from '../guards/user.can-not-ourself.guard';
+import { UserBlockedGuard } from '../guards/user.blocked.guard';
+import { UserInactivePermanentGuard } from '../guards/user.inactive-permanent.guard';
+import { UserActiveGuard } from '../guards/user.active.guard';
 import {
     USER_ACTIVE_META_KEY,
     USER_BLOCKED_META_KEY,
     USER_INACTIVE_PERMANENT_META_KEY,
-} from '@modules/user/constants/user.constant';
-import { UserActiveGuard } from '@modules/user/guards/user.active.guard';
-import { UserBlockedGuard } from '@modules/user/guards/user.blocked.guard';
-import { UserCanNotOurSelfGuard } from '@modules/user/guards/user.can-not-ourself.guard';
-import { UserInactivePermanentGuard } from '@modules/user/guards/user.inactive-permanent.guard';
-import { UserNotFoundGuard } from '@modules/user/guards/user.not-found.guard';
-import { UserPutToRequestGuard } from '@modules/user/guards/user.put-to-request.guard';
+} from '../constants/user.constant';
 
 export function UserAdminGetGuard(): MethodDecorator {
     return applyDecorators(UseGuards(UserPutToRequestGuard, UserNotFoundGuard));

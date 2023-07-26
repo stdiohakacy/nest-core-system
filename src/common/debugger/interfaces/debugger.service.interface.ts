@@ -1,4 +1,4 @@
-import { IDebuggerLog } from '@common/debugger/interfaces/debugger.interface';
+import { IDebuggerLog } from './debugger.interface';
 
 export interface IDebuggerService {
     info(requestId: string, log: IDebuggerLog, data?: any): void;

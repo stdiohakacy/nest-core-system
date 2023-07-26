@@ -1,14 +1,11 @@
 import { Controller, Delete } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthJwtUserAccessProtected } from '@common/auth/decorators/auth.jwt.decorator';
-import { Response } from '@common/response/decorators/response.decorator';
-import {
-    GetUser,
-    UserProtected,
-} from '@modules/user/decorators/user.decorator';
-import { UserUserDeleteSelfDoc } from '@modules/user/docs/user.user.doc';
-import { UserService } from '@modules/user/services/user.service';
 import { UserEntity } from '../entities/user.entity';
+import { UserUserDeleteSelfDoc } from '../docs/user.user.doc';
+import { UserService } from '../services/user.service';
+import { Response } from '../../../common/response/decorators/response.decorator';
+import { GetUser, UserProtected } from '../decorators/user.decorator';
+import { AuthJwtUserAccessProtected } from '../../../common/auth/decorators/auth.jwt.decorator';
 
 @ApiTags('modules.user.user')
 @Controller({

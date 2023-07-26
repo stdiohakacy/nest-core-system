@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import bytes from 'bytes';
-import { ENUM_HELPER_FILE_TYPE } from '@common/helper/constants/helper.enum.constant';
-import { IHelperFileService } from '@common/helper/interfaces/helper.file-service.interface';
-import {
-    IHelperFileWriteExcelOptions,
-    IHelperFileReadExcelOptions,
-    IHelperFileRows,
-    IHelperFileCreateExcelWorkbookOptions,
-} from '@common/helper/interfaces/helper.interface';
 import { utils, write, read, WorkBook } from 'xlsx';
 import { writeFileSync, readFileSync } from 'fs';
+import { IHelperFileService } from '../interfaces/helper.file-service.interface';
+import {
+    IHelperFileCreateExcelWorkbookOptions,
+    IHelperFileReadExcelOptions,
+    IHelperFileRows,
+    IHelperFileWriteExcelOptions,
+} from '../interfaces/helper.interface';
+import { ENUM_HELPER_FILE_TYPE } from '../constants/helper.enum.constant';
 
 @Injectable()
 export class HelperFileService implements IHelperFileService {

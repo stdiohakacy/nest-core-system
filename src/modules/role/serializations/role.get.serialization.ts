@@ -4,9 +4,9 @@ import { Exclude, Type } from 'class-transformer';
 import {
     ENUM_POLICY_ACTION,
     ENUM_POLICY_SUBJECT,
-} from '@common/policy/constants/policy.enum.constant';
-import { ResponseIdSerialization } from '@common/response/serializations/response.id.serialization';
-import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
+} from '../../../common/policy/constants/policy.enum.constant';
+import { ResponseIdSerialization } from '../../../common/response/serializations/response.id.serialization';
+import { ENUM_ROLE_TYPE } from '../constants/role.enum.constant';
 
 export class RoleGetPermissionSerialization {
     @ApiProperty({

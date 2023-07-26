@@ -1,12 +1,12 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty, PickType } from '@nestjs/swagger';
-import { PAGINATION_AVAILABLE_ORDER_DIRECTION } from '@common/pagination/constants/pagination.constant';
-import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '@common/pagination/constants/pagination.enum.constant';
-import { RequestPaginationSerialization } from '@common/request/serializations/request.pagination.serialization';
+import { RequestPaginationSerialization } from '../../../common/request/serializations/request.pagination.serialization';
 import {
     ResponseDefaultSerialization,
     ResponseMetadataSerialization,
-} from '@common/response/serializations/response.default.serialization';
+} from './response.default.serialization';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../../common/pagination/constants/pagination.enum.constant';
+import { PAGINATION_AVAILABLE_ORDER_DIRECTION } from '../../../common/pagination/constants/pagination.constant';
 
 export class ResponsePaginationCursorSerialization {
     nextPage: string;

@@ -1,38 +1,36 @@
+import { ApiTags } from '@nestjs/swagger';
+import { RoleEntity } from '../entities/role.entity';
 import {
     Body,
     ConflictException,
     Controller,
-    Delete,
     Get,
     Patch,
     Post,
     Put,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { AuthJwtAdminAccessProtected } from '@common/auth/decorators/auth.jwt.decorator';
+import { PaginationService } from '../../../common/pagination/services/pagination.service';
+import { RoleService } from '../services/role.service';
+import { UserService } from '../../../modules/user/services/user.service';
+import {
+    RoleAdminActiveDoc,
+    RoleAdminCreateDoc,
+    RoleAdminGetDoc,
+    RoleAdminInactiveDoc,
+    RoleAdminListDoc,
+    RoleAdminUpdateDoc,
+} from '../docs/role.admin.doc';
+import {
+    Response,
+    ResponsePaging,
+} from '../../../common/response/decorators/response.decorator';
+import { RoleListSerialization } from '../serializations/role.list.serialization';
+import { AuthJwtAdminAccessProtected } from '../../../common/auth/decorators/auth.jwt.decorator';
 import {
     PaginationQuery,
     PaginationQueryFilterInBoolean,
     PaginationQueryFilterInEnum,
-} from '@common/pagination/decorators/pagination.decorator';
-import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
-import { PaginationService } from '@common/pagination/services/pagination.service';
-import {
-    ENUM_POLICY_ACTION,
-    ENUM_POLICY_SUBJECT,
-} from '@common/policy/constants/policy.enum.constant';
-import { PolicyAbilityProtected } from '@common/policy/decorators/policy.decorator';
-import { RequestParamGuard } from '@common/request/decorators/request.decorator';
-import {
-    Response,
-    ResponsePaging,
-} from '@common/response/decorators/response.decorator';
-import {
-    IResponse,
-    IResponsePaging,
-} from '@common/response/interfaces/response.interface';
-import { ResponseIdSerialization } from '@common/response/serializations/response.id.serialization';
-import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
+} from '../../../common/pagination/decorators/pagination.decorator';
 import {
     ROLE_DEFAULT_AVAILABLE_ORDER_BY,
     ROLE_DEFAULT_AVAILABLE_SEARCH,
@@ -41,40 +39,31 @@ import {
     ROLE_DEFAULT_ORDER_DIRECTION,
     ROLE_DEFAULT_PER_PAGE,
     ROLE_DEFAULT_TYPE,
-} from '@modules/role/constants/role.list.constant';
-import { ENUM_ROLE_STATUS_CODE_ERROR } from '@modules/role/constants/role.status-code.constant';
+} from '../constants/role.list.constant';
+import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
+import { ENUM_ROLE_TYPE } from '../constants/role.enum.constant';
 import {
-    RoleAdminDeleteGuard,
+    IResponse,
+    IResponsePaging,
+} from '../../../common/response/interfaces/response.interface';
+import { RoleGetSerialization } from '../serializations/role.get.serialization';
+import {
     RoleAdminGetGuard,
     RoleAdminUpdateActiveGuard,
     RoleAdminUpdateGuard,
     RoleAdminUpdateInactiveGuard,
-} from '@modules/role/decorators/role.admin.decorator';
-import { GetRole } from '@modules/role/decorators/role.decorator';
-import {
-    RoleAdminActiveDoc,
-    RoleAdminCreateDoc,
-    RoleAdminDeleteDoc,
-    RoleAdminGetDoc,
-    RoleAdminInactiveDoc,
-    RoleAdminListDoc,
-    RoleAdminUpdateDoc,
-} from '@modules/role/docs/role.admin.doc';
-import { RoleCreateDTO } from '@modules/role/dtos/role.create.dto';
-import { RoleRequestDto } from '@modules/role/dtos/role.request.dto';
-import { RoleUpdatePermissionDTO } from '@modules/role/dtos/role.update-permission.dto';
-import { RoleUpdateDTO } from '@modules/role/dtos/role.update.dto';
-import { RoleGetSerialization } from '@modules/role/serializations/role.get.serialization';
-import { RoleListSerialization } from '@modules/role/serializations/role.list.serialization';
-import { RoleService } from '@modules/role/services/role.service';
-import { UserService } from '@modules/user/services/user.service';
-import { RoleEntity } from '../entities/role.entity';
+} from '../decorators/role.admin.decorator';
+import { PolicyAbilityProtected } from '../../../common/policy/decorators/policy.decorator';
+import { RequestParamGuard } from '../../../common/request/decorators/request.decorator';
+import { RoleRequestDto } from '../dtos/role.request.dto';
+import { GetRole } from '../decorators/role.decorator';
+import { ResponseIdSerialization } from '../../../common/response/serializations/response.id.serialization';
+import { RoleCreateDTO } from '../dtos/role.create.dto';
+import { ENUM_ROLE_STATUS_CODE_ERROR } from '../constants/role.status-code.constant';
+import { RoleUpdateDTO } from '../dtos/role.update.dto';
 
 @ApiTags('modules.admin.role')
-@Controller({
-    version: '1',
-    path: '/role',
-})
+@Controller({ version: '1', path: '/role' })
 export class RoleAdminController {
     constructor(
         private readonly paginationService: PaginationService,
@@ -83,9 +72,7 @@ export class RoleAdminController {
     ) {}
 
     @RoleAdminListDoc()
-    @ResponsePaging('role.list', {
-        serialization: RoleListSerialization,
-    })
+    @ResponsePaging('role.list', { serialization: RoleListSerialization })
     // @PolicyAbilityProtected({
     //     subject: ENUM_POLICY_SUBJECT.ROLE,
     //     action: [ENUM_POLICY_ACTION.READ],
@@ -131,14 +118,12 @@ export class RoleAdminController {
     }
 
     @RoleAdminGetDoc()
-    @Response('role.get', {
-        serialization: RoleGetSerialization,
-    })
+    @Response('role.get', { serialization: RoleGetSerialization })
     @RoleAdminGetGuard()
-    @PolicyAbilityProtected({
-        subject: ENUM_POLICY_SUBJECT.ROLE,
-        action: [ENUM_POLICY_ACTION.READ],
-    })
+    // @PolicyAbilityProtected({
+    //     subject: ENUM_POLICY_SUBJECT.ROLE,
+    //     action: [ENUM_POLICY_ACTION.READ],
+    // })
     @AuthJwtAdminAccessProtected()
     @RequestParamGuard(RoleRequestDto)
     @Get('get/:role')
@@ -147,9 +132,7 @@ export class RoleAdminController {
     }
 
     @RoleAdminCreateDoc()
-    @Response('role.create', {
-        serialization: ResponseIdSerialization,
-    })
+    @Response('role.create', { serialization: ResponseIdSerialization })
     // @PolicyAbilityProtected({
     //     subject: ENUM_POLICY_SUBJECT.ROLE,
     //     action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.CREATE],
@@ -158,7 +141,7 @@ export class RoleAdminController {
     @Post('/create')
     async create(
         @Body()
-        { name, description, type }: RoleCreateDTO
+        { name, type }: RoleCreateDTO
     ): Promise<IResponse> {
         const exist: boolean = await this.roleService.existByName(name);
         if (exist) {
@@ -170,7 +153,6 @@ export class RoleAdminController {
 
         const create = await this.roleService.create({
             name,
-            description,
             type,
         });
 
@@ -184,10 +166,10 @@ export class RoleAdminController {
         serialization: ResponseIdSerialization,
     })
     @RoleAdminUpdateGuard()
-    @PolicyAbilityProtected({
-        subject: ENUM_POLICY_SUBJECT.ROLE,
-        action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.UPDATE],
-    })
+    // @PolicyAbilityProtected({
+    //     subject: ENUM_POLICY_SUBJECT.ROLE,
+    //     action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.UPDATE],
+    // })
     @AuthJwtAdminAccessProtected()
     @RequestParamGuard(RoleRequestDto)
     @Put('/update/:role')

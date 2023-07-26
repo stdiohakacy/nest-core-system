@@ -5,10 +5,10 @@ import {
     BadRequestException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { API_KEY_TYPE_META_KEY } from '@common/api-key/constants/api-key.constant';
-import { ENUM_API_KEY_TYPE } from '@common/api-key/constants/api-key.enum.constant';
-import { ENUM_API_KEY_STATUS_CODE_ERROR } from '@common/api-key/constants/api-key.status-code.constant';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
+import { ENUM_API_KEY_TYPE } from '../../constants/api-key.enum.constant';
+import { API_KEY_TYPE_META_KEY } from '../../constants/api-key.constant';
+import { IRequestApp } from '../../../../common/request/interfaces/request.interface';
+import { ENUM_API_KEY_STATUS_CODE_ERROR } from '../../constants/api-key.status-code.constant';
 
 @Injectable()
 export class ApiKeyPayloadTypeGuard implements CanActivate {

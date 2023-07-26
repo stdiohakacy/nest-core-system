@@ -1,27 +1,27 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { DebuggerModule } from '@common/debugger/debugger.module';
-import { HelperModule } from '@common/helper/helper.module';
-import { ErrorModule } from '@common/error/error.module';
-import { ResponseModule } from '@common/response/response.module';
-import { RequestModule } from '@common/request/request.module';
-import { AuthModule } from '@common/auth/auth.module';
-import { MessageModule } from '@common/message/message.module';
-import { LoggerModule } from '@common/logger/logger.module';
-import { PaginationModule } from '@common/pagination/pagination.module';
 import Joi from 'joi';
 import { ENUM_MESSAGE_LANGUAGE } from './message/constants/message.enum.constant';
 import configs from 'src/configs';
-import { SettingModule } from '@common/setting/setting.module';
-import { ApiKeyModule } from '@common/api-key/api-key.module';
 import { ENUM_APP_ENVIRONMENT } from 'src/app/constants/app.enum.constant';
 import { APP_LANGUAGE } from 'src/app/constants/app.constant';
-import { PolicyModule } from '@common/policy/policy.module';
 import { DatabaseOptionsModule } from './database/database.options.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseOptionService } from './database/services/database.options.service';
 import { DataSource } from 'typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
+import { MessageModule } from './message/message.module';
+import { HelperModule } from './helper/helper.module';
+import { PaginationModule } from './pagination/pagination.module';
+import { ErrorModule } from './error/error.module';
+import { ResponseModule } from './response/response.module';
+import { RequestModule } from './request/request.module';
+import { PolicyModule } from './policy/policy.module';
+import { SettingModule } from './setting/setting.module';
+import { LoggerModule } from './logger/logger.module';
+import { ApiKeyModule } from './api-key/api-key.module';
+import { DebuggerModule } from './debugger/debugger.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
     controllers: [],
     providers: [],

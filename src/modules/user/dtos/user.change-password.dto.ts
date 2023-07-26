@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, MaxLength } from 'class-validator';
-import { IsPasswordStrong } from '@common/request/validations/request.is-password-strong.validation';
+import { IsPasswordStrong } from '../../../common/request/validations/request.is-password-strong.validation';
 
 export class UserChangePasswordDto {
     @ApiProperty({

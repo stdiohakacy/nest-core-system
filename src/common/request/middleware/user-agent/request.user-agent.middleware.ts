@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Response, NextFunction } from 'express';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
 import { UAParser, IResult } from 'ua-parser-js';
+import { IRequestApp } from '../../interfaces/request.interface';
 
 @Injectable()
 export class RequestUserAgentMiddleware implements NestMiddleware {

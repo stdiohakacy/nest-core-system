@@ -1,14 +1,14 @@
-import { IAuthPassword } from '@common/auth/interfaces/auth.interface';
-import { AwsS3Serialization } from '@common/aws/serializations/aws.s3.serialization';
-import { UserCreateDTO } from '@modules/user/dtos/user.create.dto';
-import { UserImportDTO } from '@modules/user/dtos/user.import.dto';
-import { UserUpdateNameDTO } from '@modules/user/dtos/user.update-name.dto';
-import { UserUpdateUsernameDTO } from '@modules/user/dtos/user.update-username.dto';
-import { UserPayloadSerialization } from '@modules/user/serializations/user.payload.serialization';
 import { UserEntity } from '../entities/user.entity';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { UserUpdateGoogleSSODTO } from '../dtos/user.update-google-sso.dto';
-import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
+import { IAuthPassword } from '../../../common/auth/interfaces/auth.interface';
+import { UserCreateDTO } from '../dtos/user.create.dto';
+import { UserUpdateNameDTO } from '../dtos/user.update-name.dto';
+import { UserUpdateUsernameDTO } from '../dtos/user.update-username.dto';
+import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
+import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
+import { UserImportDTO } from '../dtos/user.import.dto';
+import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
 
 export interface IUserService {
     findAll(find?: Record<string, any>): Promise<UserEntity[]>;

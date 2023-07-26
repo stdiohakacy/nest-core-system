@@ -6,13 +6,13 @@ import {
     UseGuards,
 } from '@nestjs/common';
 import { instanceToPlain } from 'class-transformer';
-import { API_KEY_TYPE_META_KEY } from '@common/api-key/constants/api-key.constant';
-import { ENUM_API_KEY_TYPE } from '@common/api-key/constants/api-key.enum.constant';
-import { ApiKeyPayloadTypeGuard } from '@common/api-key/guards/payload/api-key.payload.type.guard';
-import { ApiKeyXApiKeyGuard } from '@common/api-key/guards/x-api-key/api-key.x-api-key.guard';
-import { IApiKeyPayload } from '@common/api-key/interfaces/api-key.interface';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
-import { ApiKeyEntity } from '@modules/api-key/entities/api-key.entity';
+import { IApiKeyPayload } from '../interfaces/api-key.interface';
+import { IRequestApp } from '../../../common/request/interfaces/request.interface';
+import { ApiKeyXApiKeyGuard } from '../guards/x-api-key/api-key.x-api-key.guard';
+import { ApiKeyPayloadTypeGuard } from '../guards/payload/api-key.payload.type.guard';
+import { API_KEY_TYPE_META_KEY } from '../constants/api-key.constant';
+import { ENUM_API_KEY_TYPE } from '../constants/api-key.enum.constant';
+import { ApiKeyEntity } from '../../../modules/api-key/entities/api-key.entity';
 
 export const ApiKeyPayload: () => ParameterDecorator = createParamDecorator(
     (data: string, ctx: ExecutionContext): IApiKeyPayload => {

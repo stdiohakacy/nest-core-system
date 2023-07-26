@@ -2,18 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ValidationError } from 'class-validator';
 import { I18nService } from 'nestjs-i18n';
-import {
-    IErrors,
-    IErrorsImport,
-    IValidationErrorImport,
-} from '@common/error/interfaces/error.interface';
-import { HelperArrayService } from '@common/helper/services/helper.array.service';
+import { IMessageService } from '../interfaces/message.service.interface';
+import { HelperArrayService } from '../../../common/helper/services/helper.array.service';
 import {
     IMessageErrorOptions,
     IMessageOptions,
     IMessageSetOptions,
-} from '@common/message/interfaces/message.interface';
-import { IMessageService } from '@common/message/interfaces/message.service.interface';
+} from '../interfaces/message.interface';
+import {
+    IErrors,
+    IErrorsImport,
+    IValidationErrorImport,
+} from '../../../common/error/interfaces/error.interface';
 
 @Injectable()
 export class MessageService implements IMessageService {

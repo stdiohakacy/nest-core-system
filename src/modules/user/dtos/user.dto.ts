@@ -1,6 +1,4 @@
-import { BaseDTO } from '@common/base/dto/base.dto';
 import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
-import { AwsS3Serialization } from '@common/aws/serializations/aws.s3.serialization';
 import { IUserGoogleEntity } from '../interfaces/user.interface';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { faker } from '@faker-js/faker';
@@ -18,8 +16,10 @@ import {
     ValidateIf,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { IsPasswordStrong } from '@common/request/validations/request.is-password-strong.validation';
-import { MobileNumberAllowed } from '@common/request/validations/request.mobile-number-allowed.validation';
+import { BaseDTO } from '../../../common/base/dto/base.dto';
+import { IsPasswordStrong } from '../../../common/request/validations/request.is-password-strong.validation';
+import { MobileNumberAllowed } from '../../../common/request/validations/request.mobile-number-allowed.validation';
+import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 
 export class UserDTO extends BaseDTO {
     @ApiProperty({

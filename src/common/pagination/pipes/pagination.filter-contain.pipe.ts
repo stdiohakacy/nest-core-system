@@ -1,10 +1,10 @@
 import { Inject, Injectable, mixin, Type } from '@nestjs/common';
 import { PipeTransform, Scope } from '@nestjs/common/interfaces';
 import { REQUEST } from '@nestjs/core';
-import { ENUM_PAGINATION_FILTER_CASE_OPTIONS } from '@common/pagination/constants/pagination.enum.constant';
-import { IPaginationFilterStringContainOptions } from '@common/pagination/interfaces/pagination.interface';
-import { PaginationService } from '@common/pagination/services/pagination.service';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
+import { IPaginationFilterStringContainOptions } from '../interfaces/pagination.interface';
+import { IRequestApp } from '../../../common/request/interfaces/request.interface';
+import { PaginationService } from '../services/pagination.service';
+import { ENUM_PAGINATION_FILTER_CASE_OPTIONS } from '../constants/pagination.enum.constant';
 
 export function PaginationFilterContainPipe(
     field: string,

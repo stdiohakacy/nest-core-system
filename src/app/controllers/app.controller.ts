@@ -1,15 +1,15 @@
 import { Controller, Get, VERSION_NEUTRAL } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
-import { AppHelloApiKeyDoc, AppHelloDoc } from 'src/app/docs/app.doc';
-import { AppHelloSerialization } from 'src/app/serializations/app.hello.serialization';
-import { ApiKeyPublicProtected } from '@common/api-key/decorators/api-key.decorator';
-import { HelperDateService } from '@common/helper/services/helper.date.service';
-import { ENUM_LOGGER_ACTION } from '@common/logger/constants/logger.enum.constant';
-import { Logger } from '@common/logger/decorators/logger.decorator';
-import { RequestUserAgent } from '@common/request/decorators/request.decorator';
-import { Response } from '@common/response/decorators/response.decorator';
-import { IResponse } from '@common/response/interfaces/response.interface';
+import { AppHelloApiKeyDoc, AppHelloDoc } from '../../app/docs/app.doc';
+import { AppHelloSerialization } from '../../app/serializations/app.hello.serialization';
+import { ApiKeyPublicProtected } from '../../common/api-key/decorators/api-key.decorator';
+import { HelperDateService } from '../../common/helper/services/helper.date.service';
+import { ENUM_LOGGER_ACTION } from '../../common/logger/constants/logger.enum.constant';
+import { Logger } from '../../common/logger/decorators/logger.decorator';
+import { RequestUserAgent } from '../../common/request/decorators/request.decorator';
+import { Response } from '../../common/response/decorators/response.decorator';
+import { IResponse } from '../../common/response/interfaces/response.interface';
 import { IResult } from 'ua-parser-js';
 
 @ApiTags('hello')

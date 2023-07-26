@@ -1,8 +1,11 @@
+import { SettingDTO } from '../../../common/setting/dtos/setting.dto';
+import {
+    BaseEntity,
+    IBaseEntity,
+} from '../../../common/base/entity/base.entity';
 import { Column, Entity } from 'typeorm';
-import { BaseEntity, IBaseEntity } from '@common/base/entity/base.entity';
-import { UseDTO } from '@common/decorators/use-dto.decorator';
-import { ENUM_SETTING_DATA_TYPE } from '@common/setting/constants/setting.enum.constant';
-import { SettingDTO } from '@common/setting/dtos/setting.dto';
+import { ENUM_SETTING_DATA_TYPE } from '../../../common/setting/constants/setting.enum.constant';
+import { UseDTO } from '../../../common/decorators/use-dto.decorator';
 
 export interface ISettingEntity extends IBaseEntity<SettingDTO> {
     name: string;

@@ -1,9 +1,8 @@
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { RoleCreateDTO } from '../dtos/role.create.dto';
-import { RoleUpdatePermissionDTO } from '../dtos/role.update-permission.dto';
 import { RoleUpdateDTO } from '../dtos/role.update.dto';
 import { RoleEntity } from '../entities/role.entity';
-import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
+import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
 
 export interface IRoleService {
     findAllAndCount(

@@ -5,9 +5,9 @@ import {
     Injectable,
     UnauthorizedException,
 } from '@nestjs/common';
-import { HelperNumberService } from '@common/helper/services/helper.number.service';
-import { ENUM_API_KEY_STATUS_CODE_ERROR } from '@common/api-key/constants/api-key.status-code.constant';
 import { BadRequestError } from 'passport-headerapikey';
+import { HelperNumberService } from '../../../../common/helper/services/helper.number.service';
+import { ENUM_API_KEY_STATUS_CODE_ERROR } from '../../constants/api-key.status-code.constant';
 
 @Injectable()
 export class ApiKeyXApiKeyGuard extends AuthGuard('api-key') {

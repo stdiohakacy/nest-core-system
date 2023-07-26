@@ -12,31 +12,11 @@ import {
     UploadedFile,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import {
-    AuthJwtAccessProtected,
-    AuthJwtPayload,
-    AuthJwtRefreshProtected,
-    AuthJwtToken,
-} from '@common/auth/decorators/auth.jwt.decorator';
-import { IAuthPassword } from '@common/auth/interfaces/auth.interface';
-import { AuthService } from '@common/auth/services/auth.service';
-import { AwsS3Serialization } from '@common/aws/serializations/aws.s3.serialization';
-import { AwsS3Service } from '@common/aws/services/aws.s3.service';
-import { UploadFileSingle } from '@common/file/decorators/file.decorator';
-import { IFile } from '@common/file/interfaces/file.interface';
-import { FileRequiredPipe } from '@common/file/pipes/file.required.pipe';
-import { FileSizeImagePipe } from '@common/file/pipes/file.size.pipe';
-import { FileTypeImagePipe } from '@common/file/pipes/file.type.pipe';
-import { Response } from '@common/response/decorators/response.decorator';
-import { IResponse } from '@common/response/interfaces/response.interface';
-import { ENUM_ROLE_STATUS_CODE_ERROR } from '@modules/role/constants/role.status-code.constant';
-import { SettingService } from '@common/setting/services/setting.service';
-import { ENUM_USER_STATUS_CODE_ERROR } from '@modules/user/constants/user.status-code.constant';
-import {
-    GetUser,
-    UserAuthProtected,
-    UserProtected,
-} from '@modules/user/decorators/user.decorator';
+import { UserEntity } from '../entities/user.entity';
+import { UserService } from '../services/user.service';
+import { AuthService } from '../../../common/auth/services/auth.service';
+import { SettingService } from '../../../common/setting/services/setting.service';
+import { AwsS3Service } from '../../../common/aws/services/aws.s3.service';
 import {
     UserAuthChangePasswordDoc,
     UserAuthClaimUsernameDoc,
@@ -45,15 +25,34 @@ import {
     UserAuthRefreshDoc,
     UserAuthUpdateProfileDoc,
     UserAuthUploadProfileDoc,
-} from '@modules/user/docs/user.auth.doc';
-import { UserChangePasswordDto } from '@modules/user/dtos/user.change-password.dto';
-import { UserUpdateNameDTO } from '@modules/user/dtos/user.update-name.dto';
-import { UserUpdateUsernameDTO } from '@modules/user/dtos/user.update-username.dto';
-import { UserPayloadSerialization } from '@modules/user/serializations/user.payload.serialization';
-import { UserProfileSerialization } from '@modules/user/serializations/user.profile.serialization';
-import { UserService } from '@modules/user/services/user.service';
-import { UserRefreshSerialization } from '@modules/user/serializations/user.refresh.serialization';
-import { UserEntity } from '../entities/user.entity';
+} from '../docs/user.auth.doc';
+import { Response } from '../../../common/response/decorators/response.decorator';
+import { UserRefreshSerialization } from '../serializations/user.refresh.serialization';
+import {
+    GetUser,
+    UserAuthProtected,
+    UserProtected,
+} from '../decorators/user.decorator';
+import {
+    AuthJwtAccessProtected,
+    AuthJwtPayload,
+    AuthJwtRefreshProtected,
+    AuthJwtToken,
+} from '../../../common/auth/decorators/auth.jwt.decorator';
+import { IResponse } from '../../../common/response/interfaces/response.interface';
+import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
+import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
+import { UserChangePasswordDto } from '../dtos/user.change-password.dto';
+import { IAuthPassword } from '../../../common/auth/interfaces/auth.interface';
+import { UserProfileSerialization } from '../serializations/user.profile.serialization';
+import { UserUpdateNameDTO } from '../dtos/user.update-name.dto';
+import { UserUpdateUsernameDTO } from '../dtos/user.update-username.dto';
+import { UploadFileSingle } from '../../../common/file/decorators/file.decorator';
+import { FileRequiredPipe } from '../../../common/file/pipes/file.required.pipe';
+import { FileSizeImagePipe } from '../../../common/file/pipes/file.size.pipe';
+import { FileTypeImagePipe } from '../../../common/file/pipes/file.type.pipe';
+import { IFile } from '../../../common/file/interfaces/file.interface';
+import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 
 @ApiTags('modules.auth.user')
 @Controller({

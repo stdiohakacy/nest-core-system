@@ -1,4 +1,4 @@
-import { LoggerEntity } from '@modules/logger/entities/logger.entity';
+import { LoggerEntity } from '../../../modules/logger/entities/logger.entity';
 import { LoggerCreateDTO, LoggerCreateRawDTO } from '../dtos/logger.create.dto';
 
 export interface ILoggerService {

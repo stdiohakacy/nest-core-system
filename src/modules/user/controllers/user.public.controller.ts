@@ -12,35 +12,34 @@ import {
     Post,
 } from '@nestjs/common';
 import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
-import { ENUM_AUTH_LOGIN_WITH } from '@common/auth/constants/auth.enum.constant';
-import {
-    AuthGoogleOAuth2LoginProtected,
-    AuthGoogleOAuth2SignUpProtected,
-} from '@common/auth/decorators/auth.google.decorator';
-import { AuthJwtPayload } from '@common/auth/decorators/auth.jwt.decorator';
-import { IAuthGooglePayload } from '@common/auth/interfaces/auth.interface';
-import { AuthService } from '@common/auth/services/auth.service';
-import { ENUM_ERROR_STATUS_CODE_ERROR } from '@common/error/constants/error.status-code.constant';
-import { Response } from '@common/response/decorators/response.decorator';
-import { IResponse } from '@common/response/interfaces/response.interface';
-import { ENUM_ROLE_STATUS_CODE_ERROR } from '@modules/role/constants/role.status-code.constant';
-import { RoleService } from '@modules/role/services/role.service';
-import { SettingService } from '@common/setting/services/setting.service';
-import { ENUM_USER_SIGN_UP_FROM } from '@modules/user/constants/user.enum.constant';
-import {
-    ENUM_USER_STATUS_CODE_ERROR,
-    ENUM_USER_STATUS_CODE_SUCCESS,
-} from '@modules/user/constants/user.status-code.constant';
+import { UserEntity } from '../entities/user.entity';
+import { UserService } from '../services/user.service';
+import { AuthService } from '../../../common/auth/services/auth.service';
+import { RoleService } from '../../../modules/role/services/role.service';
+import { SettingService } from '../../../common/setting/services/setting.service';
 import {
     UserPublicLoginDoc,
     UserPublicSignUpDoc,
-} from '@modules/user/docs/user.public.doc';
-import { UserLoginDto } from '@modules/user/dtos/user.login.dto';
-import { UserSignUpDTO } from '@modules/user/dtos/user.sign-up.dto';
-import { UserLoginSerialization } from '@modules/user/serializations/user.login.serialization';
-import { UserPayloadSerialization } from '@modules/user/serializations/user.payload.serialization';
-import { UserService } from '@modules/user/services/user.service';
-import { UserEntity } from '../entities/user.entity';
+} from '../docs/user.public.doc';
+import { Response } from '../../../common/response/decorators/response.decorator';
+import { UserLoginSerialization } from '../serializations/user.login.serialization';
+import { UserLoginDto } from '../dtos/user.login.dto';
+import { IResponse } from '../../../common/response/interfaces/response.interface';
+import {
+    ENUM_USER_STATUS_CODE_ERROR,
+    ENUM_USER_STATUS_CODE_SUCCESS,
+} from '../constants/user.status-code.constant';
+import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
+import { ENUM_AUTH_LOGIN_WITH } from '../../../common/auth/constants/auth.enum.constant';
+import { UserSignUpDTO } from '../dtos/user.sign-up.dto';
+import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
+import {
+    AuthGoogleOAuth2LoginProtected,
+    AuthGoogleOAuth2SignUpProtected,
+} from '../../../common/auth/decorators/auth.google.decorator';
+import { AuthJwtPayload } from '../../../common/auth/decorators/auth.jwt.decorator';
+import { IAuthGooglePayload } from '../../../common/auth/interfaces/auth.interface';
+import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/error.status-code.constant';
 
 @ApiTags('modules.public.user')
 @Controller({
@@ -57,9 +56,7 @@ export class UserPublicController {
     ) {}
 
     @UserPublicLoginDoc()
-    @Response('user.login', {
-        serialization: UserLoginSerialization,
-    })
+    @Response('user.login', { serialization: UserLoginSerialization })
     @HttpCode(HttpStatus.OK)
     @Post('/login')
     async login(@Body() { email, password }: UserLoginDto): Promise<IResponse> {
@@ -133,7 +130,7 @@ export class UserPublicController {
         const payloadAccessToken: Record<string, any> =
             await this.authService.createPayloadAccessToken(payload);
         const payloadRefreshToken: Record<string, any> =
-            await this.authService.createPayloadRefreshToken(payload._id, {
+            await this.authService.createPayloadRefreshToken(payload.id, {
                 loginWith: ENUM_AUTH_LOGIN_WITH.LOCAL,
             });
 
@@ -288,7 +285,7 @@ export class UserPublicController {
         const payloadAccessToken: Record<string, any> =
             await this.authService.createPayloadAccessToken(payload);
         const payloadRefreshToken: Record<string, any> =
-            await this.authService.createPayloadRefreshToken(payload._id, {
+            await this.authService.createPayloadRefreshToken(payload.id, {
                 loginWith: ENUM_AUTH_LOGIN_WITH.GOOGLE,
             });
 

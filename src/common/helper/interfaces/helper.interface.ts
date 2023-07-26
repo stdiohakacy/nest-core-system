@@ -2,7 +2,7 @@ import {
     ENUM_HELPER_DATE_DIFF,
     ENUM_HELPER_DATE_FORMAT,
     ENUM_HELPER_FILE_TYPE,
-} from '@common/helper/constants/helper.enum.constant';
+} from '../constants/helper.enum.constant';
 
 // Helper Array
 export interface IHelperArrayRemove<T> {

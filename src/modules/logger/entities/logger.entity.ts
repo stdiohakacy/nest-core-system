@@ -1,16 +1,17 @@
 import {
+    ENUM_LOGGER_ACTION,
+    ENUM_LOGGER_LEVEL,
+} from '../../../common/logger/constants/logger.enum.constant';
+import {
     BaseEntity,
     IBaseEntity,
 } from '../../../common/base/entity/base.entity';
 import { UseDTO } from '../../../common/decorators/use-dto.decorator';
-import {
-    ENUM_LOGGER_ACTION,
-    ENUM_LOGGER_LEVEL,
-} from '@common/logger/constants/logger.enum.constant';
-import { LoggerDTO } from '@common/logger/dtos/logger.dto';
-import { ENUM_REQUEST_METHOD } from '@common/request/constants/request.enum.constant';
-import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
+
 import { Column, Entity } from 'typeorm';
+import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
+import { ENUM_ROLE_TYPE } from '../../../modules/role/constants/role.enum.constant';
+import { LoggerDTO } from '../../../common/logger/dtos/logger.dto';
 
 export interface ILoggerEntity extends IBaseEntity<LoggerDTO> {
     level: ENUM_LOGGER_LEVEL;
@@ -62,7 +63,7 @@ export class LoggerEntity
     @Column({ name: 'description', default: '' })
     description: string;
 
-    @Column({ name: 'description', type: 'jsonb', default: [] })
+    @Column({ name: 'tags', type: 'jsonb', default: [] })
     tags: string[];
 
     @Column({ name: 'requestId', type: 'uuid', nullable: true })
@@ -89,7 +90,7 @@ export class LoggerEntity
     params?: Record<string, any>;
 
     @Column({
-        name: 'params',
+        name: 'bodies',
         type: 'jsonb',
         default: {},
     })

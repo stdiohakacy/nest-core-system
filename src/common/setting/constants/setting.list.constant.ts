@@ -1,4 +1,4 @@
-import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '@common/pagination/constants/pagination.enum.constant';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../../common/pagination/constants/pagination.enum.constant';
 
 export const SETTING_DEFAULT_PER_PAGE = 20;
 export const SETTING_DEFAULT_ORDER_BY = 'createdAt';

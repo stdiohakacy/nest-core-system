@@ -3,13 +3,13 @@ import {
     HeadBucketCommandOutput,
     UploadPartRequest,
 } from '@aws-sdk/client-s3';
-import { IAwsS3PutItemOptions } from '@common/aws/interfaces/aws.interface';
+import { Readable } from 'stream';
+import { AwsS3Serialization } from '../serializations/aws.s3.serialization';
+import { IAwsS3PutItemOptions } from './aws.interface';
 import {
     AwsS3MultipartPartsSerialization,
     AwsS3MultipartSerialization,
-} from '@common/aws/serializations/aws.s3-multipart.serialization';
-import { AwsS3Serialization } from '@common/aws/serializations/aws.s3.serialization';
-import { Readable } from 'stream';
+} from '../serializations/aws.s3-multipart.serialization';
 
 export interface IAwsS3Service {
     checkBucketExistence(): Promise<HeadBucketCommandOutput>;

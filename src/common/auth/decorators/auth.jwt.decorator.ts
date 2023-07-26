@@ -1,12 +1,12 @@
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
-import { AuthJwtAccessGuard } from '@common/auth/guards/jwt-access/auth.jwt-access.guard';
-import { AuthJwtRefreshGuard } from '@common/auth/guards/jwt-refresh/auth.jwt-refresh.guard';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { UserPayloadSerialization } from '@modules/user/serializations/user.payload.serialization';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
-import { RolePayloadTypeGuard } from '@modules/role/guards/payload/role.payload.type.guard';
-import { ROLE_TYPE_META_KEY } from '@modules/role/constants/role.constant';
-import { ENUM_ROLE_TYPE } from '@modules/role/constants/role.enum.constant';
+import { IRequestApp } from '../../../common/request/interfaces/request.interface';
+import { UserPayloadSerialization } from '../../../modules/user/serializations/user.payload.serialization';
+import { AuthJwtAccessGuard } from '../guards/jwt-access/auth.jwt-access.guard';
+import { RolePayloadTypeGuard } from '../../../modules/role/guards/payload/role.payload.type.guard';
+import { ROLE_TYPE_META_KEY } from '../../../modules/role/constants/role.constant';
+import { ENUM_ROLE_TYPE } from '../../../modules/role/constants/role.enum.constant';
+import { AuthJwtRefreshGuard } from '../guards/jwt-refresh/auth.jwt-refresh.guard';
 
 export const AuthJwtPayload = createParamDecorator(
     (data: string, ctx: ExecutionContext): Record<string, any> => {

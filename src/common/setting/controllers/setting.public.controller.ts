@@ -1,35 +1,35 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { PaginationQuery } from '@common/pagination/decorators/pagination.decorator';
-import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
-import { PaginationService } from '@common/pagination/services/pagination.service';
-import { RequestParamGuard } from '@common/request/decorators/request.decorator';
+import { SettingService } from '../services/setting.service';
+import { PaginationService } from '../../../common/pagination/services/pagination.service';
+import {
+    SettingPublicGetDoc,
+    SettingPublicListDoc,
+} from '../docs/setting.public.doc';
 import {
     Response,
     ResponsePaging,
-} from '@common/response/decorators/response.decorator';
-import {
-    IResponse,
-    IResponsePaging,
-} from '@common/response/interfaces/response.interface';
+} from '../../../common/response/decorators/response.decorator';
+import { SettingListSerialization } from '../serializations/setting.list.serialization';
+import { PaginationQuery } from '../../../common/pagination/decorators/pagination.decorator';
 import {
     SETTING_DEFAULT_AVAILABLE_ORDER_BY,
     SETTING_DEFAULT_AVAILABLE_SEARCH,
     SETTING_DEFAULT_ORDER_BY,
     SETTING_DEFAULT_ORDER_DIRECTION,
     SETTING_DEFAULT_PER_PAGE,
-} from '@common/setting/constants/setting.list.constant';
-import { GetSetting } from '@common/setting/decorators/setting.decorator';
-import { SettingPublicGetGuard } from '@common/setting/decorators/setting.public.decorator';
+} from '../constants/setting.list.constant';
+import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
 import {
-    SettingPublicGetDoc,
-    SettingPublicListDoc,
-} from '@common/setting/docs/setting.public.doc';
-import { SettingRequestDTO } from '@common/setting/dtos/setting.request.dto';
-import { SettingGetSerialization } from '@common/setting/serializations/setting.get.serialization';
-import { SettingListSerialization } from '@common/setting/serializations/setting.list.serialization';
-import { SettingService } from '@common/setting/services/setting.service';
-import { SettingEntity } from '@modules/setting/entities/setting.entity';
+    IResponse,
+    IResponsePaging,
+} from '../../../common/response/interfaces/response.interface';
+import { SettingGetSerialization } from '../serializations/setting.get.serialization';
+import { SettingPublicGetGuard } from '../decorators/setting.public.decorator';
+import { RequestParamGuard } from '../../../common/request/decorators/request.decorator';
+import { SettingRequestDTO } from '../dtos/setting.request.dto';
+import { GetSetting } from '../decorators/setting.decorator';
+import { SettingEntity } from '../../../modules/setting/entities/setting.entity';
 
 @ApiTags('common.public.setting')
 @Controller({
@@ -43,9 +43,7 @@ export class SettingPublicController {
     ) {}
 
     @SettingPublicListDoc()
-    @ResponsePaging('setting.list', {
-        serialization: SettingListSerialization,
-    })
+    @ResponsePaging('setting.list', { serialization: SettingListSerialization })
     @Get('/list')
     async list(
         @PaginationQuery(
@@ -80,9 +78,7 @@ export class SettingPublicController {
     }
 
     @SettingPublicGetDoc()
-    @Response('setting.get', {
-        serialization: SettingGetSerialization,
-    })
+    @Response('setting.get', { serialization: SettingGetSerialization })
     @SettingPublicGetGuard()
     @RequestParamGuard(SettingRequestDTO)
     @Get('get/:setting')

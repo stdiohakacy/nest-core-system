@@ -4,9 +4,9 @@ import {
     ServiceUnavailableException,
 } from '@nestjs/common';
 import { Response, NextFunction } from 'express';
-import { ENUM_ERROR_STATUS_CODE_ERROR } from '@common/error/constants/error.status-code.constant';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
-import { SettingService } from '@common/setting/services/setting.service';
+import { SettingService } from '../../services/setting.service';
+import { IRequestApp } from '../../../../common/request/interfaces/request.interface';
+import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../../common/error/constants/error.status-code.constant';
 
 @Injectable()
 export class SettingMaintenanceMiddleware implements NestMiddleware {

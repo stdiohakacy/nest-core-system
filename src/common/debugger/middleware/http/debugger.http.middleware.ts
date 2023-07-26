@@ -3,17 +3,16 @@ import morgan from 'morgan';
 import { Request, Response, NextFunction } from 'express';
 import { createStream } from 'rotating-file-stream';
 import { ConfigService } from '@nestjs/config';
-import { HelperDateService } from '@common/helper/services/helper.date.service';
 import {
     IDebuggerHttpConfig,
     IDebuggerHttpConfigOptions,
     IDebuggerHttpMiddleware,
-} from '@common/debugger/interfaces/debugger.interface';
+} from '../../interfaces/debugger.interface';
+import { HelperDateService } from '../../../../common/helper/services/helper.date.service';
 import {
     DEBUGGER_HTTP_FORMAT,
     DEBUGGER_HTTP_NAME,
-} from '@common/debugger/constants/debugger.constant';
-
+} from '../../constants/debugger.constant';
 @Injectable()
 export class DebuggerHttpMiddleware implements NestMiddleware {
     private readonly writeIntoFile: boolean;

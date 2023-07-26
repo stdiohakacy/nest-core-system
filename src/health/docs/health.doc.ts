@@ -3,17 +3,14 @@ import {
     Doc,
     DocAuth,
     DocResponse,
-} from '@common/doc/decorators/doc.decorator';
+} from '../../common/doc/decorators/doc.decorator';
+
 import { HealthSerialization } from 'src/health/serializations/health.serialization';
 
 export function HealthCheckDoc(): MethodDecorator {
     return applyDecorators(
-        Doc({
-            operation: 'health',
-        }),
-        DocAuth({
-            jwtAccessToken: true,
-        }),
+        Doc({ operation: 'health' }),
+        DocAuth({ jwtAccessToken: true }),
         DocResponse<HealthSerialization>('health.check', {
             serialization: HealthSerialization,
         })

@@ -6,11 +6,6 @@ import {
     ValidationPipe,
 } from '@nestjs/common';
 import { APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
-import { RequestTimeoutInterceptor } from '@common/request/interceptors/request.timeout.interceptor';
-import { RequestMiddlewareModule } from '@common/request/middleware/request.middleware.module';
-import { MaxDateTodayConstraint } from '@common/request/validations/request.max-date-today.validation';
-import { MinDateTodayConstraint } from '@common/request/validations/request.min-date-today.validation';
-import { MobileNumberAllowedConstraint } from '@common/request/validations/request.mobile-number-allowed.validation';
 import { ENUM_REQUEST_STATUS_CODE_ERROR } from './constants/request.status-code.constant';
 import { IsPasswordMediumConstraint } from './validations/request.is-password-medium.validation';
 import { IsPasswordStrongConstraint } from './validations/request.is-password-strong.validation';
@@ -22,11 +17,16 @@ import { MinGreaterThanEqualConstraint } from './validations/request.min-greater
 import { MinGreaterThanConstraint } from './validations/request.min-greater-than.validation';
 import { IsOnlyDigitsConstraint } from './validations/request.only-digits.validation';
 import { SafeStringConstraint } from './validations/request.safe-string.validation';
-import { MaxBinaryFileConstraint } from '@common/request/validations/request.max-binary-file.validation';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SettingModule } from '../setting/setting.module';
 import { CommonModule } from '../common.module';
+import { RequestTimeoutInterceptor } from './interceptors/request.timeout.interceptor';
+import { MinDateTodayConstraint } from './validations/request.min-date-today.validation';
+import { MobileNumberAllowedConstraint } from './validations/request.mobile-number-allowed.validation';
+import { MaxDateTodayConstraint } from './validations/request.max-date-today.validation';
+import { MaxBinaryFileConstraint } from './validations/request.max-binary-file.validation';
+import { RequestMiddlewareModule } from './middleware/request.middleware.module';
 
 @Module({
     controllers: [],

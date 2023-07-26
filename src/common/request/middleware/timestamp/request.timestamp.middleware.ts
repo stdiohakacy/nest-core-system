@@ -1,8 +1,8 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Response, NextFunction } from 'express';
-import { HelperDateService } from '@common/helper/services/helper.date.service';
-import { HelperNumberService } from '@common/helper/services/helper.number.service';
-import { IRequestApp } from '@common/request/interfaces/request.interface';
+import { IRequestApp } from '../../interfaces/request.interface';
+import { HelperNumberService } from 'src/common/helper/services/helper.number.service';
+import { HelperDateService } from 'src/common/helper/services/helper.date.service';
 
 @Injectable()
 export class RequestTimestampMiddleware implements NestMiddleware {

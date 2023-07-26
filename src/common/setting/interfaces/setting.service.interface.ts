@@ -1,9 +1,9 @@
-import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
-import { ENUM_SETTING_DATA_TYPE } from '@common/setting/constants/setting.enum.constant';
-import { SettingCreateDTO } from '@common/setting/dtos/setting.create.dto';
-import { SettingUpdateValueDTO } from '@common/setting/dtos/setting.update-value.dto';
-import { SettingEntity } from '@modules/setting/entities/setting.entity';
+import { SettingEntity } from '../../../modules/setting/entities/setting.entity';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { SettingCreateDTO } from '../dtos/setting.create.dto';
+import { SettingUpdateValueDTO } from '../dtos/setting.update-value.dto';
+import { ENUM_SETTING_DATA_TYPE } from '../constants/setting.enum.constant';
+import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
 
 export interface ISettingService {
     findAll(find?: Record<string, any>): Promise<SettingEntity[]>;

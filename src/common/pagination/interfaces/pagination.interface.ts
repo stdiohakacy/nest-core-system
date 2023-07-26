@@ -2,7 +2,7 @@ import {
     ENUM_PAGINATION_FILTER_CASE_OPTIONS,
     ENUM_PAGINATION_FILTER_DATE_TIME_OPTIONS,
     ENUM_PAGINATION_ORDER_DIRECTION_TYPE,
-} from '@common/pagination/constants/pagination.enum.constant';
+} from '../constants/pagination.enum.constant';
 
 export type IPaginationOrder = Record<
     string,

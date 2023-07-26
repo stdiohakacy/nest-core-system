@@ -9,27 +9,8 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { instanceToPlain } from 'class-transformer';
-import {
-    API_KEY_DEFAULT_AVAILABLE_ORDER_BY,
-    API_KEY_DEFAULT_AVAILABLE_SEARCH,
-    API_KEY_DEFAULT_IS_ACTIVE,
-    API_KEY_DEFAULT_ORDER_BY,
-    API_KEY_DEFAULT_ORDER_DIRECTION,
-    API_KEY_DEFAULT_PER_PAGE,
-    API_KEY_DEFAULT_TYPE,
-} from '@common/api-key/constants/api-key.list.constant';
-import {
-    ApiKeyAdminDeleteGuard,
-    ApiKeyAdminGetGuard,
-    ApiKeyAdminUpdateActiveGuard,
-    ApiKeyAdminUpdateGuard,
-    ApiKeyAdminUpdateInactiveGuard,
-    ApiKeyAdminUpdateResetGuard,
-} from '@common/api-key/decorators/api-key.admin.decorator';
-import {
-    ApiKeyPublicProtected,
-    GetApiKey,
-} from '@common/api-key/decorators/api-key.decorator';
+import { ApiKeyService } from '../services/api-key.service';
+import { PaginationService } from '../../../common/pagination/services/pagination.service';
 import {
     ApiKeyAdminActiveDoc,
     ApiKeyAdminCreateDoc,
@@ -39,42 +20,61 @@ import {
     ApiKeyAdminListDoc,
     ApiKeyAdminResetDoc,
     ApiKeyAdminUpdateDoc,
-} from '@common/api-key/docs/api-key.admin.doc';
-import { ApiKeyCreateDTO } from '@common/api-key/dtos/api-key.create.dto';
-import { ApiKeyRequestDto } from '@common/api-key/dtos/api-key.request.dto';
-import { ApiKeyUpdateDateDTO } from '@common/api-key/dtos/api-key.update-date.dto';
-import { ApiKeyUpdateDTO } from '@common/api-key/dtos/api-key.update.dto';
-import { IApiKeyCreated } from '@common/api-key/interfaces/api-key.interface';
-import { ApiKeyCreateSerialization } from '@common/api-key/serializations/api-key.create.serialization';
-import { ApiKeyGetSerialization } from '@common/api-key/serializations/api-key.get.serialization';
-import { ApiKeyListSerialization } from '@common/api-key/serializations/api-key.list.serialization';
-import { ApiKeyResetSerialization } from '@common/api-key/serializations/api-key.reset.serialization';
-import { ApiKeyService } from '@common/api-key/services/api-key.service';
-import { AuthJwtAdminAccessProtected } from '@common/auth/decorators/auth.jwt.decorator';
+} from '../docs/api-key.admin.doc';
+import {
+    Response,
+    ResponsePaging,
+} from '../../../common/response/decorators/response.decorator';
+import { ApiKeyListSerialization } from '../serializations/api-key.list.serialization';
+import { AuthJwtAdminAccessProtected } from '../../../common/auth/decorators/auth.jwt.decorator';
+import {
+    ApiKeyPublicProtected,
+    GetApiKey,
+} from '../decorators/api-key.decorator';
 import {
     PaginationQuery,
     PaginationQueryFilterInBoolean,
     PaginationQueryFilterInEnum,
-} from '@common/pagination/decorators/pagination.decorator';
-import { PaginationListDTO } from '@common/pagination/dtos/pagination.list.dto';
-import { PaginationService } from '@common/pagination/services/pagination.service';
+} from '../../../common/pagination/decorators/pagination.decorator';
 import {
-    ENUM_POLICY_ACTION,
-    ENUM_POLICY_SUBJECT,
-} from '@common/policy/constants/policy.enum.constant';
-import { PolicyAbilityProtected } from '@common/policy/decorators/policy.decorator';
-import { RequestParamGuard } from '@common/request/decorators/request.decorator';
-import {
-    Response,
-    ResponsePaging,
-} from '@common/response/decorators/response.decorator';
+    API_KEY_DEFAULT_AVAILABLE_ORDER_BY,
+    API_KEY_DEFAULT_AVAILABLE_SEARCH,
+    API_KEY_DEFAULT_IS_ACTIVE,
+    API_KEY_DEFAULT_ORDER_BY,
+    API_KEY_DEFAULT_ORDER_DIRECTION,
+    API_KEY_DEFAULT_PER_PAGE,
+    API_KEY_DEFAULT_TYPE,
+} from '../constants/api-key.list.constant';
+import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
+import { ENUM_API_KEY_TYPE } from '../constants/api-key.enum.constant';
 import {
     IResponse,
     IResponsePaging,
-} from '@common/response/interfaces/response.interface';
-import { ResponseIdSerialization } from '@common/response/serializations/response.id.serialization';
-import { ApiKeyEntity } from '@modules/api-key/entities/api-key.entity';
-import { ENUM_API_KEY_TYPE } from '@common/api-key/constants/api-key.enum.constant';
+} from '../../../common/response/interfaces/response.interface';
+import { ApiKeyGetSerialization } from '../serializations/api-key.get.serialization';
+import {
+    ApiKeyAdminDeleteGuard,
+    ApiKeyAdminGetGuard,
+    ApiKeyAdminUpdateActiveGuard,
+    ApiKeyAdminUpdateGuard,
+    ApiKeyAdminUpdateInactiveGuard,
+    ApiKeyAdminUpdateResetGuard,
+} from '../decorators/api-key.admin.decorator';
+import { PolicyAbilityProtected } from '../../../common/policy/decorators/policy.decorator';
+import {
+    ENUM_POLICY_ACTION,
+    ENUM_POLICY_SUBJECT,
+} from '../../../common/policy/constants/policy.enum.constant';
+import { RequestParamGuard } from '../../../common/request/decorators/request.decorator';
+import { ApiKeyRequestDto } from '../dtos/api-key.request.dto';
+import { ApiKeyEntity } from '../../../modules/api-key/entities/api-key.entity';
+import { ApiKeyCreateSerialization } from '../serializations/api-key.create.serialization';
+import { ApiKeyCreateDTO } from '../dtos/api-key.create.dto';
+import { IApiKeyCreated } from '../interfaces/api-key.interface';
+import { ApiKeyResetSerialization } from '../serializations/api-key.reset.serialization';
+import { ResponseIdSerialization } from '../../../common/response/serializations/response.id.serialization';
+import { ApiKeyUpdateDTO } from '../dtos/api-key.update.dto';
+import { ApiKeyUpdateDateDTO } from '../dtos/api-key.update-date.dto';
 
 @ApiTags('common.admin.apiKey')
 @Controller({
@@ -141,9 +141,7 @@ export class ApiKeyAdminController {
     }
 
     @ApiKeyAdminGetDoc()
-    @Response('apiKey.get', {
-        serialization: ApiKeyGetSerialization,
-    })
+    @Response('apiKey.get', { serialization: ApiKeyGetSerialization })
     @ApiKeyAdminGetGuard()
     @PolicyAbilityProtected({
         subject: ENUM_POLICY_SUBJECT.API_KEY,

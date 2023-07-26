@@ -55,7 +55,7 @@ import {
 } from '../decorators/role.admin.decorator';
 import { PolicyAbilityProtected } from '../../../common/policy/decorators/policy.decorator';
 import { RequestParamGuard } from '../../../common/request/decorators/request.decorator';
-import { RoleRequestDto } from '../dtos/role.request.dto';
+import { RoleRequestDTO } from '../dtos/role.request.dto';
 import { GetRole } from '../decorators/role.decorator';
 import { ResponseIdSerialization } from '../../../common/response/serializations/response.id.serialization';
 import { RoleCreateDTO } from '../dtos/role.create.dto';
@@ -125,7 +125,7 @@ export class RoleAdminController {
     //     action: [ENUM_POLICY_ACTION.READ],
     // })
     @AuthJwtAdminAccessProtected()
-    @RequestParamGuard(RoleRequestDto)
+    @RequestParamGuard(RoleRequestDTO)
     @Get('get/:role')
     async get(@GetRole(true) role: RoleEntity): Promise<IResponse> {
         return { data: role };
@@ -171,7 +171,7 @@ export class RoleAdminController {
     //     action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.UPDATE],
     // })
     @AuthJwtAdminAccessProtected()
-    @RequestParamGuard(RoleRequestDto)
+    @RequestParamGuard(RoleRequestDTO)
     @Put('/update/:role')
     async update(
         @GetRole() role: RoleEntity,
@@ -195,7 +195,7 @@ export class RoleAdminController {
     //     action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.UPDATE],
     // })
     // @AuthJwtAdminAccessProtected()
-    // @RequestParamGuard(RoleRequestDto)
+    // @RequestParamGuard(RoleRequestDTO)
     // @Put('/update/:role/permission')
     // async updatePermission(
     //     @GetRole() role: RoleDoc,
@@ -220,7 +220,7 @@ export class RoleAdminController {
     //     action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.DELETE],
     // })
     // @AuthJwtAdminAccessProtected()
-    // @RequestParamGuard(RoleRequestDto)
+    // @RequestParamGuard(RoleRequestDTO)
     // @Delete('/delete/:role')
     // async delete(@GetRole() role: RoleEntity): Promise<void> {
     //     const used: RoleEntity = await this.userService.findOne({
@@ -242,7 +242,7 @@ export class RoleAdminController {
     @Response('role.inactive')
     @RoleAdminUpdateInactiveGuard()
     @AuthJwtAdminAccessProtected()
-    @RequestParamGuard(RoleRequestDto)
+    @RequestParamGuard(RoleRequestDTO)
     @Patch('/update/:role/inactive')
     async inactive(@GetRole() role: RoleEntity): Promise<void> {
         await this.roleService.inactive(role);
@@ -252,7 +252,7 @@ export class RoleAdminController {
     @Response('role.active')
     @RoleAdminUpdateActiveGuard()
     @AuthJwtAdminAccessProtected()
-    @RequestParamGuard(RoleRequestDto)
+    @RequestParamGuard(RoleRequestDTO)
     @Patch('/update/:role/active')
     async active(@GetRole() role: RoleEntity): Promise<void> {
         await this.roleService.active(role);

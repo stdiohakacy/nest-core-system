@@ -75,7 +75,7 @@ export class RoleService implements IRoleService {
 
     // async updatePermissions(
     //     repository: RoleEntity,
-    //     { permissions, type }: RoleUpdatePermissionDto,
+    //     { permissions, type }: RoleUpdatePermissionDTO,
     //     options?: IDatabaseSaveOptions
     // ): Promise<RoleEntity> {
     //     repository.permissions = permissions;

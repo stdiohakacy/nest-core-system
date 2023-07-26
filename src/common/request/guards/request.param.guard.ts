@@ -16,12 +16,12 @@ export class RequestParamRawGuard implements CanActivate {
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const { params } = context.switchToHttp().getRequest();
-        const classDtos: ClassConstructor<any>[] = this.reflector.get<
+        const classDTOs: ClassConstructor<any>[] = this.reflector.get<
             ClassConstructor<any>[]
         >(REQUEST_PARAM_CLASS_DTOS_META_KEY, context.getHandler());
 
-        for (const clsDto of classDtos) {
-            const request = plainToInstance(clsDto, params);
+        for (const clsDTO of classDTOs) {
+            const request = plainToInstance(clsDTO, params);
 
             const errors: ValidationError[] = await validate(request);
 

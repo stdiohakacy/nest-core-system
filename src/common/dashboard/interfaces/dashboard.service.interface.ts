@@ -1,7 +1,7 @@
-import { DashboardDto } from '../dtos/dashboard';
+import { DashboardDTO } from '../dtos/dashboard';
 import { IDashboardStartAndEndDate } from './dashboard.interface';
 
 export interface IDashboardService {
-    getStartAndEndDate(date?: DashboardDto): IDashboardStartAndEndDate;
+    getStartAndEndDate(date?: DashboardDTO): IDashboardStartAndEndDate;
     getPercentage(value: number, total: number): number;
 }

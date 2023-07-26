@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, MaxLength } from 'class-validator';
 import { IsPasswordStrong } from '../../../common/request/validations/request.is-password-strong.validation';
 
-export class UserChangePasswordDto {
+export class UserChangePasswordDTO {
     @ApiProperty({
         description:
             "new string password, newPassword can't same with oldPassword",

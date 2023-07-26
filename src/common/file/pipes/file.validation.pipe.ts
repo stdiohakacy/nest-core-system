@@ -68,10 +68,10 @@ export class FileValidationPipe<T> implements PipeTransform {
     }
 
     async transformExtract(
-        classDtos: ClassConstructor<T>,
+        classDTOs: ClassConstructor<T>,
         extract: Record<string, any>[]
     ): Promise<T[]> {
-        return plainToInstance(classDtos, extract);
+        return plainToInstance(classDTOs, extract);
     }
 
     async validate(value: IFileExtract): Promise<void> {
@@ -117,7 +117,7 @@ export class FileValidationPipe<T> implements PipeTransform {
             throw new UnprocessableEntityException({
                 statusCode:
                     ENUM_FILE_STATUS_CODE_ERROR.FILE_VALIDATION_DTO_ERROR,
-                message: 'file.error.validationDto',
+                message: 'file.error.validationDTO',
                 errors,
                 _errorType: 'import',
             });

@@ -72,7 +72,7 @@ import {
     UserAdminUpdateInactiveGuard,
 } from '../decorators/user.admin.decorator';
 import { RequestParamGuard } from '../../../common/request/decorators/request.decorator';
-import { UserRequestDto } from '../dtos/user.request.dto';
+import { UserRequestDTO } from '../dtos/user.request.dto';
 import { GetUser } from '../decorators/user.decorator';
 import { ResponseIdSerialization } from '../../../common/response/serializations/response.id.serialization';
 import { UserCreateDTO } from '../dtos/user.create.dto';
@@ -165,7 +165,7 @@ export class UserAdminController {
         action: [ENUM_POLICY_ACTION.READ],
     })
     @AuthJwtAdminAccessProtected()
-    @RequestParamGuard(UserRequestDto)
+    @RequestParamGuard(UserRequestDTO)
     @Get('/get/:user')
     async get(@GetUser() user: UserEntity): Promise<IResponse> {
         const userEntity = await this.userService.findOneById(user.id);
@@ -245,7 +245,7 @@ export class UserAdminController {
         action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.UPDATE],
     })
     @AuthJwtAdminAccessProtected()
-    @RequestParamGuard(UserRequestDto)
+    @RequestParamGuard(UserRequestDTO)
     @Put('/update/:user')
     async update(
         @GetUser() user: UserEntity,
@@ -267,7 +267,7 @@ export class UserAdminController {
         action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.UPDATE],
     })
     @AuthJwtAdminAccessProtected()
-    @RequestParamGuard(UserRequestDto)
+    @RequestParamGuard(UserRequestDTO)
     @Patch('/update/:user/inactive')
     async inactive(@GetUser() user: UserEntity): Promise<void> {
         await this.userService.inactive(user);
@@ -281,7 +281,7 @@ export class UserAdminController {
         action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.UPDATE],
     })
     @AuthJwtAdminAccessProtected()
-    @RequestParamGuard(UserRequestDto)
+    @RequestParamGuard(UserRequestDTO)
     @Patch('/update/:user/active')
     async active(@GetUser() user: UserEntity): Promise<void> {
         await this.userService.active(user);
@@ -295,7 +295,7 @@ export class UserAdminController {
     //     action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.UPDATE],
     // })
     @AuthJwtAdminAccessProtected()
-    @RequestParamGuard(UserRequestDto)
+    @RequestParamGuard(UserRequestDTO)
     @Patch('/update/:user/blocked')
     async blocked(@GetUser() user: UserEntity): Promise<void> {
         await this.userService.blocked(user);
@@ -309,7 +309,7 @@ export class UserAdminController {
     //     action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.DELETE],
     // })
     @AuthJwtAdminAccessProtected()
-    @RequestParamGuard(UserRequestDto)
+    @RequestParamGuard(UserRequestDTO)
     @Delete('/delete/:user')
     async delete(@GetUser() user: UserEntity): Promise<void> {
         await this.userService.delete(user.id);

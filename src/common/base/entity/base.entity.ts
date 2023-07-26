@@ -51,7 +51,7 @@ export abstract class BaseEntity<DTO extends BaseDTO = BaseDTO, O = never>
 
         if (!dtoClass) {
             throw new Error(
-                `You need to use @UseDto on class (${this.constructor.name}) be able to call toDTO function`
+                `You need to use @UseDTO on class (${this.constructor.name}) be able to call toDTO function`
             );
         }
 

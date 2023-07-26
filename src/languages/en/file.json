@@ -5,6 +5,6 @@
         "maxFiles": "Files are to many",
         "mimeInvalid": "File extension not valid",
         "needExtractFirst": "Extract data needed",
-        "validationDto": "Import Data invalid"
+        "validationDTO": "Import Data invalid"
     }
 }

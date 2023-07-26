@@ -23,7 +23,7 @@ import {
 } from '../docs/user.public.doc';
 import { Response } from '../../../common/response/decorators/response.decorator';
 import { UserLoginSerialization } from '../serializations/user.login.serialization';
-import { UserLoginDto } from '../dtos/user.login.dto';
+import { UserLoginDTO } from '../dtos/user.login.dto';
 import { IResponse } from '../../../common/response/interfaces/response.interface';
 import {
     ENUM_USER_STATUS_CODE_ERROR,
@@ -58,7 +58,7 @@ export class UserPublicController {
     @Response('user.login', { serialization: UserLoginSerialization })
     @HttpCode(HttpStatus.OK)
     @Post('/login')
-    async login(@Body() { email, password }: UserLoginDto): Promise<IResponse> {
+    async login(@Body() { email, password }: UserLoginDTO): Promise<IResponse> {
         const user: UserEntity = await this.userService.findOneByEmail(email);
         if (!user) {
             throw new NotFoundException({

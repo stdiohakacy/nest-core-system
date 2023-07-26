@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class FileSingleDto {
+export class FileSingleDTO {
     @ApiProperty({ type: 'string', format: 'binary' })
     file: any;
 }

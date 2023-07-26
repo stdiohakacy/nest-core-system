@@ -31,8 +31,8 @@ import { ResponseDefaultSerialization } from '../../../common/response/serializa
 import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/error.status-code.constant';
 import { ENUM_DOC_REQUEST_BODY_TYPE } from '../constants/doc.enum.constant';
 import { ENUM_REQUEST_STATUS_CODE_ERROR } from '../../../common/request/constants/request.status-code.constant';
-import { FileMultipleDto } from '../../../common/file/dtos/file.multiple.dto';
-import { FileSingleDto } from '../../../common/file/dtos/file.single.dto';
+import { FileMultipleDTO } from '../../../common/file/dtos/file.multiple.dto';
+import { FileSingleDTO } from '../../../common/file/dtos/file.single.dto';
 import { ENUM_AUTH_STATUS_CODE_ERROR } from '../../../common/auth/constants/auth.status-code.constant';
 import { ENUM_API_KEY_STATUS_CODE_ERROR } from '../../../common/api-key/constants/api-key.status-code.constant';
 import { ENUM_FILE_EXCEL_MIME } from '../../../common/file/constants/file.enum.constant';
@@ -320,14 +320,14 @@ export function DocRequestFile(options?: IDocRequestFileOptions) {
         docs.push(
             ApiBody({
                 description: 'Multiple file',
-                type: FileMultipleDto,
+                type: FileMultipleDTO,
             })
         );
     } else {
         docs.push(
             ApiBody({
                 description: 'Single file',
-                type: FileSingleDto,
+                type: FileSingleDTO,
             })
         );
     }

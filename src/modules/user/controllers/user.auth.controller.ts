@@ -42,7 +42,7 @@ import {
 import { IResponse } from '../../../common/response/interfaces/response.interface';
 import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
-import { UserChangePasswordDto } from '../dtos/user.change-password.dto';
+import { UserChangePasswordDTO } from '../dtos/user.change-password.dto';
 import { IAuthPassword } from '../../../common/auth/interfaces/auth.interface';
 import { UserProfileSerialization } from '../serializations/user.profile.serialization';
 import { UserUpdateNameDTO } from '../dtos/user.update-name.dto';
@@ -136,7 +136,7 @@ export class UserAuthController {
     @AuthJwtAccessProtected()
     @Patch('/change-password')
     async changePassword(
-        @Body() body: UserChangePasswordDto,
+        @Body() body: UserChangePasswordDTO,
         @GetUser() user: UserEntity
     ): Promise<void> {
         const passwordAttempt: boolean =

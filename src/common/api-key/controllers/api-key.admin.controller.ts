@@ -66,7 +66,7 @@ import {
     ENUM_POLICY_SUBJECT,
 } from '../../../common/policy/constants/policy.enum.constant';
 import { RequestParamGuard } from '../../../common/request/decorators/request.decorator';
-import { ApiKeyRequestDto } from '../dtos/api-key.request.dto';
+import { ApiKeyRequestDTO } from '../dtos/api-key.request.dto';
 import { ApiKeyEntity } from '../../../modules/api-key/entities/api-key.entity';
 import { ApiKeyCreateSerialization } from '../serializations/api-key.create.serialization';
 import { ApiKeyCreateDTO } from '../dtos/api-key.create.dto';
@@ -149,7 +149,7 @@ export class ApiKeyAdminController {
     })
     @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
-    @RequestParamGuard(ApiKeyRequestDto)
+    @RequestParamGuard(ApiKeyRequestDTO)
     @Get('/get/:apiKey')
     async get(@GetApiKey(true) apiKey: ApiKeyEntity): Promise<IResponse> {
         return { data: apiKey };
@@ -184,7 +184,7 @@ export class ApiKeyAdminController {
     })
     @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
-    @RequestParamGuard(ApiKeyRequestDto)
+    @RequestParamGuard(ApiKeyRequestDTO)
     @Patch('/update/:apiKey/reset')
     async reset(@GetApiKey() apiKey: ApiKeyEntity): Promise<IResponse> {
         const secret: string = await this.apiKeyService.createSecret();
@@ -207,7 +207,7 @@ export class ApiKeyAdminController {
     })
     @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
-    @RequestParamGuard(ApiKeyRequestDto)
+    @RequestParamGuard(ApiKeyRequestDTO)
     @Put('/update/:apiKey')
     async updateName(
         @Body() body: ApiKeyUpdateDTO,
@@ -227,7 +227,7 @@ export class ApiKeyAdminController {
     })
     @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
-    @RequestParamGuard(ApiKeyRequestDto)
+    @RequestParamGuard(ApiKeyRequestDTO)
     @Patch('/update/:apiKey/inactive')
     async inactive(@GetApiKey() apiKey: ApiKeyEntity): Promise<void> {
         await this.apiKeyService.inactive(apiKey);
@@ -244,7 +244,7 @@ export class ApiKeyAdminController {
     })
     @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
-    @RequestParamGuard(ApiKeyRequestDto)
+    @RequestParamGuard(ApiKeyRequestDTO)
     @Patch('/update/:apiKey/active')
     async active(@GetApiKey() apiKey: ApiKeyEntity): Promise<void> {
         await this.apiKeyService.active(apiKey);
@@ -261,7 +261,7 @@ export class ApiKeyAdminController {
     })
     @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
-    @RequestParamGuard(ApiKeyRequestDto)
+    @RequestParamGuard(ApiKeyRequestDTO)
     @Put('/update/:apiKey/date')
     async updateDate(
         @Body() body: ApiKeyUpdateDateDTO,
@@ -281,7 +281,7 @@ export class ApiKeyAdminController {
     })
     @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
-    @RequestParamGuard(ApiKeyRequestDto)
+    @RequestParamGuard(ApiKeyRequestDTO)
     @Delete('/delete/:apiKey')
     async delete(@GetApiKey() apiKey: ApiKeyEntity): Promise<void> {
         await this.apiKeyService.delete(apiKey);

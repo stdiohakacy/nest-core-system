@@ -1,19 +1,21 @@
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
-import { MailService } from './mail.service';
-import { MailProcessor } from './mail.processor';
+import { MailService } from './services/mail.service';
+import { MailProcessor } from './processors/mail.processor';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
     imports: [
         ConfigModule.forRoot(),
-        BullModule.forRoot({
-            redis: {
-                host: process.env.REDIS_HOST,
-                port: parseInt(process.env.REDIS_PORT),
-            },
+        BullModule.registerQueueAsync({
+            name: 'mail-queue',
+            useFactory: () => ({
+                redis: {
+                    host: process.env.REDIS_HOST,
+                    port: Number(process.env.REDIS_PORT),
+                },
+            }),
         }),
-        BullModule.registerQueue({ name: 'mail' }),
     ],
     providers: [MailService, MailProcessor],
     exports: [MailService, MailProcessor],

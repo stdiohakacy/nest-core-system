@@ -40,7 +40,7 @@ import {
 import { AuthJwtPayload } from '../../../common/auth/decorators/auth.jwt.decorator';
 import { IAuthGooglePayload } from '../../../common/auth/interfaces/auth.interface';
 import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/error.status-code.constant';
-import { MailService } from 'src/common/integrations/mail/mail.service';
+import { MailService } from 'src/common/integrations/mail/services/mail.service';
 
 @ApiTags('modules.public.user')
 @Controller({
@@ -184,14 +184,13 @@ export class UserPublicController {
         @Body()
         { email, mobileNumber, username, ...body }: UserSignUpDTO
     ): Promise<void> {
-        const result = await this.mailService.sendWelcomeEmail({
+        await this.mailService.sendAccountActivation({
             from: '',
             to: '',
             subject: '',
             text: '',
             test: '',
         });
-        console.log(result);
         // const promises: Promise<any>[] = [this.userService.existByEmail(email)];
         // if (mobileNumber) {
         //     promises.push(this.userService.existByMobileNumber(mobileNumber));

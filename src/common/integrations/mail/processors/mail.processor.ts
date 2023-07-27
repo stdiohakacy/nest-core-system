@@ -6,8 +6,6 @@ import {
     Processor,
 } from '@nestjs/bull';
 import { Job } from 'bull';
-import { IMail } from '../interfaces/mail.interface';
-import { SentMessageInfo } from 'nodemailer';
 import nodemailer from 'nodemailer';
 import SibTransport from 'nodemailer-sendinblue-transport';
 import { ConfigService } from '@nestjs/config';
@@ -19,7 +17,6 @@ import {
 import { IMailProcessor } from '../interfaces/mail.processor.interface';
 import { ENUM_MAIL_STATUS_CODE_ERROR } from '../constants/mail.status-code.constant';
 import { MAIL_QUEUE_NAME } from '../constants/mail.constant';
-import { IMailTransporter } from '../transporters/mail.transporter';
 import { MailSibTransporter } from '../transporters/mail.sib.transporter';
 import { MailConsoleTransporter } from '../transporters/mail.console.transporter';
 
@@ -32,10 +29,6 @@ export class MailProcessor implements IMailProcessor {
         const providerType = this.configService.get<string>(
             'integration.mail.providerType'
         );
-
-        console.log(providerType);
-
-        console.log(ENUM_MAIL_PROVIDER_TYPE.SIB);
 
         switch (providerType) {
             case ENUM_MAIL_PROVIDER_TYPE.SIB:
@@ -94,12 +87,16 @@ export class MailProcessor implements IMailProcessor {
         );
 
         try {
-            this.mailTransporter.sendMail({
-                from,
-                to,
-                subject,
-                text,
+            this.mailTransporter.sendMailAccountActivation({
+                activationLink:
+                    'https://www.w3schools.com/html/tryit.asp?filename=tryhtml_default_default',
             });
+            // this.mailTransporter.sendMail({
+            //     from,
+            //     to,
+            //     subject,
+            //     text,
+            // });
         } catch (error) {
             this.logger.error(
                 'Failed to send account activation email.',

@@ -11,26 +11,54 @@ import { SentMessageInfo } from 'nodemailer';
 import nodemailer from 'nodemailer';
 import SibTransport from 'nodemailer-sendinblue-transport';
 import { ConfigService } from '@nestjs/config';
-import { Logger } from '@nestjs/common';
+import { Logger, NotFoundException } from '@nestjs/common';
 import {
     ENUM_MAIL_PROCESSOR_NAME,
-    ENUM_QUEUE_NAME,
-} from '../constants/mail.enum.constant';
+    ENUM_MAIL_PROVIDER_TYPE,
+} from 'src/common/integrations/mail/constants/mail.enum.constant';
 import { IMailProcessor } from '../interfaces/mail.processor.interface';
+import { ENUM_MAIL_STATUS_CODE_ERROR } from '../constants/mail.status-code.constant';
+import { MAIL_QUEUE_NAME } from '../constants/mail.constant';
+import { IMailTransporter } from '../transporters/mail.transporter';
+import { MailSibTransporter } from '../transporters/mail.sib.transporter';
+import { MailConsoleTransporter } from '../transporters/mail.console.transporter';
 
-@Processor(ENUM_QUEUE_NAME.MAIL)
+@Processor(MAIL_QUEUE_NAME)
 export class MailProcessor implements IMailProcessor {
-    private readonly transporter: nodemailer.Transporter;
+    private mailTransporter;
     private readonly logger = new Logger(this.constructor.name);
 
     constructor(private readonly configService: ConfigService) {
-        this.transporter = nodemailer.createTransport(
-            new SibTransport({
-                apiKey: this.configService.get<string>(
-                    'integration.mail.sib.apiKey'
-                ),
-            })
+        const providerType = this.configService.get<string>(
+            'integration.mail.providerType'
         );
+
+        console.log(providerType);
+
+        console.log(ENUM_MAIL_PROVIDER_TYPE.SIB);
+
+        switch (providerType) {
+            case ENUM_MAIL_PROVIDER_TYPE.SIB:
+                this.mailTransporter = new MailSibTransporter(
+                    nodemailer.createTransport(
+                        new SibTransport({
+                            apiKey: this.configService.get<string>(
+                                'integration.mail.sib.apiKey'
+                            ),
+                        })
+                    )
+                );
+                break;
+            case ENUM_MAIL_PROVIDER_TYPE.CONSOLE:
+                this.mailTransporter = new MailConsoleTransporter();
+                break;
+            default:
+                throw new NotFoundException({
+                    statusCode:
+                        ENUM_MAIL_STATUS_CODE_ERROR.MAIL_PROVIDER_TYPE_NOT_FOUND_ERROR,
+                    message: 'mail.error.providerNotFound',
+                });
+        }
     }
 
     @OnQueueActive()
@@ -60,16 +88,17 @@ export class MailProcessor implements IMailProcessor {
     @Process(ENUM_MAIL_PROCESSOR_NAME.ACCOUNT_ACTIVATION)
     async sendAccountActivation(job: Job): Promise<any> {
         const { data } = job;
+        const { from, to, subject, text } = data;
         this.logger.log(
             'Processor:@Process - Sending account activation email.'
         );
 
         try {
-            const info: SentMessageInfo = await this.transporter.sendMail({
-                from: 'Your Name <your-email@example.com>',
-                to: 'nguyendangduy2210@gmail.com',
-                subject: 'Account activation',
-                text: 'This is content of account activation',
+            this.mailTransporter.sendMail({
+                from,
+                to,
+                subject,
+                text,
             });
         } catch (error) {
             this.logger.error(

@@ -185,11 +185,10 @@ export class UserPublicController {
         { email, mobileNumber, username, ...body }: UserSignUpDTO
     ): Promise<void> {
         await this.mailService.sendAccountActivation({
-            from: '',
-            to: '',
-            subject: '',
-            text: '',
-            test: '',
+            from: 'Your Name <your-email@example.com>',
+            to: 'nguyendangduy2210@gmail.com',
+            subject: 'Account activation',
+            text: 'This is content of account activation',
         });
         // const promises: Promise<any>[] = [this.userService.existByEmail(email)];
         // if (mobileNumber) {

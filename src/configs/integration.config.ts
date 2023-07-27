@@ -10,6 +10,7 @@ export default registerAs(
             },
         },
         mail: {
+            providerType: process.env.MAIL_PROVIDER_TYPE,
             sib: {
                 apiKey: process.env.SIB_API_KEY,
             },

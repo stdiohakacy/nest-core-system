@@ -15,7 +15,6 @@ import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import { UserEntity } from '../entities/user.entity';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../../../common/auth/services/auth.service';
-import { RoleService } from '../../../modules/role/services/role.service';
 import { SettingService } from '../../../common/setting/services/setting.service';
 import {
     UserPublicActiveDoc,
@@ -43,7 +42,7 @@ import {
 import { AuthJwtPayload } from '../../../common/auth/decorators/auth.jwt.decorator';
 import { IAuthGooglePayload } from '../../../common/auth/interfaces/auth.interface';
 import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/error.status-code.constant';
-import { MailService } from 'src/common/integrations/mail/services/mail.service';
+import { MailService } from '../../../common/integrations/mail/services/mail.service';
 import { randomBytes } from 'crypto';
 import { ConfigService } from '@nestjs/config';
 import { UserActiveDTO } from '../dtos/user.active.dto';
@@ -55,15 +54,11 @@ import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { UserResetPasswordCommand } from '../commands/user.reset-password.command';
 
 @ApiTags('modules.public.user')
-@Controller({
-    version: '1',
-    path: '/user',
-})
+@Controller({ version: '1', path: '/user' })
 export class UserPublicController {
     constructor(
         private readonly userService: UserService,
         private readonly authService: AuthService,
-        private readonly roleService: RoleService,
         private readonly settingService: SettingService,
         private readonly mailService: MailService,
         private readonly configService: ConfigService,
@@ -124,16 +119,6 @@ export class UserPublicController {
                 message: 'user.error.inactive',
             });
         }
-
-        // const userWithRole: IUserDoc = await this.userService.joinWithRole(
-        //     user
-        // );
-        // if (!userWithRole.role.isActive) {
-        //     throw new ForbiddenException({
-        //         statusCode: ENUM_ROLE_STATUS_CODE_ERROR.ROLE_INACTIVE_ERROR,
-        //         message: 'role.error.inactive',
-        //     });
-        // }
 
         await this.userService.resetPasswordAttempt(user);
 
@@ -296,16 +281,6 @@ export class UserPublicController {
             });
         }
 
-        // const userWithRole: IUserDoc = await this.userService.joinWithRole(
-        //     user
-        // );
-        // if (!userWithRole.role.isActive) {
-        //     throw new ForbiddenException({
-        //         statusCode: ENUM_ROLE_STATUS_CODE_ERROR.ROLE_INACTIVE_ERROR,
-        //         message: 'role.error.inactive',
-        //     });
-        // }
-
         await this.userService.updateGoogleSSO(user, {
             accessToken: googleAccessToken,
             refreshToken: googleRefreshToken,
@@ -379,12 +354,9 @@ export class UserPublicController {
     ): Promise<void> {
         // sign up
 
-        const promises: Promise<any>[] = [
-            this.roleService.findOneByName('user'),
-            this.userService.existByEmail(email),
-        ];
+        const promises: Promise<any>[] = [this.userService.existByEmail(email)];
 
-        const [role, emailExist] = await Promise.all(promises);
+        const [emailExist] = await Promise.all(promises);
 
         if (emailExist) {
             throw new ConflictException({

@@ -1,5 +1,5 @@
 import { applyDecorators } from '@nestjs/common';
-import { AppHelloSerialization } from 'src/app/serializations/app.hello.serialization';
+import { AppHelloSerialization } from '../../app/serializations/app.hello.serialization';
 import {
     Doc,
     DocAuth,

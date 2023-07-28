@@ -1,34 +1,15 @@
 import { faker } from '@faker-js/faker';
 import { ApiHideProperty, ApiProperty, OmitType } from '@nestjs/swagger';
 import { Exclude, Expose, Transform } from 'class-transformer';
-import {
-    ENUM_POLICY_REQUEST_ACTION,
-    ENUM_POLICY_SUBJECT,
-} from '../../../common/policy/constants/policy.enum.constant';
+
 import { UserProfileSerialization } from './user.profile.serialization';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
-import { ENUM_ROLE_TYPE } from '../../../modules/role/constants/role.enum.constant';
-import { IPolicyRule } from '../../../common/policy/interfaces/policy.interface';
 import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
-export class UserPayloadPermissionSerialization {
-    @ApiProperty({
-        required: true,
-        nullable: false,
-        enum: ENUM_POLICY_SUBJECT,
-        example: ENUM_POLICY_SUBJECT.API_KEY,
-    })
-    subject: ENUM_POLICY_SUBJECT;
-
-    @ApiProperty({
-        required: true,
-        nullable: false,
-    })
-    action: string;
-}
+import { ENUM_RBAC_ROLE_TYPE } from 'src/common/rbac/constants/rbac.enum.role.constant';
 
 export class UserPayloadSerialization extends OmitType(
     UserProfileSerialization,
-    ['photo', 'role', 'signUpDate', 'createdAt', 'updatedAt'] as const
+    ['photo', 'signUpDate', 'createdAt', 'updatedAt'] as const
 ) {
     @ApiHideProperty()
     @Exclude()
@@ -45,35 +26,15 @@ export class UserPayloadSerialization extends OmitType(
     readonly role: string;
 
     @ApiProperty({
-        example: ENUM_ROLE_TYPE.ADMIN,
+        example: ENUM_RBAC_ROLE_TYPE.ADMIN,
         type: 'string',
-        enum: ENUM_ROLE_TYPE,
+        enum: ENUM_RBAC_ROLE_TYPE,
         required: true,
         nullable: false,
     })
     @Expose()
     @Transform(({ obj }) => obj.role.type)
-    readonly type: ENUM_ROLE_TYPE;
-
-    @ApiProperty({
-        type: () => UserPayloadPermissionSerialization,
-        isArray: true,
-        required: true,
-        nullable: false,
-    })
-    @Transform(({ obj }) => {
-        return obj.role.permissions.map(({ action, subject }: IPolicyRule) => {
-            const ac = action.map(
-                (l) => ENUM_POLICY_REQUEST_ACTION[l.toUpperCase()]
-            );
-            return {
-                subject,
-                action: ac.join(','),
-            };
-        });
-    })
-    @Expose()
-    readonly permissions: UserPayloadPermissionSerialization[];
+    readonly type: ENUM_RBAC_ROLE_TYPE;
 
     @ApiHideProperty()
     @Exclude()

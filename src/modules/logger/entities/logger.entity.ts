@@ -10,7 +10,7 @@ import { UseDTO } from '../../../common/decorators/use-dto.decorator';
 
 import { Column, Entity } from 'typeorm';
 import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
-import { ENUM_ROLE_TYPE } from '../../../modules/role/constants/role.enum.constant';
+import { ENUM_RBAC_ROLE_TYPE } from '../../../common/rbac/constants/rbac.enum.role.constant';
 import { LoggerDTO } from '../../../common/logger/dtos/logger.dto';
 
 export interface ILoggerEntity extends IBaseEntity<LoggerDTO> {
@@ -23,7 +23,7 @@ export interface ILoggerEntity extends IBaseEntity<LoggerDTO> {
     requestId?: string;
     userId?: string;
     apiKeyId?: string;
-    type?: ENUM_ROLE_TYPE;
+    type?: ENUM_RBAC_ROLE_TYPE;
     params?: Record<string, any>;
     bodies?: Record<string, any>;
     statusCode?: number;
@@ -77,10 +77,10 @@ export class LoggerEntity
 
     @Column({
         name: 'type',
-        enum: ENUM_ROLE_TYPE,
-        default: ENUM_ROLE_TYPE.USER,
+        enum: ENUM_RBAC_ROLE_TYPE,
+        default: ENUM_RBAC_ROLE_TYPE.USER,
     })
-    type?: ENUM_ROLE_TYPE;
+    type?: ENUM_RBAC_ROLE_TYPE;
 
     @Column({
         name: 'params',

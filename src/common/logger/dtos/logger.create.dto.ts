@@ -1,9 +1,9 @@
+import { ENUM_RBAC_ROLE_TYPE } from '../../../common/rbac/constants/rbac.enum.role.constant';
 import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
 import {
     ENUM_LOGGER_ACTION,
     ENUM_LOGGER_LEVEL,
 } from '../constants/logger.enum.constant';
-import { ENUM_ROLE_TYPE } from '../../../modules/role/constants/role.enum.constant';
 
 export class LoggerCreateDTO {
     action: ENUM_LOGGER_ACTION;
@@ -14,7 +14,7 @@ export class LoggerCreateDTO {
     method: ENUM_REQUEST_METHOD;
     path: string;
     // role?: string;
-    type?: ENUM_ROLE_TYPE;
+    type?: ENUM_RBAC_ROLE_TYPE;
     tags?: string[];
     params?: Record<string, any>;
     bodies?: Record<string, any>;

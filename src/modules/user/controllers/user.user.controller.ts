@@ -5,7 +5,6 @@ import { UserUserDeleteSelfDoc } from '../docs/user.user.doc';
 import { UserService } from '../services/user.service';
 import { Response } from '../../../common/response/decorators/response.decorator';
 import { GetUser, UserProtected } from '../decorators/user.decorator';
-import { AuthJwtUserAccessProtected } from '../../../common/auth/decorators/auth.jwt.decorator';
 
 @ApiTags('modules.user.user')
 @Controller({
@@ -18,7 +17,6 @@ export class UserUserController {
     @UserUserDeleteSelfDoc()
     @Response('user.deleteSelf')
     @UserProtected()
-    @AuthJwtUserAccessProtected()
     @Delete('/delete')
     async deleteSelf(@GetUser() user: UserEntity): Promise<void> {
         await this.userService.inactivePermanent(user);

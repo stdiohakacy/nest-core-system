@@ -7,7 +7,6 @@ import { SettingPublicController } from '../../common/setting/controllers/settin
 import { SettingModule } from '../../common/setting/setting.module';
 import { HealthPublicController } from 'src/health/controllers/health.public.controller';
 import { HealthModule } from 'src/health/health.module';
-import { RoleModule } from '../../modules/role/role.module';
 import { UserPublicController } from '../../modules/user/controllers/user.public.controller';
 import { UserModule } from '../../modules/user/user.module';
 import { CqrsModule } from '@nestjs/cqrs';
@@ -18,7 +17,6 @@ import { CqrsModule } from '@nestjs/cqrs';
         HealthModule,
         UserModule,
         AuthModule,
-        RoleModule,
         SettingModule,
         LoggerModule,
         CqrsModule,
@@ -28,7 +26,6 @@ import { CqrsModule } from '@nestjs/cqrs';
         HealthModule,
         UserModule,
         AuthModule,
-        RoleModule,
         LoggerModule,
         SettingModule,
         LoggerModule,

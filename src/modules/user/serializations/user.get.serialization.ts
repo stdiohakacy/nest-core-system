@@ -3,18 +3,9 @@ import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Exclude, Type } from 'class-transformer';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 import { ResponseIdSerialization } from '../../../common/response/serializations/response.id.serialization';
-import { RoleGetSerialization } from '../../../modules/role/serializations/role.get.serialization';
 import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
 
 export class UserGetSerialization extends ResponseIdSerialization {
-    @ApiProperty({
-        required: true,
-        nullable: false,
-        type: () => RoleGetSerialization,
-    })
-    @Type(() => RoleGetSerialization)
-    readonly role: RoleGetSerialization;
-
     @ApiProperty({
         example: faker.internet.userName(),
         nullable: true,

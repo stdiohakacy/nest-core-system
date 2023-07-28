@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserService } from './services/user.service';
 import { UserEntity } from './entities/user.entity';
-import { IntegrationModule } from 'src/common/integrations/integration.module';
+import { IntegrationModule } from '../../common/integrations/integration.module';
 import { UserActiveHandler } from './commands/user.active.command';
 import { UserRepository } from './repositories/user.repository';
 import { UserForgotPasswordHandler } from './commands/user.forgot-password.command';
@@ -22,7 +22,7 @@ const repositories = [UserRepository];
         IntegrationModule,
         AuthModule,
     ],
-    exports: [UserService, IntegrationModule],
+    exports: [UserService, IntegrationModule, ...repositories],
     providers: [...commandHandlers, ...repositories, UserService],
     controllers: [],
 })

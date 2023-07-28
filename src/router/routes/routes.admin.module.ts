@@ -5,8 +5,6 @@ import { AuthModule } from '../../common/auth/auth.module';
 import { LoggerModule } from '../../common/logger/logger.module';
 import { SettingAdminController } from '../../common/setting/controllers/setting.admin.controller';
 import { SettingModule } from '../../common/setting/setting.module';
-import { RoleAdminController } from '../../modules/role/controllers/role.admin.controller';
-import { RoleModule } from '../../modules/role/role.module';
 import { UserAdminController } from '../../modules/user/controllers/user.admin.controller';
 import { UserModule } from '../../modules/user/user.module';
 
@@ -14,13 +12,11 @@ import { UserModule } from '../../modules/user/user.module';
     controllers: [
         SettingAdminController,
         ApiKeyAdminController,
-        RoleAdminController,
         UserAdminController,
     ],
     providers: [],
     exports: [
         ApiKeyModule,
-        RoleModule,
         UserModule,
         AuthModule,
         SettingModule,
@@ -28,7 +24,6 @@ import { UserModule } from '../../modules/user/user.module';
     ],
     imports: [
         ApiKeyModule,
-        RoleModule,
         UserModule,
         AuthModule,
         SettingModule,

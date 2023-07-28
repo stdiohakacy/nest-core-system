@@ -16,13 +16,13 @@ import { PaginationModule } from './pagination/pagination.module';
 import { ErrorModule } from './error/error.module';
 import { ResponseModule } from './response/response.module';
 import { RequestModule } from './request/request.module';
-import { PolicyModule } from './policy/policy.module';
 import { SettingModule } from './setting/setting.module';
 import { LoggerModule } from './logger/logger.module';
 import { ApiKeyModule } from './api-key/api-key.module';
 import { DebuggerModule } from './debugger/debugger.module';
 import { AuthModule } from './auth/auth.module';
 import { IntegrationModule } from './integrations/integration.module';
+import { RBACCommonModule } from './rbac/rbac.module';
 @Module({
     controllers: [],
     providers: [],
@@ -169,11 +169,11 @@ import { IntegrationModule } from './integrations/integration.module';
         ErrorModule,
         ResponseModule,
         RequestModule,
-        PolicyModule,
         SettingModule,
         LoggerModule,
         ApiKeyModule,
         IntegrationModule,
+        RBACCommonModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],
@@ -185,11 +185,11 @@ import { IntegrationModule } from './integrations/integration.module';
         ErrorModule,
         ResponseModule,
         RequestModule,
-        PolicyModule,
         SettingModule,
         LoggerModule,
         ApiKeyModule,
         IntegrationModule,
+        RBACCommonModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],

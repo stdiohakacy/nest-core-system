@@ -26,7 +26,6 @@ import {
     ResponsePaging,
 } from '../../../common/response/decorators/response.decorator';
 import { ApiKeyListSerialization } from '../serializations/api-key.list.serialization';
-import { AuthJwtAdminAccessProtected } from '../../../common/auth/decorators/auth.jwt.decorator';
 import {
     ApiKeyPublicProtected,
     GetApiKey,
@@ -60,11 +59,6 @@ import {
     ApiKeyAdminUpdateInactiveGuard,
     ApiKeyAdminUpdateResetGuard,
 } from '../decorators/api-key.admin.decorator';
-import { PolicyAbilityProtected } from '../../../common/policy/decorators/policy.decorator';
-import {
-    ENUM_POLICY_ACTION,
-    ENUM_POLICY_SUBJECT,
-} from '../../../common/policy/constants/policy.enum.constant';
 import { RequestParamGuard } from '../../../common/request/decorators/request.decorator';
 import { ApiKeyRequestDTO } from '../dtos/api-key.request.dto';
 import { ApiKeyEntity } from '../../../modules/api-key/entities/api-key.entity';
@@ -91,11 +85,6 @@ export class ApiKeyAdminController {
     @ResponsePaging('apiKey.list', {
         serialization: ApiKeyListSerialization,
     })
-    @PolicyAbilityProtected({
-        subject: ENUM_POLICY_SUBJECT.API_KEY,
-        action: [ENUM_POLICY_ACTION.READ],
-    })
-    @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
     @Get('/list')
     async list(
@@ -143,11 +132,6 @@ export class ApiKeyAdminController {
     @ApiKeyAdminGetDoc()
     @Response('apiKey.get', { serialization: ApiKeyGetSerialization })
     @ApiKeyAdminGetGuard()
-    @PolicyAbilityProtected({
-        subject: ENUM_POLICY_SUBJECT.API_KEY,
-        action: [ENUM_POLICY_ACTION.READ],
-    })
-    @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
     @RequestParamGuard(ApiKeyRequestDTO)
     @Get('/get/:apiKey')
@@ -157,11 +141,6 @@ export class ApiKeyAdminController {
 
     @ApiKeyAdminCreateDoc()
     @Response('apiKey.create', { serialization: ApiKeyCreateSerialization })
-    @PolicyAbilityProtected({
-        subject: ENUM_POLICY_SUBJECT.API_KEY,
-        action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.CREATE],
-    })
-    @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
     @Post('/create')
     async create(@Body() body: ApiKeyCreateDTO): Promise<IResponse> {
@@ -178,11 +157,6 @@ export class ApiKeyAdminController {
     @ApiKeyAdminResetDoc()
     @Response('apiKey.reset', { serialization: ApiKeyResetSerialization })
     @ApiKeyAdminUpdateResetGuard()
-    @PolicyAbilityProtected({
-        subject: ENUM_POLICY_SUBJECT.API_KEY,
-        action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.UPDATE],
-    })
-    @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
     @RequestParamGuard(ApiKeyRequestDTO)
     @Patch('/update/:apiKey/reset')
@@ -201,11 +175,6 @@ export class ApiKeyAdminController {
     @ApiKeyAdminUpdateDoc()
     @Response('apiKey.update', { serialization: ResponseIdSerialization })
     @ApiKeyAdminUpdateGuard()
-    @PolicyAbilityProtected({
-        subject: ENUM_POLICY_SUBJECT.API_KEY,
-        action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.UPDATE],
-    })
-    @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
     @RequestParamGuard(ApiKeyRequestDTO)
     @Put('/update/:apiKey')
@@ -221,11 +190,6 @@ export class ApiKeyAdminController {
     @ApiKeyAdminInactiveDoc()
     @Response('apiKey.inactive')
     @ApiKeyAdminUpdateInactiveGuard()
-    @PolicyAbilityProtected({
-        subject: ENUM_POLICY_SUBJECT.API_KEY,
-        action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.UPDATE],
-    })
-    @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
     @RequestParamGuard(ApiKeyRequestDTO)
     @Patch('/update/:apiKey/inactive')
@@ -238,11 +202,6 @@ export class ApiKeyAdminController {
     @ApiKeyAdminActiveDoc()
     @Response('apiKey.active')
     @ApiKeyAdminUpdateActiveGuard()
-    @PolicyAbilityProtected({
-        subject: ENUM_POLICY_SUBJECT.API_KEY,
-        action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.UPDATE],
-    })
-    @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
     @RequestParamGuard(ApiKeyRequestDTO)
     @Patch('/update/:apiKey/active')
@@ -255,11 +214,6 @@ export class ApiKeyAdminController {
     @ApiKeyAdminUpdateDoc()
     @Response('apiKey.updateDate', { serialization: ResponseIdSerialization })
     @ApiKeyAdminUpdateGuard()
-    @PolicyAbilityProtected({
-        subject: ENUM_POLICY_SUBJECT.API_KEY,
-        action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.UPDATE],
-    })
-    @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
     @RequestParamGuard(ApiKeyRequestDTO)
     @Put('/update/:apiKey/date')
@@ -275,11 +229,6 @@ export class ApiKeyAdminController {
     @ApiKeyAdminDeleteDoc()
     @Response('apiKey.delete')
     @ApiKeyAdminDeleteGuard()
-    @PolicyAbilityProtected({
-        subject: ENUM_POLICY_SUBJECT.API_KEY,
-        action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.DELETE],
-    })
-    @AuthJwtAdminAccessProtected()
     @ApiKeyPublicProtected()
     @RequestParamGuard(ApiKeyRequestDTO)
     @Delete('/delete/:apiKey')

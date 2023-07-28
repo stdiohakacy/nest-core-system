@@ -5,7 +5,6 @@ import { AuthModule } from '../common/auth/auth.module';
 import { CommonModule } from '../common/common.module';
 import { MigrationApiKeySeed } from 'src/migration/seeds/migration.api-key.seed';
 import { MigrationSettingSeed } from 'src/migration/seeds/migration.setting.seed';
-import { RoleModule } from '../modules/role/role.module';
 import { UserModule } from '../modules/user/user.module';
 
 @Module({
@@ -14,7 +13,6 @@ import { UserModule } from '../modules/user/user.module';
         CommandModule,
         ApiKeyModule,
         AuthModule,
-        RoleModule,
         UserModule,
     ],
     providers: [MigrationApiKeySeed, MigrationSettingSeed],

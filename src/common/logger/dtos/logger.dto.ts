@@ -15,7 +15,7 @@ import {
 } from 'class-validator';
 import { faker } from '@faker-js/faker';
 import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
-import { ENUM_ROLE_TYPE } from '../../../modules/role/constants/role.enum.constant';
+import { ENUM_RBAC_ROLE_TYPE } from '../../../common/rbac/constants/rbac.enum.role.constant';
 
 export class LoggerDTO extends BaseDTO {
     @ApiProperty({
@@ -121,14 +121,14 @@ export class LoggerDTO extends BaseDTO {
     @ApiPropertyOptional({
         name: 'type',
         description: 'Logger type',
-        example: ENUM_ROLE_TYPE.USER,
+        example: ENUM_RBAC_ROLE_TYPE.USER,
         required: false,
         nullable: true,
     })
-    @IsEnum(ENUM_ROLE_TYPE)
+    @IsEnum(ENUM_RBAC_ROLE_TYPE)
     @IsString()
     @IsOptional()
-    type?: ENUM_ROLE_TYPE;
+    type?: ENUM_RBAC_ROLE_TYPE;
 
     @ApiPropertyOptional({
         name: 'params',

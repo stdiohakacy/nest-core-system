@@ -36,10 +36,9 @@ import { FileSingleDTO } from '../../../common/file/dtos/file.single.dto';
 import { ENUM_AUTH_STATUS_CODE_ERROR } from '../../../common/auth/constants/auth.status-code.constant';
 import { ENUM_API_KEY_STATUS_CODE_ERROR } from '../../../common/api-key/constants/api-key.status-code.constant';
 import { ENUM_FILE_EXCEL_MIME } from '../../../common/file/constants/file.enum.constant';
-import { ENUM_ROLE_STATUS_CODE_ERROR } from '../../../modules/role/constants/role.status-code.constant';
-import { ENUM_POLICY_STATUS_CODE_ERROR } from '../../../common/policy/constants/policy.status-code.constant';
 import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../../common/pagination/constants/pagination.enum.constant';
 import { ResponsePagingSerialization } from '../../../common/response/serializations/response.paging.serialization';
+import { ENUM_RBAC_ROLE_STATUS_CODE_ERROR } from 'src/common/rbac/constants/rbac.role.status-code.constant';
 
 export function DocDefault<T>(options: IDocDefaultOptions): MethodDecorator {
     const docs = [];
@@ -382,18 +381,18 @@ export function DocGuard(options?: IDocGuardOptions) {
     if (options?.role) {
         oneOfForbidden.push({
             statusCode:
-                ENUM_ROLE_STATUS_CODE_ERROR.ROLE_PAYLOAD_TYPE_INVALID_ERROR,
+                ENUM_RBAC_ROLE_STATUS_CODE_ERROR.ROLE_TYPE_INVALID_ERROR,
             messagePath: 'role.error.typeForbidden',
         });
     }
 
-    if (options?.policy) {
-        oneOfForbidden.push({
-            statusCode:
-                ENUM_POLICY_STATUS_CODE_ERROR.POLICY_ABILITY_FORBIDDEN_ERROR,
-            messagePath: 'policy.error.abilityForbidden',
-        });
-    }
+    // if (options?.policy) {
+    //     oneOfForbidden.push({
+    //         statusCode:
+    //             ENUM_POLICY_STATUS_CODE_ERROR.POLICY_ABILITY_FORBIDDEN_ERROR,
+    //         messagePath: 'policy.error.abilityForbidden',
+    //     });
+    // }
 
     return applyDecorators(DocOneOf(HttpStatus.FORBIDDEN, ...oneOfForbidden));
 }

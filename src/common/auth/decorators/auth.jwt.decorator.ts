@@ -3,10 +3,14 @@ import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { IRequestApp } from '../../../common/request/interfaces/request.interface';
 import { UserPayloadSerialization } from '../../../modules/user/serializations/user.payload.serialization';
 import { AuthJwtAccessGuard } from '../guards/jwt-access/auth.jwt-access.guard';
-import { RolePayloadTypeGuard } from '../../../modules/role/guards/payload/role.payload.type.guard';
-import { ROLE_TYPE_META_KEY } from '../../../modules/role/constants/role.constant';
-import { ENUM_ROLE_TYPE } from '../../../modules/role/constants/role.enum.constant';
 import { AuthJwtRefreshGuard } from '../guards/jwt-refresh/auth.jwt-refresh.guard';
+import { ENUM_RBAC_ROLE_TYPE } from '../../../common/rbac/constants/rbac.enum.role.constant';
+import { ENUM_RBAC_PERMISSION_TYPE } from '../../../common/rbac/constants/rbac.enum.permission.constant';
+import { RBACRolePermissionTypeAccessGuard } from '../../../common/rbac/guards/rbac.role-permission-type.guard';
+import {
+    RBAC_PERMISSION_TYPE_META_KEY,
+    RBAC_ROLE_TYPE_META_KEY,
+} from '../../../common/rbac/constants/rbac.constant';
 
 export const AuthJwtPayload = createParamDecorator(
     (data: string, ctx: ExecutionContext): Record<string, any> => {
@@ -31,23 +35,17 @@ export function AuthJwtAccessProtected(): MethodDecorator {
     return applyDecorators(UseGuards(AuthJwtAccessGuard));
 }
 
-export function AuthJwtUserAccessProtected(): MethodDecorator {
-    return applyDecorators(
-        UseGuards(AuthJwtAccessGuard, RolePayloadTypeGuard),
-        SetMetadata(ROLE_TYPE_META_KEY, [ENUM_ROLE_TYPE.USER])
-    );
-}
-
-export function AuthJwtAdminAccessProtected(): MethodDecorator {
-    return applyDecorators(
-        UseGuards(AuthJwtAccessGuard, RolePayloadTypeGuard),
-        SetMetadata(ROLE_TYPE_META_KEY, [
-            ENUM_ROLE_TYPE.SUPER_ADMIN,
-            ENUM_ROLE_TYPE.ADMIN,
-        ])
-    );
-}
-
 export function AuthJwtRefreshProtected(): MethodDecorator {
     return applyDecorators(UseGuards(AuthJwtRefreshGuard));
+}
+
+export function AuthJwtRBACAccessProtected(policy: {
+    roles?: ENUM_RBAC_ROLE_TYPE[];
+    permissions?: ENUM_RBAC_PERMISSION_TYPE[];
+}): MethodDecorator {
+    return applyDecorators(
+        UseGuards(AuthJwtAccessGuard, RBACRolePermissionTypeAccessGuard),
+        SetMetadata(RBAC_ROLE_TYPE_META_KEY, policy.roles),
+        SetMetadata(RBAC_PERMISSION_TYPE_META_KEY, policy.permissions)
+    );
 }

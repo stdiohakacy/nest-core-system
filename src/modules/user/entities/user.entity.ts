@@ -1,4 +1,4 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { UseDTO } from '../../../common/decorators/use-dto.decorator';
 import {
     BaseEntity,
@@ -8,6 +8,7 @@ import { UserDTO } from '../dtos/user.dto';
 import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 import { IUserGoogleEntity } from '../interfaces/user.interface';
+import { UserRoleEntity } from 'src/modules/rbac/entities/user-role.entity';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
     username?: string;
@@ -124,6 +125,9 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
 
     @Column({ name: 'forgotExpire', nullable: true, type: 'timestamptz' })
     forgotExpire?: Date;
+
+    @OneToMany(() => UserRoleEntity, (userRoles) => userRoles.user)
+    userRoles: UserRoleEntity[];
 
     active(data: any) {
         this.isActive = true;

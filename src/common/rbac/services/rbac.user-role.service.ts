@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteResult, InsertResult, Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRoleEntity } from 'src/modules/rbac/entities/user-role.entity';
+import { UserRoleEntity } from '../../../modules/rbac/entities/user-role.entity';
 import { IRBACUserRoleService } from '../interfaces/rbac.user-role.service.interface';
 import { UserRoleCreateRawDTO } from '../dtos/user-role.create-raw.dto';
 import { UserRoleCreateDTO } from '../dtos/user-role.create.dto';

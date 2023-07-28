@@ -15,26 +15,16 @@ export class UserPayloadSerialization extends OmitType(
     @Exclude()
     readonly photo?: AwsS3Serialization;
 
-    @ApiProperty({
-        example: [faker.string.uuid()],
-        type: 'string',
-        isArray: true,
-        required: true,
-        nullable: false,
-    })
-    @Transform(({ obj }) => `${obj.role._id}`)
-    readonly role: string;
-
-    @ApiProperty({
-        example: ENUM_RBAC_ROLE_TYPE.ADMIN,
-        type: 'string',
-        enum: ENUM_RBAC_ROLE_TYPE,
-        required: true,
-        nullable: false,
-    })
-    @Expose()
-    @Transform(({ obj }) => obj.role.type)
-    readonly type: ENUM_RBAC_ROLE_TYPE;
+    // @ApiProperty({
+    //     example: ENUM_RBAC_ROLE_TYPE.ADMIN,
+    //     type: 'string',
+    //     enum: ENUM_RBAC_ROLE_TYPE,
+    //     required: true,
+    //     nullable: false,
+    // })
+    // @Expose()
+    // @Transform(({ obj }) => obj.role.type)
+    // readonly type: ENUM_RBAC_ROLE_TYPE;
 
     @ApiHideProperty()
     @Exclude()

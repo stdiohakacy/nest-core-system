@@ -45,7 +45,7 @@ export function AuthJwtRBACAccessProtected(policy: {
 }): MethodDecorator {
     return applyDecorators(
         UseGuards(AuthJwtAccessGuard, RBACRolePermissionTypeAccessGuard),
-        SetMetadata(RBAC_ROLE_TYPE_META_KEY, policy.roles),
-        SetMetadata(RBAC_PERMISSION_TYPE_META_KEY, policy.permissions)
+        SetMetadata(RBAC_ROLE_TYPE_META_KEY, policy?.roles),
+        SetMetadata(RBAC_PERMISSION_TYPE_META_KEY, policy?.permissions)
     );
 }

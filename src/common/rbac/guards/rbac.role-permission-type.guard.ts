@@ -13,7 +13,7 @@ import {
 import { ENUM_RBAC_PERMISSION_TYPE } from '../constants/rbac.enum.permission.constant';
 import { ENUM_RBAC_ROLE_STATUS_CODE_ERROR } from '../constants/rbac.role.status-code.constant';
 import { ENUM_RBAC_PERMISSION_STATUS_CODE_ERROR } from '../constants/rbac.permission.status-code.constant';
-import { UserRepository } from 'src/modules/user/repositories/user.repository';
+import { UserRepository } from '../../../modules/user/repositories/user.repository';
 
 @Injectable()
 export class RBACRolePermissionTypeAccessGuard implements CanActivate {

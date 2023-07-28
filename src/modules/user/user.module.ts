@@ -8,11 +8,14 @@ import { UserActiveHandler } from './commands/user.active.command';
 import { UserRepository } from './repositories/user.repository';
 import { UserForgotPasswordHandler } from './commands/user.forgot-password.command';
 import { UserResetPasswordHandler } from './commands/user.reset-password.command';
+import { AccessTokenModule } from '../access-token/access-token.module';
+import { UserRevokeHandler } from './commands/user.revoke.command';
 
 const commandHandlers = [
     UserActiveHandler,
     UserForgotPasswordHandler,
     UserResetPasswordHandler,
+    UserRevokeHandler,
 ];
 const repositories = [UserRepository];
 
@@ -21,8 +24,14 @@ const repositories = [UserRepository];
         TypeOrmModule.forFeature([UserEntity]),
         IntegrationModule,
         AuthModule,
+        AccessTokenModule,
     ],
-    exports: [UserService, IntegrationModule, ...repositories],
+    exports: [
+        UserService,
+        IntegrationModule,
+        AccessTokenModule,
+        ...repositories,
+    ],
     providers: [...commandHandlers, ...repositories, UserService],
     controllers: [],
 })

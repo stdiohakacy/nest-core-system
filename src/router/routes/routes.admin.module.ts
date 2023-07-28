@@ -7,6 +7,7 @@ import { SettingAdminController } from '../../common/setting/controllers/setting
 import { SettingModule } from '../../common/setting/setting.module';
 import { UserAdminController } from '../../modules/user/controllers/user.admin.controller';
 import { UserModule } from '../../modules/user/user.module';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
     controllers: [
@@ -23,6 +24,7 @@ import { UserModule } from '../../modules/user/user.module';
         LoggerModule,
     ],
     imports: [
+        CqrsModule,
         ApiKeyModule,
         UserModule,
         AuthModule,

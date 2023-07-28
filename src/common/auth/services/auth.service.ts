@@ -128,7 +128,7 @@ export class AuthService implements IAuthService {
     }
 
     async validateAccessToken(token: string): Promise<boolean> {
-        return this.helperEncryptionService.jwtVerify(token, {
+        return await this.helperEncryptionService.jwtVerify(token, {
             secretKey: this.accessTokenSecretKey,
             audience: this.audience,
             issuer: this.issuer,
@@ -178,7 +178,7 @@ export class AuthService implements IAuthService {
     }
 
     async validateRefreshToken(token: string): Promise<boolean> {
-        return this.helperEncryptionService.jwtVerify(token, {
+        return await this.helperEncryptionService.jwtVerify(token, {
             secretKey: this.refreshTokenSecretKey,
             audience: this.audience,
             issuer: this.issuer,

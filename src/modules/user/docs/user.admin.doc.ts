@@ -140,3 +140,12 @@ export function UserAdminExportDoc(): MethodDecorator {
         DocResponseFile()
     );
 }
+
+export function UserAdminRevokeTokenDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.admin.user' }),
+        DocAuth({ jwtAccessToken: true }),
+        DocGuard({ role: true, policy: true }),
+        DocResponse('user.revokeToken', { httpStatus: HttpStatus.OK })
+    );
+}

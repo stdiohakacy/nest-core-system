@@ -1,3 +1,4 @@
+import { AccessTokenEntity } from '../../../modules/access-token/entities/access-token.entity';
 import {
     BadRequestException,
     Body,
@@ -52,6 +53,7 @@ import { UserForgotPasswordDTO } from '../dtos/user.forgot-password.dto';
 import { UserForgotPasswordCommand } from '../commands/user.forgot-password.command';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { UserResetPasswordCommand } from '../commands/user.reset-password.command';
+import { AccessTokenRepository } from '../../../modules/access-token/repositories/access-token.repository';
 
 @ApiTags('modules.public.user')
 @Controller({ version: '1', path: '/user' })
@@ -62,15 +64,20 @@ export class UserPublicController {
         private readonly settingService: SettingService,
         private readonly mailService: MailService,
         private readonly configService: ConfigService,
-        private readonly commandBus: CommandBus
+        private readonly commandBus: CommandBus,
+        private readonly accessTokenRepo: AccessTokenRepository
     ) {}
 
     @UserPublicLoginDoc()
     @Response('user.login', { serialization: UserLoginSerialization })
     @HttpCode(HttpStatus.OK)
     @Post('/login')
-    async login(@Body() { email, password }: UserLoginDTO): Promise<IResponse> {
-        const user: UserEntity = await this.userService.findOneByEmail(email);
+    async login(
+        @Body() { username, password }: UserLoginDTO
+    ): Promise<IResponse> {
+        const user: UserEntity = await this.userService.findOneByUsername(
+            username
+        );
         if (!user) {
             throw new NotFoundException({
                 statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_NOT_FOUND_ERROR,
@@ -164,6 +171,15 @@ export class UserPublicController {
                     ENUM_USER_STATUS_CODE_SUCCESS.USER_PASSWORD_EXPIRED_ERROR,
                 message: 'user.error.passwordExpired',
             });
+        }
+
+        const token = new AccessTokenEntity();
+        token.userId = user.id;
+        token.token = accessToken;
+
+        const isTokenExist = await this.accessTokenRepo.getByToken(accessToken);
+        if (!isTokenExist) {
+            await this.accessTokenRepo.create(token);
         }
 
         return {

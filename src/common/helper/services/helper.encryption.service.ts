@@ -6,10 +6,16 @@ import {
     IHelperJwtOptions,
     IHelperJwtVerifyOptions,
 } from '../interfaces/helper.interface';
+import { HelperDateService } from './helper.date.service';
+import { AccessTokenRepository } from '../../../modules/access-token/repositories/access-token.repository';
 
 @Injectable()
 export class HelperEncryptionService implements IHelperEncryptionService {
-    constructor(private readonly jwtService: JwtService) {}
+    constructor(
+        private readonly jwtService: JwtService,
+        private readonly helperDateService: HelperDateService,
+        private readonly accessTokenRepo: AccessTokenRepository
+    ) {}
 
     base64Encrypt(data: string): string {
         const buff: Buffer = Buffer.from(data, 'utf8');
@@ -73,15 +79,22 @@ export class HelperEncryptionService implements IHelperEncryptionService {
         return this.jwtService.decode(token) as Record<string, any>;
     }
 
-    jwtVerify(token: string, options: IHelperJwtVerifyOptions): boolean {
+    async jwtVerify(
+        token: string,
+        options: IHelperJwtVerifyOptions
+    ): Promise<boolean> {
         try {
-            this.jwtService.verify(token, {
+            const decodedToken = this.jwtService.verify(token, {
                 secret: options.secretKey,
                 audience: options.audience,
                 issuer: options.issuer,
                 subject: options.subject,
             });
 
+            if (decodedToken.exp >= this.helperDateService.create()) {
+                await this.accessTokenRepo.revokeByToken(token);
+                return false;
+            }
             return true;
         } catch (err: unknown) {
             return false;

@@ -9,6 +9,7 @@ import {
     Get,
     HttpCode,
     HttpStatus,
+    Param,
     Patch,
     Post,
     Put,
@@ -27,6 +28,7 @@ import {
     UserAdminImportDoc,
     UserAdminInactiveDoc,
     UserAdminListDoc,
+    UserAdminRevokeTokenDoc,
     UserAdminUpdateDoc,
 } from '../docs/user.admin.doc';
 import {
@@ -66,7 +68,7 @@ import {
 } from '../decorators/user.admin.decorator';
 import { RequestParamGuard } from '../../../common/request/decorators/request.decorator';
 import { UserRequestDTO } from '../dtos/user.request.dto';
-import { GetUser } from '../decorators/user.decorator';
+import { GetUser, UserProtected } from '../decorators/user.decorator';
 import { ResponseIdSerialization } from '../../../common/response/serializations/response.id.serialization';
 import { UserCreateDTO } from '../dtos/user.create.dto';
 import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
@@ -82,9 +84,14 @@ import { FileValidationPipe } from '../../../common/file/pipes/file.validation.p
 import { UserImportDTO } from '../dtos/user.import.dto';
 import { IFileExtract } from '../../../common/file/interfaces/file.interface';
 import { ENUM_HELPER_FILE_TYPE } from '../../../common/helper/constants/helper.enum.constant';
-import { AuthJwtRBACAccessProtected } from '../../../common/auth/decorators/auth.jwt.decorator';
+import {
+    AuthJwtAccessProtected,
+    AuthJwtRBACAccessProtected,
+} from '../../../common/auth/decorators/auth.jwt.decorator';
 import { ENUM_RBAC_ROLE_TYPE } from '../../../common/rbac/constants/rbac.enum.role.constant';
 import { ENUM_RBAC_PERMISSION_TYPE } from '../../../common/rbac/constants/rbac.enum.permission.constant';
+import { CommandBus } from '@nestjs/cqrs';
+import { UserRevokeTokenCommand } from '../commands/user.revoke.command';
 
 @ApiTags('modules.admin.user')
 @Controller({ version: '1', path: '/user' })
@@ -92,7 +99,8 @@ export class UserAdminController {
     constructor(
         private readonly authService: AuthService,
         private readonly paginationService: PaginationService,
-        private readonly userService: UserService
+        private readonly userService: UserService,
+        private readonly commandBus: CommandBus
     ) {}
 
     @UserAdminListDoc()
@@ -181,12 +189,6 @@ export class UserAdminController {
 
         const [emailExist, mobileNumberExist] = await Promise.all(promises);
 
-        // if (!checkRole) {
-        //     throw new NotFoundException({
-        //         statusCode: ENUM_ROLE_STATUS_CODE_ERROR.ROLE_NOT_FOUND_ERROR,
-        //         message: 'role.error.notFound',
-        //     });
-        // } else
         if (emailExist) {
             throw new ConflictException({
                 statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_EMAIL_EXIST_ERROR,
@@ -306,7 +308,21 @@ export class UserAdminController {
     @Post('/export')
     async export(): Promise<IResponse> {
         const users: UserEntity[] = await this.userService.findAll({});
-
         return { data: users };
+    }
+
+    @UserAdminRevokeTokenDoc()
+    @Response('user.revokeToken')
+    @UserProtected()
+    @AuthJwtAccessProtected()
+    // @AuthJwtRBACAccessProtected({ roles: [], permissions: [] })
+    @Post('/:id/revoke-tokens')
+    async revokeToken(
+        @GetUser() userAuth: UserEntity,
+        @Param('id') id: string
+    ) {
+        return await this.commandBus.execute(
+            new UserRevokeTokenCommand(id, userAuth)
+        );
     }
 }

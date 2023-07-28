@@ -8,6 +8,7 @@ import { HelperHashService } from './services/helper.hash.service';
 import { HelperNumberService } from './services/helper.number.service';
 import { HelperStringService } from './services/helper.string.service';
 import { HelperFileService } from './services/helper.file.service';
+import { AccessTokenModule } from '../../modules/access-token/access-token.module';
 
 @Global()
 @Module({
@@ -31,6 +32,7 @@ import { HelperFileService } from './services/helper.file.service';
     ],
     controllers: [],
     imports: [
+        AccessTokenModule,
         JwtModule.registerAsync({
             inject: [ConfigService],
             imports: [ConfigModule],

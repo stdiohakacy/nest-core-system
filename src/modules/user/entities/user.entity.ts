@@ -8,7 +8,8 @@ import { UserDTO } from '../dtos/user.dto';
 import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 import { IUserGoogleEntity } from '../interfaces/user.interface';
-import { UserRoleEntity } from 'src/modules/rbac/entities/user-role.entity';
+import { UserRoleEntity } from '../../../modules/rbac/entities/user-role.entity';
+import { AccessTokenEntity } from '../../../modules/access-token/entities/access-token.entity';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
     username?: string;
@@ -128,6 +129,9 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
 
     @OneToMany(() => UserRoleEntity, (userRoles) => userRoles.user)
     userRoles: UserRoleEntity[];
+
+    @OneToMany(() => AccessTokenEntity, (accessTokens) => accessTokens.user)
+    accessTokens: AccessTokenEntity[];
 
     active(data: any) {
         this.isActive = true;

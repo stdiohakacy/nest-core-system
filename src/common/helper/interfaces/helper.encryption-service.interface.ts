@@ -19,5 +19,8 @@ export interface IHelperEncryptionService {
         options: IHelperJwtOptions
     ): string;
     jwtDecrypt(token: string): Record<string, any>;
-    jwtVerify(token: string, options: IHelperJwtVerifyOptions): boolean;
+    jwtVerify(
+        token: string,
+        options: IHelperJwtVerifyOptions
+    ): Promise<boolean>;
 }

@@ -78,16 +78,6 @@ export class UserAuthController {
         @AuthJwtToken() refreshToken: string,
         @GetUser() user: UserEntity
     ): Promise<IResponse> {
-        // const userWithRole: IUserDoc = await this.userService.joinWithRole(
-        //     user
-        // );
-        // if (!userWithRole.role.isActive) {
-        //     throw new ForbiddenException({
-        //         statusCode: ENUM_ROLE_STATUS_CODE_ERROR.ROLE_INACTIVE_ERROR,
-        //         message: 'role.error.inactive',
-        //     });
-        // }
-
         const checkPasswordExpired: boolean =
             await this.authService.checkPasswordExpired(user.passwordExpired);
 

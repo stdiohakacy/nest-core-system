@@ -54,6 +54,7 @@ import { UserForgotPasswordCommand } from '../commands/user.forgot-password.comm
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { UserResetPasswordCommand } from '../commands/user.reset-password.command';
 import { AccessTokenRepository } from '../../../modules/access-token/repositories/access-token.repository';
+import { Transactional } from 'typeorm-transactional';
 
 @ApiTags('modules.public.user')
 @Controller({ version: '1', path: '/user' })
@@ -194,6 +195,7 @@ export class UserPublicController {
 
     @UserPublicSignUpDoc()
     @Response('user.signUp')
+    @Transactional()
     @Post('/sign-up')
     async signUp(
         @Body()
@@ -428,6 +430,7 @@ export class UserPublicController {
 
     @UserPublicActiveDoc()
     @Response('user.active')
+    @Transactional()
     @Post('/active')
     async active(
         @Body()
@@ -438,6 +441,7 @@ export class UserPublicController {
 
     @UserPublicForgotPasswordDoc()
     @Response('user.forgotPassword')
+    @Transactional()
     @Post('/forgot-password')
     async forgotPassword(
         @Body()
@@ -450,6 +454,7 @@ export class UserPublicController {
 
     @UserPublicResetPasswordDoc()
     @Response('user.resetPassword')
+    @Transactional()
     @Post('/reset-password')
     async resetPassword(
         @Body()

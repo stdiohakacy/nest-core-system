@@ -53,6 +53,8 @@ import { FileSizeImagePipe } from '../../../common/file/pipes/file.size.pipe';
 import { FileTypeImagePipe } from '../../../common/file/pipes/file.type.pipe';
 import { IFile } from '../../../common/file/interfaces/file.interface';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
+import { CommandBus } from '@nestjs/cqrs';
+import { UserUploadMinioCommand } from '../commands/user.upload.minio.command';
 
 @ApiTags('modules.auth.user')
 @Controller({
@@ -64,7 +66,8 @@ export class UserAuthController {
         private readonly userService: UserService,
         private readonly authService: AuthService,
         private readonly settingService: SettingService,
-        private readonly awsS3Service: AwsS3Service
+        private readonly awsS3Service: AwsS3Service,
+        private readonly commandBus: CommandBus
     ) {}
 
     @UserAuthRefreshDoc()
@@ -264,5 +267,36 @@ export class UserAuthController {
             }
         );
         await this.userService.updatePhoto(user.id, aws);
+    }
+
+    @UserAuthUploadProfileDoc()
+    @Response('user.upload')
+    @UserProtected()
+    @AuthJwtAccessProtected()
+    @UploadFileSingle('file')
+    @HttpCode(HttpStatus.OK)
+    @Post('/profile/upload/minio')
+    async uploadMinio(
+        @GetUser() user: UserEntity,
+        @UploadedFile(FileRequiredPipe, FileSizeImagePipe, FileTypeImagePipe)
+        file: IFile
+    ): Promise<void> {
+        return await this.commandBus.execute(new UserUploadMinioCommand(file));
+        // const filename: string = file.originalname;
+        // const content: Buffer = file.buffer;
+        // const mime: string = filename
+        //     .substring(filename.lastIndexOf('.') + 1, filename.length)
+        //     .toLowerCase();
+
+        // const path = await this.userService.createPhotoFilename();
+
+        // const aws: AwsS3Serialization = await this.awsS3Service.putItemInBucket(
+        //     `${path.filename}.${mime}`,
+        //     content,
+        //     {
+        //         path: `${path.path}/${user.id}`,
+        //     }
+        // );
+        // await this.userService.updatePhoto(user.id, aws);
     }
 }

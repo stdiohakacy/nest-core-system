@@ -87,7 +87,7 @@ import { RBACCommonModule } from './rbac/rbac.module';
                     .max(5000)
                     .required(),
                 AUTH_JWT_ACCESS_TOKEN_EXPIRED: Joi.string()
-                    .default('15m')
+                    .default('1d')
                     .required(),
 
                 AUTH_JWT_REFRESH_TOKEN_SECRET_KEY: Joi.string()
@@ -99,7 +99,7 @@ import { RBACCommonModule } from './rbac/rbac.module';
                     .default('7d')
                     .required(),
                 AUTH_JWT_REFRESH_TOKEN_NOT_BEFORE_EXPIRATION: Joi.string()
-                    .default('15m')
+                    .default('1d')
                     .required(),
 
                 AUTH_JWT_PAYLOAD_ENCRYPT: Joi.boolean()

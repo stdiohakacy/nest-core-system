@@ -10,12 +10,14 @@ import { UserForgotPasswordHandler } from './commands/user.forgot-password.comma
 import { UserResetPasswordHandler } from './commands/user.reset-password.command';
 import { AccessTokenModule } from '../access-token/access-token.module';
 import { UserRevokeHandler } from './commands/user.revoke.command';
+import { UserUploadMinioHandler } from './commands/user.upload.minio.command';
 
 const commandHandlers = [
     UserActiveHandler,
     UserForgotPasswordHandler,
     UserResetPasswordHandler,
     UserRevokeHandler,
+    UserUploadMinioHandler,
 ];
 const repositories = [UserRepository];
 

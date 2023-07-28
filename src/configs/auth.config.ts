@@ -7,7 +7,7 @@ export default registerAs(
         accessToken: {
             secretKey: process.env.AUTH_JWT_ACCESS_TOKEN_SECRET_KEY ?? '123456',
             expirationTime: seconds(
-                process.env.AUTH_JWT_ACCESS_TOKEN_EXPIRED ?? '1h'
+                process.env.AUTH_JWT_ACCESS_TOKEN_EXPIRED ?? '1d'
             ), // 1 hours
             notBeforeExpirationTime: seconds('0'), // immediately
 

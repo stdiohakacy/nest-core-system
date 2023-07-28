@@ -1,5 +1,5 @@
-import { IMail } from './mail.interface';
+import { IMail, IMailAccountActivationParams } from './mail.interface';
 
 export interface IMailService {
-    sendAccountActivation(mail: IMail);
+    sendAccountActivation(mail: IMailAccountActivationParams);
 }

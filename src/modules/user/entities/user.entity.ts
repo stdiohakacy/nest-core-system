@@ -95,4 +95,22 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
 
     @Column({ name: 'mobileNumber', nullable: true })
     mobileNumber?: string;
+
+    @Column('varchar', {
+        name: 'activeKey',
+        nullable: true,
+    })
+    activeKey?: string;
+
+    @Column('timestamptz', {
+        name: 'activeExpire',
+        nullable: true,
+    })
+    activeExpire?: Date;
+
+    @Column('timestamptz', {
+        name: 'activatedAt',
+        nullable: true,
+    })
+    activatedAt?: Date;
 }

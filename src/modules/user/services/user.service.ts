@@ -16,6 +16,7 @@ import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.se
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { UserImportDTO } from '../dtos/user.import.dto';
 import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
+import { randomBytes } from 'crypto';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -73,29 +74,33 @@ export class UserService implements IUserService {
             lastName,
             email,
             mobileNumber,
+            activeKey,
             // role,
             signUpFrom,
         }: UserCreateDTO,
         { passwordExpired, passwordHash, salt, passwordCreated }: IAuthPassword
     ): Promise<UserEntity> {
-        const create: UserEntity = new UserEntity();
-        create.firstName = firstName;
-        create.email = email;
-        create.password = passwordHash;
-        // create.role = role;
-        create.isActive = true;
-        create.inactivePermanent = false;
-        create.blocked = false;
-        create.lastName = lastName;
-        create.salt = salt;
-        create.passwordExpired = passwordExpired;
-        create.passwordCreated = passwordCreated;
-        create.signUpDate = this.helperDateService.create();
-        create.passwordAttempt = 0;
-        create.mobileNumber = mobileNumber ?? undefined;
-        create.signUpFrom = signUpFrom;
+        const user: UserEntity = new UserEntity();
 
-        return await this.userRepo.save(create);
+        user.activeKey = activeKey;
+        user.activeExpire = this.helperDateService.forwardInDays(3);
+        user.firstName = firstName;
+        user.email = email;
+        user.password = passwordHash;
+        // user.role = role;
+        user.isActive = false;
+        user.inactivePermanent = false;
+        user.blocked = false;
+        user.lastName = lastName;
+        user.salt = salt;
+        user.passwordExpired = passwordExpired;
+        user.passwordCreated = passwordCreated;
+        user.signUpDate = this.helperDateService.create();
+        user.passwordAttempt = 0;
+        user.mobileNumber = mobileNumber ?? undefined;
+        user.signUpFrom = signUpFrom;
+
+        return await this.userRepo.save(user);
     }
 
     async existByEmail(email: string): Promise<boolean> {

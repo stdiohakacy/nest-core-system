@@ -25,5 +25,6 @@ export default registerAs(
         },
 
         jobEnable: process.env.JOB_ENABLE === 'true' ?? false,
+        protocol: process.env.APP_PROTOCOL || 'http',
     })
 );

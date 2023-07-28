@@ -1,6 +1,11 @@
 import { faker } from '@faker-js/faker';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import {
+    ApiExcludeEndpoint,
+    ApiHideProperty,
+    ApiProperty,
+    ApiPropertyOptional,
+} from '@nestjs/swagger';
+import { Exclude, Type } from 'class-transformer';
 import {
     IsString,
     IsNotEmpty,
@@ -15,6 +20,7 @@ import {
 import { IsPasswordStrong } from '../../../common/request/validations/request.is-password-strong.validation';
 import { MobileNumberAllowed } from '../../../common/request/validations/request.mobile-number-allowed.validation';
 import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
+import { isString } from 'lodash';
 export class UserCreateDTO {
     @ApiProperty({
         example: faker.internet.email(),
@@ -72,13 +78,17 @@ export class UserCreateDTO {
     @MobileNumberAllowed()
     readonly mobileNumber?: string;
 
-    // @ApiProperty({
-    //     example: faker.string.uuid(),
-    //     required: true,
-    // })
-    // @IsNotEmpty()
-    // @IsUUID('4')
-    // readonly role: string;
+    @ApiHideProperty()
+    @ApiPropertyOptional({
+        name: 'activeKey',
+        description: 'User active key',
+        example: faker.string.alphanumeric(30),
+        required: false,
+        nullable: true,
+    })
+    @IsOptional()
+    @IsString()
+    readonly activeKey?: string;
 
     @ApiProperty({
         description: 'string password',

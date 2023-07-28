@@ -5,3 +5,8 @@ export interface IMail {
     text: string;
     [key: string]: any;
 }
+
+export interface IMailAccountActivationParams {
+    name: string;
+    activationLink: string;
+}

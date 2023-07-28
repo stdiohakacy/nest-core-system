@@ -41,6 +41,8 @@ import { AuthJwtPayload } from '../../../common/auth/decorators/auth.jwt.decorat
 import { IAuthGooglePayload } from '../../../common/auth/interfaces/auth.interface';
 import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/error.status-code.constant';
 import { MailService } from 'src/common/integrations/mail/services/mail.service';
+import { randomBytes } from 'crypto';
+import { ConfigService } from '@nestjs/config';
 
 @ApiTags('modules.public.user')
 @Controller({
@@ -53,7 +55,8 @@ export class UserPublicController {
         private readonly authService: AuthService,
         private readonly roleService: RoleService,
         private readonly settingService: SettingService,
-        private readonly mailService: MailService
+        private readonly mailService: MailService,
+        private readonly configService: ConfigService
     ) {}
 
     @UserPublicLoginDoc()
@@ -182,52 +185,60 @@ export class UserPublicController {
     @Post('/sign-up')
     async signUp(
         @Body()
-        { email, mobileNumber, username, ...body }: UserSignUpDTO
+        payload: UserSignUpDTO
     ): Promise<void> {
-        await this.mailService.sendAccountActivation({
-            from: 'Your Name <your-email@example.com>',
-            to: 'nguyendangduy2210@gmail.com',
-            subject: 'Account activation',
-            text: 'This is content of account activation',
-        });
-        // const promises: Promise<any>[] = [this.userService.existByEmail(email)];
-        // if (mobileNumber) {
-        //     promises.push(this.userService.existByMobileNumber(mobileNumber));
-        // }
-        // if (username) {
-        //     promises.push(this.userService.existByUsername(username));
-        // }
-        // const [emailExist, mobileNumberExist, usernameExist] =
-        //     await Promise.all(promises);
-        // if (emailExist) {
-        //     throw new ConflictException({
-        //         statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_EMAIL_EXIST_ERROR,
-        //         message: 'user.error.emailExist',
-        //     });
-        // } else if (mobileNumberExist) {
-        //     throw new ConflictException({
-        //         statusCode:
-        //             ENUM_USER_STATUS_CODE_ERROR.USER_MOBILE_NUMBER_EXIST_ERROR,
-        //         message: 'user.error.mobileNumberExist',
-        //     });
-        // } else if (usernameExist) {
-        //     throw new ConflictException({
-        //         statusCode:
-        //             ENUM_USER_STATUS_CODE_ERROR.USER_USERNAME_EXISTS_ERROR,
-        //         message: 'user.error.usernameExist',
-        //     });
-        // }
-        // const password = await this.authService.createPassword(body.password);
+        const { email, mobileNumber, username, ...body } = payload;
+        console.log(payload);
+        const promises: Promise<any>[] = [this.userService.existByEmail(email)];
+        if (mobileNumber) {
+            promises.push(this.userService.existByMobileNumber(mobileNumber));
+        }
+        if (username) {
+            promises.push(this.userService.existByUsername(username));
+        }
+        const [emailExist, mobileNumberExist, usernameExist] =
+            await Promise.all(promises);
+        if (emailExist) {
+            throw new ConflictException({
+                statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_EMAIL_EXIST_ERROR,
+                message: 'user.error.emailExist',
+            });
+        } else if (mobileNumberExist) {
+            throw new ConflictException({
+                statusCode:
+                    ENUM_USER_STATUS_CODE_ERROR.USER_MOBILE_NUMBER_EXIST_ERROR,
+                message: 'user.error.mobileNumberExist',
+            });
+        } else if (usernameExist) {
+            throw new ConflictException({
+                statusCode:
+                    ENUM_USER_STATUS_CODE_ERROR.USER_USERNAME_EXISTS_ERROR,
+                message: 'user.error.usernameExist',
+            });
+        }
+        const password = await this.authService.createPassword(body.password);
+        const activeKey = randomBytes(32).toString('hex');
         // await this.userService.create(
         //     {
         //         username,
         //         email,
         //         mobileNumber,
         //         signUpFrom: ENUM_USER_SIGN_UP_FROM.LOCAL,
+        //         activeKey,
         //         ...body,
         //     },
         //     password
         // );
+        const appProtocol = this.configService.get<string>('app.protocol');
+        const httpHost = this.configService.get<string>('app.http.host');
+        const httpPort = this.configService.get<string>('app.http.port');
+        const activationLink = `${appProtocol}://${httpHost}:${httpPort}/confirm-account?email=${payload.email}&key=${payload.activeKey}`;
+
+        console.log(`${payload.firstName} ${payload.lastName}`);
+        this.mailService.sendAccountActivation({
+            activationLink,
+            name: `${payload.firstName} ${payload.lastName}`,
+        });
     }
 
     @ApiExcludeEndpoint()

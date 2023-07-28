@@ -18,7 +18,7 @@
     "format:src": "prettier --write src/**/*.ts",
     "format:test": "prettier --write test/**/*.ts",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "npm run build && npm run start:prod --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main",
     "lint": "yarn lint:src && yarn lint:test",

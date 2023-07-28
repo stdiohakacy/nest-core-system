@@ -19,6 +19,7 @@ import { ENUM_MAIL_STATUS_CODE_ERROR } from '../constants/mail.status-code.const
 import { MAIL_QUEUE_NAME } from '../constants/mail.constant';
 import { MailSibTransporter } from '../transporters/mail.sib.transporter';
 import { MailConsoleTransporter } from '../transporters/mail.console.transporter';
+import { IMailAccountActivationParams } from '../interfaces/mail.interface';
 
 @Processor(MAIL_QUEUE_NAME)
 export class MailProcessor implements IMailProcessor {
@@ -81,22 +82,16 @@ export class MailProcessor implements IMailProcessor {
     @Process(ENUM_MAIL_PROCESSOR_NAME.ACCOUNT_ACTIVATION)
     async sendAccountActivation(job: Job): Promise<any> {
         const { data } = job;
-        const { from, to, subject, text } = data;
+        const { name, activationLink } = data;
         this.logger.log(
             'Processor:@Process - Sending account activation email.'
         );
 
         try {
             this.mailTransporter.sendMailAccountActivation({
-                activationLink:
-                    'https://www.w3schools.com/html/tryit.asp?filename=tryhtml_default_default',
-            });
-            // this.mailTransporter.sendMail({
-            //     from,
-            //     to,
-            //     subject,
-            //     text,
-            // });
+                name,
+                activationLink,
+            } as IMailAccountActivationParams);
         } catch (error) {
             this.logger.error(
                 'Failed to send account activation email.',

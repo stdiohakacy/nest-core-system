@@ -1,5 +1,8 @@
 import { Logger } from '@nestjs/common';
-import { IMail } from '../interfaces/mail.interface';
+import {
+    IMail,
+    IMailAccountActivationParams,
+} from '../interfaces/mail.interface';
 import { IMailTransporter } from './mail.transporter';
 import fs from 'fs';
 import handlebars from 'handlebars';
@@ -15,14 +18,14 @@ export class MailConsoleTransporter implements IMailTransporter<any> {
         console.log('mail console sent');
     }
 
-    sendMailAccountActivation({ activationLink }: any) {
+    sendMailAccountActivation(params: IMailAccountActivationParams) {
         const templatePath = '../templates/account-activation.hbs';
         const template = fs.readFileSync(
             path.join(__dirname, templatePath),
             'utf8'
         );
         const compiledTemplate = handlebars.compile(template);
-        const html = compiledTemplate({ activationLink });
+        const html = compiledTemplate(params);
         this.logger.log(html);
     }
 }

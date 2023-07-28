@@ -168,6 +168,17 @@ export class UserDTO extends BaseDTO {
     @IsNotEmpty()
     isActive: boolean;
 
+    @ApiPropertyOptional({
+        name: 'activeKey',
+        description: 'User active key',
+        example: true,
+        required: false,
+        nullable: true,
+    })
+    @IsString()
+    @IsOptional()
+    activeKey?: string;
+
     @ApiProperty({
         name: 'inactivePermanent',
         description: 'User inactive permanent',

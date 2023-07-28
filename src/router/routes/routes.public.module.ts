@@ -10,6 +10,7 @@ import { HealthModule } from 'src/health/health.module';
 import { RoleModule } from '../../modules/role/role.module';
 import { UserPublicController } from '../../modules/user/controllers/user.public.controller';
 import { UserModule } from '../../modules/user/user.module';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import { UserModule } from '../../modules/user/user.module';
         RoleModule,
         SettingModule,
         LoggerModule,
+        CqrsModule,
     ],
     exports: [
         TerminusModule,

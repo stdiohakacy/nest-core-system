@@ -75,31 +75,31 @@ export class UserService implements IUserService {
             email,
             mobileNumber,
             activeKey,
+            username,
             // role,
             signUpFrom,
         }: UserCreateDTO,
         { passwordExpired, passwordHash, salt, passwordCreated }: IAuthPassword
     ): Promise<UserEntity> {
-        const user: UserEntity = new UserEntity();
-
-        user.activeKey = activeKey;
-        user.activeExpire = this.helperDateService.forwardInDays(3);
-        user.firstName = firstName;
-        user.email = email;
-        user.password = passwordHash;
-        // user.role = role;
-        user.isActive = false;
-        user.inactivePermanent = false;
-        user.blocked = false;
-        user.lastName = lastName;
-        user.salt = salt;
-        user.passwordExpired = passwordExpired;
-        user.passwordCreated = passwordCreated;
-        user.signUpDate = this.helperDateService.create();
-        user.passwordAttempt = 0;
-        user.mobileNumber = mobileNumber ?? undefined;
-        user.signUpFrom = signUpFrom;
-
+        const user = this.userRepo.create({
+            username,
+            activeKey,
+            activeExpire: this.helperDateService.forwardInDays(3),
+            firstName,
+            lastName,
+            email,
+            password: passwordHash,
+            isActive: false,
+            inactivePermanent: false,
+            blocked: false,
+            salt,
+            passwordExpired,
+            passwordCreated,
+            signUpDate: this.helperDateService.create(),
+            passwordAttempt: 0,
+            mobileNumber,
+            signUpFrom,
+        });
         return await this.userRepo.save(user);
     }
 
@@ -237,24 +237,24 @@ export class UserService implements IUserService {
         const passwordExpired: Date = this.helperDateService.backwardInDays(1);
         const users: UserEntity[] = data.map(
             ({ email, firstName, lastName, mobileNumber, signUpFrom }) => {
-                const create: UserEntity = new UserEntity();
-                create.firstName = firstName;
-                create.email = email;
-                create.password = passwordHash;
-                // create.role = role;
-                create.isActive = true;
-                create.inactivePermanent = false;
-                create.blocked = false;
-                create.lastName = lastName;
-                create.salt = salt;
-                create.passwordExpired = passwordExpired;
-                create.passwordCreated = passwordCreated;
-                create.signUpDate = this.helperDateService.create();
-                create.passwordAttempt = 0;
-                create.mobileNumber = mobileNumber ?? undefined;
-                create.signUpFrom = signUpFrom;
+                const user = this.userRepo.create({
+                    firstName,
+                    lastName,
+                    email,
+                    password: passwordHash,
+                    isActive: true,
+                    inactivePermanent: false,
+                    blocked: false,
+                    salt,
+                    passwordExpired,
+                    passwordCreated,
+                    signUpDate: this.helperDateService.create(),
+                    passwordAttempt: 0,
+                    mobileNumber,
+                    signUpFrom,
+                });
 
-                return create;
+                return user;
             }
         );
 

@@ -1,3 +1,4 @@
+import { PartialType } from '@nestjs/swagger';
 import { Column, Entity } from 'typeorm';
 import { UseDTO } from '../../../common/decorators/use-dto.decorator';
 import {
@@ -8,6 +9,7 @@ import { UserDTO } from '../dtos/user.dto';
 import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 import { IUserGoogleEntity } from '../interfaces/user.interface';
+import { HelperDateService } from '../../../common/helper/services/helper.date.service';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
     username?: string;
@@ -113,4 +115,11 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
         nullable: true,
     })
     activatedAt?: Date;
+
+    active(data: any) {
+        this.isActive = true;
+        this.activatedAt = data.activatedAt;
+        this.activeKey = '';
+        this.activeExpire = null;
+    }
 }

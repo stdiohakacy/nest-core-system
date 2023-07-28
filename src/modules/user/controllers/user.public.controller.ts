@@ -18,6 +18,7 @@ import { AuthService } from '../../../common/auth/services/auth.service';
 import { RoleService } from '../../../modules/role/services/role.service';
 import { SettingService } from '../../../common/setting/services/setting.service';
 import {
+    UserPublicActiveDoc,
     UserPublicLoginDoc,
     UserPublicSignUpDoc,
 } from '../docs/user.public.doc';
@@ -43,6 +44,9 @@ import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/er
 import { MailService } from 'src/common/integrations/mail/services/mail.service';
 import { randomBytes } from 'crypto';
 import { ConfigService } from '@nestjs/config';
+import { UserActiveDTO } from '../dtos/user.active.dto';
+import { CommandBus } from '@nestjs/cqrs';
+import { UserActiveCommand } from '../commands/user.active.command';
 
 @ApiTags('modules.public.user')
 @Controller({
@@ -56,7 +60,8 @@ export class UserPublicController {
         private readonly roleService: RoleService,
         private readonly settingService: SettingService,
         private readonly mailService: MailService,
-        private readonly configService: ConfigService
+        private readonly configService: ConfigService,
+        private readonly commandBus: CommandBus
     ) {}
 
     @UserPublicLoginDoc()
@@ -218,23 +223,22 @@ export class UserPublicController {
         }
         const password = await this.authService.createPassword(body.password);
         const activeKey = randomBytes(32).toString('hex');
-        // await this.userService.create(
-        //     {
-        //         username,
-        //         email,
-        //         mobileNumber,
-        //         signUpFrom: ENUM_USER_SIGN_UP_FROM.LOCAL,
-        //         activeKey,
-        //         ...body,
-        //     },
-        //     password
-        // );
+        await this.userService.create(
+            {
+                username,
+                email,
+                mobileNumber,
+                signUpFrom: ENUM_USER_SIGN_UP_FROM.LOCAL,
+                activeKey,
+                ...body,
+            },
+            password
+        );
         const appProtocol = this.configService.get<string>('app.protocol');
         const httpHost = this.configService.get<string>('app.http.host');
         const httpPort = this.configService.get<string>('app.http.port');
-        const activationLink = `${appProtocol}://${httpHost}:${httpPort}/confirm-account?email=${payload.email}&key=${payload.activeKey}`;
+        const activationLink = `${appProtocol}://${httpHost}:${httpPort}/confirm-account?username=${payload.username}&key=${payload.activeKey}`;
 
-        console.log(`${payload.firstName} ${payload.lastName}`);
         this.mailService.sendAccountActivation({
             activationLink,
             name: `${payload.firstName} ${payload.lastName}`,
@@ -426,5 +430,15 @@ export class UserPublicController {
                 _error: err.message,
             });
         }
+    }
+
+    @UserPublicActiveDoc()
+    @Response('user.active')
+    @Post('/active')
+    async active(
+        @Body()
+        payload: UserActiveDTO
+    ): Promise<IResponse> {
+        return await this.commandBus.execute(new UserActiveCommand(payload));
     }
 }

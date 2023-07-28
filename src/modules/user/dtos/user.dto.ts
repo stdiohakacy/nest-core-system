@@ -171,7 +171,7 @@ export class UserDTO extends BaseDTO {
     @ApiPropertyOptional({
         name: 'activeKey',
         description: 'User active key',
-        example: true,
+        example: faker.string.alphanumeric(30),
         required: false,
         nullable: true,
     })

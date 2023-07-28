@@ -47,6 +47,8 @@ import { ConfigService } from '@nestjs/config';
 import { UserActiveDTO } from '../dtos/user.active.dto';
 import { CommandBus } from '@nestjs/cqrs';
 import { UserActiveCommand } from '../commands/user.active.command';
+import { UserForgotPasswordDTO } from '../dtos/user.forgot-password.dto';
+import { UserForgotPasswordCommand } from '../commands/user.forgot-password.command';
 
 @ApiTags('modules.public.user')
 @Controller({
@@ -440,5 +442,17 @@ export class UserPublicController {
         payload: UserActiveDTO
     ): Promise<IResponse> {
         return await this.commandBus.execute(new UserActiveCommand(payload));
+    }
+
+    @UserPublicActiveDoc()
+    @Response('user.forgotPassword')
+    @Post('/forgot-password')
+    async forgotPassword(
+        @Body()
+        payload: UserForgotPasswordDTO
+    ): Promise<IResponse> {
+        return await this.commandBus.execute(
+            new UserForgotPasswordCommand(payload)
+        );
     }
 }

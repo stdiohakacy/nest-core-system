@@ -5,8 +5,9 @@ import { UserEntity } from './entities/user.entity';
 import { IntegrationModule } from 'src/common/integrations/integration.module';
 import { UserActiveHandler } from './commands/user.active.command';
 import { UserRepository } from './repositories/user.repository';
+import { UserForgotPasswordHandler } from './commands/user.forgot-password.command';
 
-const commandHandlers = [UserActiveHandler];
+const commandHandlers = [UserActiveHandler, UserForgotPasswordHandler];
 const repositories = [UserRepository];
 
 @Module({

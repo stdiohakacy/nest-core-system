@@ -31,6 +31,11 @@ export interface IUserEntity extends IBaseEntity<UserDTO> {
     blockedDate?: Date;
     photo?: AwsS3Serialization;
     google?: IUserGoogleEntity;
+    activeKey?: string;
+    activeExpire?: Date;
+    activatedAt?: Date;
+    forgotKey?: string;
+    forgotExpire?: Date;
     // role: string;
 }
 
@@ -116,10 +121,22 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
     })
     activatedAt?: Date;
 
+    @Column({ name: 'forgotKey', nullable: true })
+    forgotKey?: string;
+
+    @Column({ name: 'forgotExpire', nullable: true, type: 'timestamptz' })
+    forgotExpire?: Date;
+
     active(data: any) {
         this.isActive = true;
         this.activatedAt = data.activatedAt;
         this.activeKey = '';
         this.activeExpire = null;
+    }
+
+    forgotPassword(data: any) {
+        const { forgotKey, forgotExpire } = data;
+        this.forgotKey = forgotKey;
+        this.forgotExpire = forgotExpire;
     }
 }

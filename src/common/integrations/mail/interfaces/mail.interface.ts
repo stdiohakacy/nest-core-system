@@ -10,3 +10,8 @@ export interface IMailAccountActivationParams {
     name: string;
     activationLink: string;
 }
+
+export interface IMailForgotPasswordParams {
+    name: string;
+    resetPasswordLink: string;
+}

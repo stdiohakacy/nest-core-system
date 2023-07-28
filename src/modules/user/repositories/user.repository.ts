@@ -45,4 +45,7 @@ export class UserRepository
     ) {
         super();
     }
+    async findOneByEmail(email: string): Promise<UserEntity> {
+        return await this.userRepo.findOneBy({ email });
+    }
 }

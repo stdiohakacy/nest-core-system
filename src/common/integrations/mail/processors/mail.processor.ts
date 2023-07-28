@@ -19,7 +19,10 @@ import { ENUM_MAIL_STATUS_CODE_ERROR } from '../constants/mail.status-code.const
 import { MAIL_QUEUE_NAME } from '../constants/mail.constant';
 import { MailSibTransporter } from '../transporters/mail.sib.transporter';
 import { MailConsoleTransporter } from '../transporters/mail.console.transporter';
-import { IMailAccountActivationParams } from '../interfaces/mail.interface';
+import {
+    IMailAccountActivationParams,
+    IMailForgotPasswordParams,
+} from '../interfaces/mail.interface';
 
 @Processor(MAIL_QUEUE_NAME)
 export class MailProcessor implements IMailProcessor {
@@ -95,6 +98,26 @@ export class MailProcessor implements IMailProcessor {
         } catch (error) {
             this.logger.error(
                 'Failed to send account activation email.',
+                error.stack
+            );
+            throw error;
+        }
+    }
+
+    @Process(ENUM_MAIL_PROCESSOR_NAME.FORGOT_PASSWORD)
+    async sendForgotPassword(job: Job): Promise<any> {
+        const { data } = job;
+        const { name, resetPasswordLink } = data;
+        this.logger.log('Processor:@Process - Sending forgot password email.');
+
+        try {
+            this.mailTransporter.sendForgotPassword({
+                name,
+                resetPasswordLink,
+            } as IMailForgotPasswordParams);
+        } catch (error) {
+            this.logger.error(
+                'Failed to send forgot password email.',
                 error.stack
             );
             throw error;

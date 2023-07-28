@@ -1,7 +1,10 @@
 import { InjectQueue } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
 import { Queue } from 'bull';
-import { IMailAccountActivationParams } from '../interfaces/mail.interface';
+import {
+    IMailAccountActivationParams,
+    IMailForgotPasswordParams,
+} from '../interfaces/mail.interface';
 import { ENUM_MAIL_PROCESSOR_NAME } from '../constants/mail.enum.constant';
 import { IMailService } from '../interfaces/mail.service.interface';
 import { MAIL_QUEUE_NAME } from '../constants/mail.constant';
@@ -14,5 +17,8 @@ export class MailService implements IMailService {
 
     async sendAccountActivation(data: IMailAccountActivationParams) {
         this.emailQueue.add(ENUM_MAIL_PROCESSOR_NAME.ACCOUNT_ACTIVATION, data);
+    }
+    async sendForgotPassword(data: IMailForgotPasswordParams) {
+        this.emailQueue.add(ENUM_MAIL_PROCESSOR_NAME.FORGOT_PASSWORD, data);
     }
 }

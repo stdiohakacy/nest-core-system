@@ -19,7 +19,9 @@ import { RoleService } from '../../../modules/role/services/role.service';
 import { SettingService } from '../../../common/setting/services/setting.service';
 import {
     UserPublicActiveDoc,
+    UserPublicForgotPasswordDoc,
     UserPublicLoginDoc,
+    UserPublicResetPasswordDoc,
     UserPublicSignUpDoc,
 } from '../docs/user.public.doc';
 import { Response } from '../../../common/response/decorators/response.decorator';
@@ -49,6 +51,8 @@ import { CommandBus } from '@nestjs/cqrs';
 import { UserActiveCommand } from '../commands/user.active.command';
 import { UserForgotPasswordDTO } from '../dtos/user.forgot-password.dto';
 import { UserForgotPasswordCommand } from '../commands/user.forgot-password.command';
+import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
+import { UserResetPasswordCommand } from '../commands/user.reset-password.command';
 
 @ApiTags('modules.public.user')
 @Controller({
@@ -444,7 +448,7 @@ export class UserPublicController {
         return await this.commandBus.execute(new UserActiveCommand(payload));
     }
 
-    @UserPublicActiveDoc()
+    @UserPublicForgotPasswordDoc()
     @Response('user.forgotPassword')
     @Post('/forgot-password')
     async forgotPassword(
@@ -453,6 +457,18 @@ export class UserPublicController {
     ): Promise<IResponse> {
         return await this.commandBus.execute(
             new UserForgotPasswordCommand(payload)
+        );
+    }
+
+    @UserPublicResetPasswordDoc()
+    @Response('user.resetPassword')
+    @Post('/reset-password')
+    async resetPassword(
+        @Body()
+        payload: UserResetPasswordDTO
+    ): Promise<IResponse> {
+        return await this.commandBus.execute(
+            new UserResetPasswordCommand(payload)
         );
     }
 }

@@ -1,4 +1,3 @@
-import { PartialType } from '@nestjs/swagger';
 import { Column, Entity } from 'typeorm';
 import { UseDTO } from '../../../common/decorators/use-dto.decorator';
 import {
@@ -9,7 +8,6 @@ import { UserDTO } from '../dtos/user.dto';
 import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 import { IUserGoogleEntity } from '../interfaces/user.interface';
-import { HelperDateService } from '../../../common/helper/services/helper.date.service';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
     username?: string;
@@ -138,5 +136,15 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
         const { forgotKey, forgotExpire } = data;
         this.forgotKey = forgotKey;
         this.forgotExpire = forgotExpire;
+    }
+
+    resetPassword(data: any) {
+        const { password, salt, passwordExpired, passwordCreated } = data;
+        this.password = password;
+        this.salt = salt;
+        this.passwordExpired = passwordExpired;
+        this.passwordCreated = passwordCreated;
+        this.forgotKey = '';
+        this.forgotExpire = null;
     }
 }

@@ -261,4 +261,26 @@ export class UserDTO extends BaseDTO {
     })
     @IsOptional()
     google?: IUserGoogleEntity;
+
+    @ApiPropertyOptional({
+        name: 'forgotKey',
+        description: 'User forgot key',
+        example: faker.string.alphanumeric(30),
+        required: false,
+        nullable: true,
+    })
+    @IsOptional()
+    @IsString()
+    forgotKey?: string;
+
+    @ApiPropertyOptional({
+        name: 'forgotExpire',
+        description: 'User forgot expire',
+        example: faker.date.recent(),
+        required: false,
+        nullable: true,
+    })
+    @IsOptional()
+    @IsDate()
+    forgotExpire?: Date;
 }

@@ -5,6 +5,8 @@
     "delete": "Delete User Success.",
     "update": "Update User Success.",
     "inactive": "Inactive Succeed",
+    "forgotPassword": "User forgot password success.",
+    "resetPassword": "User reset password success.",
     "active": "Active Succeed",
     "import": "Import user Succeed",
     "blocked": "Success blocked user",
@@ -34,6 +36,8 @@
         "isActiveInvalid": "User is active invalid",
         "usernameExist": "Username exist",
         "newPasswordMustDifference": "Old password must difference",
-        "activeKeyInvalid": "User active key invalid!"
+        "activeKeyInvalid": "User active key invalid!",
+        "passwordConfirmationNotMatch": "Password confirmation not match!",
+        "forgotKeyInvalid": "User forgot key invalid!"
     }
 }

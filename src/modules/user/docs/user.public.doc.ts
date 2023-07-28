@@ -6,7 +6,6 @@ import {
 } from '../../../common/doc/decorators/doc.decorator';
 import { UserLoginSerialization } from '../serializations/user.login.serialization';
 import { ENUM_DOC_REQUEST_BODY_TYPE } from '../../../common/doc/constants/doc.enum.constant';
-import { UpdateResult } from 'typeorm';
 
 export function UserPublicLoginDoc(): MethodDecorator {
     return applyDecorators(
@@ -31,5 +30,21 @@ export function UserPublicActiveDoc(): MethodDecorator {
         Doc({ operation: 'modules.public.user' }),
         DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
         DocResponse('user.active', { httpStatus: HttpStatus.CREATED })
+    );
+}
+
+export function UserPublicForgotPasswordDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.public.user' }),
+        DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
+        DocResponse('user.forgotPassword')
+    );
+}
+
+export function UserPublicResetPasswordDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.public.user' }),
+        DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
+        DocResponse('user.resetPassword')
     );
 }

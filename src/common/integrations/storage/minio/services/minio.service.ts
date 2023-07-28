@@ -1,19 +1,30 @@
-// minio.service.ts
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as Minio from 'minio';
 import { ClientOptions } from 'minio';
+import { IMinioService } from '../interfaces/minio.service.interface';
 
 @Injectable()
-export class MinioService {
+export class MinioService implements IMinioService {
     private minioClient: Minio.Client;
 
-    constructor() {
+    constructor(private readonly configService: ConfigService) {
         this.minioClient = new Minio.Client({
-            endPoint: '127.0.0.1',
-            port: 9000,
-            useSSL: false,
-            accessKey: '7ahreroK5Rn6F6Wr3bLQ',
-            secretKey: 'SBKxpI7ldr9G5diCW7rkWK0KffJC70apLPCSJMG3',
+            endPoint: this.configService.get<string>(
+                'integration.storage.minio.endpoint'
+            ),
+            port: Number(
+                this.configService.get<number>('integration.storage.minio.port')
+            ),
+            useSSL: this.configService.get<boolean>(
+                'integration.storage.minio.useSSL'
+            ),
+            accessKey: this.configService.get<string>(
+                'integration.storage.minio.accessKey'
+            ),
+            secretKey: this.configService.get<string>(
+                'integration.storage.minio.secretKey'
+            ),
         } as ClientOptions);
     }
 
@@ -21,7 +32,12 @@ export class MinioService {
         const exists = await this.minioClient.bucketExists(bucketName);
 
         if (!exists) {
-            await this.minioClient.makeBucket(bucketName, 'us-east-1');
+            await this.minioClient.makeBucket(
+                bucketName,
+                this.configService.get<string>(
+                    'integration.storage.minio.region'
+                )
+            );
         }
     }
 
@@ -51,5 +67,13 @@ export class MinioService {
                 reject(err);
             });
         });
+    }
+
+    async getBuckets(): Promise<Minio.BucketItemFromList[]> {
+        return this.minioClient.listBuckets();
+    }
+
+    async removeBucket(bucketName: string): Promise<void> {
+        return await this.minioClient.removeBucket(bucketName);
     }
 }

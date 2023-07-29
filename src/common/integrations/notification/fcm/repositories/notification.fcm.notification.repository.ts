@@ -1,14 +1,19 @@
-import { UpdateResult, DeleteResult, Repository, InsertResult } from 'typeorm';
+import { DeleteResult, Repository, InsertResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { BaseRepository } from 'src/common/base/repository/base.repository';
-import { DeviceEntity } from 'src/modules/notification/entities/device.entity';
-import { INotificationFCMDeviceRepository } from '../interfaces/notification.fcm.device.repository.interface';
 import { PaginationListDTO } from 'src/common/pagination/dtos/pagination.list.dto';
 import { NotificationEntity } from 'src/modules/notification/entities/notification.entity';
 
 @Injectable()
 export class NotificationFCMNotificationRepository extends BaseRepository<NotificationEntity> {
+    constructor(
+        @InjectRepository(NotificationEntity)
+        private readonly notificationRepo: Repository<NotificationEntity>
+    ) {
+        super();
+    }
+    
     findOneById(id: string) {
         throw new Error('Method not implemented.');
     }
@@ -16,7 +21,7 @@ export class NotificationFCMNotificationRepository extends BaseRepository<Notifi
         throw new Error('Method not implemented.');
     }
     async create(notification: NotificationEntity): Promise<InsertResult> {
-        return await this.deviceRepo.insert(notification);
+        return await this.notificationRepo.insert(notification);
     }
     update(entity: Partial<NotificationEntity>): Promise<NotificationEntity> {
         throw new Error('Method not implemented.');
@@ -27,10 +32,5 @@ export class NotificationFCMNotificationRepository extends BaseRepository<Notifi
     truncate(): Promise<DeleteResult> {
         throw new Error('Method not implemented.');
     }
-    constructor(
-        @InjectRepository(DeviceEntity)
-        private readonly deviceRepo: Repository<DeviceEntity>
-    ) {
-        super();
-    }
+    
 }

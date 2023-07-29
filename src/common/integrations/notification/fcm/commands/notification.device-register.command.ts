@@ -34,11 +34,11 @@ export class DeviceRegisterHandler
 
         const device = new DeviceEntity();
         device.token = token;
-        device.type = userAgent?.device?.type || '';
+        device.type = userAgent?.device?.type || 'web';
         device.userId = userId;
 
         const isDeviceExist = await this.deviceRepo.isDeviceExist(
-            userAgent?.device?.type,
+            device.type,
             userId
         );
         if (!isDeviceExist) {
@@ -47,8 +47,8 @@ export class DeviceRegisterHandler
 
         const notification = new NotificationEntity();
         notification.title = 'Congratulation';
-        (notification.body = 'Register device succeed'),
-            (notification.userId = userId);
+        notification.body = 'Register device succeed';
+        notification.userId = userId;
 
         await this.notificationRepo.create(notification);
         await this.fcmService.pushNotification(token, {

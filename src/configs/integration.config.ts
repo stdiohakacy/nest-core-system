@@ -30,23 +30,10 @@ export default registerAs(
         },
         notification: {
             fcm: {
-                apiKey:
-                    process.env.FCM_API_KEY ||
-                    'AIzaSyBA-QHtDPVuFZwuaAFJnOGEmUZVa0k-2Ik',
-
-                authDomain:
-                    process.env.FCM_AUTH_DOMAIN ||
-                    'nest-core-system.firebaseapp.com',
-                projectId: process.env.FCM_PROJECT_ID || 'nest-core-system',
-                storageBucket:
-                    process.env.FCM_STORAGE_BUCKET ||
-                    'nest-core-system.appspot.com',
-                messagingSenderId:
-                    process.env.FCM_MESSAGING_SENDER_ID || '619059218887',
-                appId:
-                    process.env.FCM_APP_ID ||
-                    '1:619059218887:web:33c07a83f17ac5d2c331e2',
-                measurementId: process.env.FCM_MEASUREMENT_ID || 'G-QQEZ45GZ1E',
+                projectId: process.env.FCM_CLIENT_ID,
+                clientEmail: process.env.FCM_CLIENT_EMAIL,
+                privateKey: process.env.FCM_PRIVATE_KEY,
+                databaseURL: process.env.FCM_DATABASE_URL,
             },
         },
     })

@@ -202,7 +202,6 @@ export class UserPublicController {
         payload: UserSignUpDTO
     ): Promise<void> {
         const { email, mobileNumber, username, ...body } = payload;
-        console.log(payload);
         const promises: Promise<any>[] = [this.userService.existByEmail(email)];
         if (mobileNumber) {
             promises.push(this.userService.existByMobileNumber(mobileNumber));

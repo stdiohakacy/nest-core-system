@@ -29,7 +29,18 @@ import { MaxBinaryFileConstraint } from './validations/request.max-binary-file.v
 import { RequestMiddlewareModule } from './middleware/request.middleware.module';
 
 @Module({
-    controllers: [],
+    imports: [
+        RequestMiddlewareModule,
+        SettingModule,
+        ThrottlerModule.forRootAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (config: ConfigService) => ({
+                ttl: config.get('request.throttle.ttl'),
+                limit: config.get('request.throttle.limit'),
+            }),
+        }),
+    ],
     providers: [
         {
             provide: APP_INTERCEPTOR,
@@ -73,17 +84,6 @@ import { RequestMiddlewareModule } from './middleware/request.middleware.module'
         MaxDateTodayConstraint,
         MaxBinaryFileConstraint,
     ],
-    imports: [
-        RequestMiddlewareModule,
-        SettingModule,
-        ThrottlerModule.forRootAsync({
-            imports: [ConfigModule],
-            inject: [ConfigService],
-            useFactory: (config: ConfigService) => ({
-                ttl: config.get('request.throttle.ttl'),
-                limit: config.get('request.throttle.limit'),
-            }),
-        }),
-    ],
+    exports: [],
 })
 export class RequestModule {}

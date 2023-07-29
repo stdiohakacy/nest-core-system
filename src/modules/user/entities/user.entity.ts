@@ -10,6 +10,8 @@ import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.se
 import { IUserGoogleEntity } from '../interfaces/user.interface';
 import { UserRoleEntity } from '../../../modules/rbac/entities/user-role.entity';
 import { AccessTokenEntity } from '../../../modules/access-token/entities/access-token.entity';
+import { DeviceEntity } from '../../../modules/notification/entities/device.entity';
+import { NotificationEntity } from '../../../modules/notification/entities/notification.entity';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
     username?: string;
@@ -132,6 +134,12 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
 
     @OneToMany(() => AccessTokenEntity, (accessTokens) => accessTokens.user)
     accessTokens: AccessTokenEntity[];
+
+    @OneToMany(() => DeviceEntity, (devices) => devices.user)
+    devices: DeviceEntity[];
+
+    @OneToMany(() => NotificationEntity, (notifications) => notifications.user)
+    notifications: NotificationEntity[];
 
     active(data: any) {
         this.isActive = true;

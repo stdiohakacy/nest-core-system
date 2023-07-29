@@ -23,6 +23,7 @@ import { DebuggerModule } from './debugger/debugger.module';
 import { AuthModule } from './auth/auth.module';
 import { IntegrationModule } from './integrations/integration.module';
 import { RBACCommonModule } from './rbac/rbac.module';
+import { NotificationModule } from './integrations/notification/notification.module';
 @Module({
     controllers: [],
     providers: [],
@@ -174,6 +175,7 @@ import { RBACCommonModule } from './rbac/rbac.module';
         ApiKeyModule,
         IntegrationModule,
         RBACCommonModule,
+        NotificationModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],
@@ -190,6 +192,7 @@ import { RBACCommonModule } from './rbac/rbac.module';
         ApiKeyModule,
         IntegrationModule,
         RBACCommonModule,
+        NotificationModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],

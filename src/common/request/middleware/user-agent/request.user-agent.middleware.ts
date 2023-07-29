@@ -10,9 +10,8 @@ export class RequestUserAgentMiddleware implements NestMiddleware {
         res: Response,
         next: NextFunction
     ): Promise<void> {
-        const parserUserAgent = new UAParser(req['User-Agent']);
+        const parserUserAgent = new UAParser(req.headers['user-agent']);
         const userAgent: IResult = parserUserAgent.getResult();
-
         req.__userAgent = userAgent;
         next();
     }

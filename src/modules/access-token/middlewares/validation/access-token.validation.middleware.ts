@@ -14,10 +14,6 @@ export class AccessTokenValidationMiddleware implements NestMiddleware {
         next: NextFunction
     ): Promise<void> {
         const token = req.headers.authorization?.replace('Bearer ', '');
-        console.log(token);
-        console.log(token);
-        console.log(token);
-        console.log(token);
         const isTokenValid = await this.accessTokenRepo.isTokenRevoke(token);
         if (!isTokenValid) {
             throw new ForbiddenException({

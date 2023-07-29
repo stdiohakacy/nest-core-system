@@ -5,11 +5,13 @@ import { LoggerModule } from '../../common/logger/logger.module';
 import { MessagePublicController } from '../../common/message/controllers/message.public.controller';
 import { SettingPublicController } from '../../common/setting/controllers/setting.public.controller';
 import { SettingModule } from '../../common/setting/setting.module';
-import { HealthPublicController } from 'src/health/controllers/health.public.controller';
-import { HealthModule } from 'src/health/health.module';
+import { HealthPublicController } from '../../health/controllers/health.public.controller';
+import { HealthModule } from '../../health/health.module';
 import { UserPublicController } from '../../modules/user/controllers/user.public.controller';
 import { UserModule } from '../../modules/user/user.module';
 import { CqrsModule } from '@nestjs/cqrs';
+import { NotificationPublicController } from '../../common/integrations/notification/fcm/controllers/notification.fcm.public.controller';
+import { NotificationModule } from '../../common/integrations/notification/notification.module';
 
 @Module({
     imports: [
@@ -19,6 +21,7 @@ import { CqrsModule } from '@nestjs/cqrs';
         AuthModule,
         SettingModule,
         LoggerModule,
+        NotificationModule,
         CqrsModule,
     ],
     exports: [
@@ -35,6 +38,7 @@ import { CqrsModule } from '@nestjs/cqrs';
         MessagePublicController,
         SettingPublicController,
         UserPublicController,
+        NotificationPublicController,
     ],
     providers: [],
 })

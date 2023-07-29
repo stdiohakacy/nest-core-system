@@ -4,9 +4,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeviceEntity } from 'src/modules/notification/entities/device.entity';
 import { DeviceRegisterHandler } from './commands/notification.device-register.command';
 import { FCMService } from './services/notification.fcm.service';
+import { NotificationFCMNotificationRepository } from './repositories/notification.fcm.notification.repository';
 
 const commandHandlers = [DeviceRegisterHandler];
-const repositories = [NotificationFCMDeviceRepository];
+const repositories = [
+    NotificationFCMDeviceRepository,
+    NotificationFCMNotificationRepository,
+];
 
 @Global()
 @Module({

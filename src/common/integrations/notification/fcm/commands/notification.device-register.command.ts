@@ -10,6 +10,8 @@ import { NotificationFCMDeviceRepository } from '../repositories/notification.fc
 import { DeviceEntity } from '../../../../../modules/notification/entities/device.entity';
 import { IResult } from 'ua-parser-js';
 import { FCMService } from '../services/notification.fcm.service';
+import { NotificationFCMNotificationRepository } from '../repositories/notification.fcm.notification.repository';
+import { NotificationEntity } from 'src/modules/notification/entities/notification.entity';
 
 export class DeviceRegisterCommand implements ICommand {
     constructor(
@@ -24,6 +26,7 @@ export class DeviceRegisterHandler
 {
     constructor(
         private readonly deviceRepo: NotificationFCMDeviceRepository,
+        private readonly notificationRepo: NotificationFCMNotificationRepository,
         private readonly fcmService: FCMService
     ) {}
     async execute({ payload, userAgent }: DeviceRegisterCommand) {
@@ -33,6 +36,7 @@ export class DeviceRegisterHandler
         device.token = token;
         device.type = userAgent?.device?.type || '';
         device.userId = userId;
+
         const isDeviceExist = await this.deviceRepo.isDeviceExist(
             userAgent?.device?.type,
             userId
@@ -41,6 +45,12 @@ export class DeviceRegisterHandler
             await this.deviceRepo.create(device);
         }
 
+        const notification = new NotificationEntity();
+        notification.title = 'Congratulation';
+        (notification.body = 'Register device succeed'),
+            (notification.userId = userId);
+
+        await this.notificationRepo.create(notification);
         await this.fcmService.pushNotification(token, {
             title: 'Congratulation',
             body: 'Register device succeed',

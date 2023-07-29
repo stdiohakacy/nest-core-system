@@ -3,7 +3,7 @@ import {
     IBaseEntity,
 } from '../../../common/base/entity/base.entity';
 import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
-import { NotificationDTO } from '../../../common/integrations/notification/fcm/dtos/notification.fcm.dto';
+import { NotificationDTO } from '../../../common/integrations/notification/fcm/dtos/notification.fcm.notification.dto';
 import { UseDTO } from '../../../common/decorators/use-dto.decorator';
 import { UserEntity } from '../../../modules/user/entities/user.entity';
 

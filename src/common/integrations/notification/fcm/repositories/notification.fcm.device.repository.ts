@@ -18,6 +18,11 @@ export class NotificationFCMDeviceRepository
         super();
     }
 
+    async isDeviceExist(type: string, userId: string): Promise<boolean> {
+        const device = this.deviceRepo.findOneBy({ userId, type });
+        return !!device;
+    }
+
     async findByUserId(userId: string): Promise<DeviceEntity[]> {
         return await this.deviceRepo.find({ where: { userId } });
     }

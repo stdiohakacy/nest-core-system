@@ -11,6 +11,8 @@ import { UserResetPasswordHandler } from './commands/user.reset-password.command
 import { AccessTokenModule } from '../access-token/access-token.module';
 import { UserRevokeHandler } from './commands/user.revoke.command';
 import { UserUploadMinioHandler } from './commands/user.upload.minio.command';
+import { UserLoginHandler } from './commands/user.login.command';
+import { SettingModule } from '../../common/setting/setting.module';
 
 const commandHandlers = [
     UserActiveHandler,
@@ -18,6 +20,7 @@ const commandHandlers = [
     UserResetPasswordHandler,
     UserRevokeHandler,
     UserUploadMinioHandler,
+    UserLoginHandler,
 ];
 const repositories = [UserRepository];
 
@@ -27,6 +30,7 @@ const repositories = [UserRepository];
         IntegrationModule,
         AuthModule,
         AccessTokenModule,
+        SettingModule,
     ],
     exports: [
         UserService,

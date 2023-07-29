@@ -2,4 +2,5 @@ import { DeviceEntity } from '../../../../../modules/notification/entities/devic
 
 export interface INotificationFCMDeviceRepository {
     findByUserId(userId: string): Promise<DeviceEntity[]>;
+    isDeviceExist(deviceType: string, userId: string): Promise<boolean>;
 }

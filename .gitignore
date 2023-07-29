@@ -3,8 +3,6 @@
 /node_modules
 .warmup/
 /storage
-/client/fcm-client/node_modules
-/client/fcm-client/.env
 
 # Logs
 logs

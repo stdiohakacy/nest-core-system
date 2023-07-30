@@ -12,6 +12,7 @@ import { UserRoleEntity } from '../../../modules/rbac/entities/user-role.entity'
 import { AccessTokenEntity } from '../../../modules/access-token/entities/access-token.entity';
 import { DeviceEntity } from '../../../modules/notification/entities/device.entity';
 import { NotificationEntity } from '../../../modules/notification/entities/notification.entity';
+import { VirtualColumn } from '../../../common/decorators/virtual-column.decorator';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
     username?: string;
@@ -132,6 +133,9 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
 
     @Column({ name: 'isPhoneConfirmation', nullable: true, default: false })
     isPhoneConfirmation: boolean;
+
+    @VirtualColumn()
+    fullName?: string;
 
     /* Relationships */
 

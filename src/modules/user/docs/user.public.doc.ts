@@ -48,3 +48,11 @@ export function UserPublicResetPasswordDoc(): MethodDecorator {
         DocResponse('user.resetPassword')
     );
 }
+
+export function UserPublicPhoneConfirmDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.public.user' }),
+        DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
+        DocResponse('user.confirmPhone')
+    );
+}

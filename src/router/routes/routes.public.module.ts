@@ -11,7 +11,6 @@ import { UserPublicController } from '../../modules/user/controllers/user.public
 import { UserModule } from '../../modules/user/user.module';
 import { CqrsModule } from '@nestjs/cqrs';
 import { NotificationPublicController } from '../../common/integrations/notification/fcm/controllers/notification.fcm.public.controller';
-import { NotificationModule } from '../../common/integrations/notification/notification.module';
 
 @Module({
     imports: [
@@ -21,7 +20,6 @@ import { NotificationModule } from '../../common/integrations/notification/notif
         AuthModule,
         SettingModule,
         LoggerModule,
-        NotificationModule,
         CqrsModule,
     ],
     exports: [

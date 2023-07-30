@@ -38,6 +38,7 @@ export interface IUserEntity extends IBaseEntity<UserDTO> {
     activatedAt?: Date;
     forgotKey?: string;
     forgotExpire?: Date;
+    isPhoneConfirmation: boolean;
     // role: string;
 }
 
@@ -129,6 +130,11 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
     @Column({ name: 'forgotExpire', nullable: true, type: 'timestamptz' })
     forgotExpire?: Date;
 
+    @Column({ name: 'isPhoneConfirmation', nullable: true, default: false })
+    isPhoneConfirmation: boolean;
+
+    /* Relationships */
+
     @OneToMany(() => UserRoleEntity, (userRoles) => userRoles.user)
     userRoles: UserRoleEntity[];
 
@@ -162,5 +168,9 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
         this.passwordCreated = passwordCreated;
         this.forgotKey = '';
         this.forgotExpire = null;
+    }
+
+    confirmedPhone() {
+        this.isPhoneConfirmation = true;
     }
 }

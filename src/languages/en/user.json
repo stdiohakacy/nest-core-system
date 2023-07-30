@@ -24,6 +24,7 @@
     "signUpGoogle": "Request sign up with google succeed",
     "signUpGoogleCallback": "Sign up with google succeed",
     "revokeToken": "User revoke token succeed!",
+    "confirmPhone": "User confirm phone succeed.",
     "error": {
         "notFound": "User not found.",
         "emailExist": "Email user used",

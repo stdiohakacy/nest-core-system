@@ -36,5 +36,13 @@ export default registerAs(
                 databaseURL: process.env.FCM_DATABASE_URL,
             },
         },
+        sms: {
+            twilio: {
+                accountSid: process.env.TWILIO_ACCOUNT_SID,
+                authToken: process.env.TWILIO_AUTH_TOKEN,
+                verificationServiceSid:
+                    process.env.TWILIO_VERIFICATION_SERVICE_SID,
+            },
+        },
     })
 );

@@ -66,7 +66,7 @@ export class UserCreateDTO {
     readonly username?: string;
 
     @ApiProperty({
-        example: faker.phone.number('62812#########'),
+        example: faker.phone.number('+84921262052'),
         required: true,
     })
     @IsString()
@@ -75,7 +75,7 @@ export class UserCreateDTO {
     @MaxLength(14)
     @ValidateIf((e) => e.mobileNumber !== '')
     @Type(() => String)
-    @MobileNumberAllowed()
+    // @MobileNumberAllowed()
     readonly mobileNumber?: string;
 
     @ApiHideProperty()

@@ -21,6 +21,7 @@ import {
     UserPublicActiveDoc,
     UserPublicForgotPasswordDoc,
     UserPublicLoginDoc,
+    UserPublicPhoneConfirmDoc,
     UserPublicResetPasswordDoc,
     UserPublicSignUpDoc,
 } from '../docs/user.public.doc';
@@ -53,9 +54,11 @@ import { UserForgotPasswordDTO } from '../dtos/user.forgot-password.dto';
 import { UserForgotPasswordCommand } from '../commands/user.forgot-password.command';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { UserResetPasswordCommand } from '../commands/user.reset-password.command';
-import { AccessTokenRepository } from '../../../modules/access-token/repositories/access-token.repository';
 import { Transactional } from 'typeorm-transactional';
 import { UserLoginCommand } from '../commands/user.login.command';
+import TwilioService from '../../../common/integrations/sms/twilio/services/twilio.service';
+import { UserPhoneConfirmDTO } from '../dtos/user.phone-confirmation.dto';
+import { UserPhoneConfirmCommand } from '../commands/user.confirm-phone.command';
 
 @ApiTags('modules.public.user')
 @Controller({ version: '1', path: '/user' })
@@ -65,7 +68,8 @@ export class UserPublicController {
         private readonly authService: AuthService,
         private readonly mailService: MailService,
         private readonly configService: ConfigService,
-        private readonly commandBus: CommandBus
+        private readonly commandBus: CommandBus,
+        private readonly twilioService: TwilioService
     ) {}
 
     @UserPublicLoginDoc()
@@ -84,56 +88,59 @@ export class UserPublicController {
         @Body()
         payload: UserSignUpDTO
     ): Promise<void> {
-        const { email, mobileNumber, username, ...body } = payload;
-        const promises: Promise<any>[] = [this.userService.existByEmail(email)];
-        if (mobileNumber) {
-            promises.push(this.userService.existByMobileNumber(mobileNumber));
-        }
-        if (username) {
-            promises.push(this.userService.existByUsername(username));
-        }
-        const [emailExist, mobileNumberExist, usernameExist] =
-            await Promise.all(promises);
-        if (emailExist) {
-            throw new ConflictException({
-                statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_EMAIL_EXIST_ERROR,
-                message: 'user.error.emailExist',
-            });
-        } else if (mobileNumberExist) {
-            throw new ConflictException({
-                statusCode:
-                    ENUM_USER_STATUS_CODE_ERROR.USER_MOBILE_NUMBER_EXIST_ERROR,
-                message: 'user.error.mobileNumberExist',
-            });
-        } else if (usernameExist) {
-            throw new ConflictException({
-                statusCode:
-                    ENUM_USER_STATUS_CODE_ERROR.USER_USERNAME_EXISTS_ERROR,
-                message: 'user.error.usernameExist',
-            });
-        }
-        const password = await this.authService.createPassword(body.password);
-        const activeKey = randomBytes(32).toString('hex');
-        await this.userService.create(
-            {
-                username,
-                email,
-                mobileNumber,
-                signUpFrom: ENUM_USER_SIGN_UP_FROM.LOCAL,
-                activeKey,
-                ...body,
-            },
-            password
+        const result = await this.twilioService.initPhoneNumberVerification(
+            payload.mobileNumber
         );
-        const appProtocol = this.configService.get<string>('app.protocol');
-        const httpHost = this.configService.get<string>('app.http.host');
-        const httpPort = this.configService.get<string>('app.http.port');
-        const activationLink = `${appProtocol}://${httpHost}:${httpPort}/confirm-account?username=${payload.username}&key=${payload.activeKey}`;
-
-        this.mailService.sendAccountActivation({
-            activationLink,
-            name: `${payload.firstName} ${payload.lastName}`,
-        });
+        console.log(result);
+        // const { email, mobileNumber, username, ...body } = payload;
+        // const promises: Promise<any>[] = [this.userService.existByEmail(email)];
+        // if (mobileNumber) {
+        //     promises.push(this.userService.existByMobileNumber(mobileNumber));
+        // }
+        // if (username) {
+        //     promises.push(this.userService.existByUsername(username));
+        // }
+        // const [emailExist, mobileNumberExist, usernameExist] =
+        //     await Promise.all(promises);
+        // if (emailExist) {
+        //     throw new ConflictException({
+        //         statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_EMAIL_EXIST_ERROR,
+        //         message: 'user.error.emailExist',
+        //     });
+        // } else if (mobileNumberExist) {
+        //     throw new ConflictException({
+        //         statusCode:
+        //             ENUM_USER_STATUS_CODE_ERROR.USER_MOBILE_NUMBER_EXIST_ERROR,
+        //         message: 'user.error.mobileNumberExist',
+        //     });
+        // } else if (usernameExist) {
+        //     throw new ConflictException({
+        //         statusCode:
+        //             ENUM_USER_STATUS_CODE_ERROR.USER_USERNAME_EXISTS_ERROR,
+        //         message: 'user.error.usernameExist',
+        //     });
+        // }
+        // const password = await this.authService.createPassword(body.password);
+        // const activeKey = randomBytes(32).toString('hex');
+        // await this.userService.create(
+        //     {
+        //         username,
+        //         email,
+        //         mobileNumber,
+        //         signUpFrom: ENUM_USER_SIGN_UP_FROM.LOCAL,
+        //         activeKey,
+        //         ...body,
+        //     },
+        //     password
+        // );
+        // const appProtocol = this.configService.get<string>('app.protocol');
+        // const httpHost = this.configService.get<string>('app.http.host');
+        // const httpPort = this.configService.get<string>('app.http.port');
+        // const activationLink = `${appProtocol}://${httpHost}:${httpPort}/confirm-account?username=${payload.username}&key=${payload.activeKey}`;
+        // this.mailService.sendAccountActivation({
+        //     activationLink,
+        //     name: `${payload.firstName} ${payload.lastName}`,
+        // });
     }
 
     @ApiExcludeEndpoint()
@@ -265,10 +272,6 @@ export class UserPublicController {
             });
         }
 
-        // const session: ClientSession =
-        //     await this.databaseConnection.startSession();
-        // session.startTransaction();
-
         try {
             const passwordString =
                 await this.authService.createPasswordRandom();
@@ -287,21 +290,11 @@ export class UserPublicController {
                 password
             );
 
-            await this.userService.updateGoogleSSO(
-                user,
-                {
-                    accessToken: googleAccessToken,
-                    refreshToken: googleRefreshToken,
-                }
-                // { session }
-            );
-
-            // await session.commitTransaction();
-            // await session.endSession();
+            await this.userService.updateGoogleSSO(user, {
+                accessToken: googleAccessToken,
+                refreshToken: googleRefreshToken,
+            });
         } catch (err: any) {
-            // await session.abortTransaction();
-            // await session.endSession();
-
             throw new InternalServerErrorException({
                 statusCode: ENUM_ERROR_STATUS_CODE_ERROR.ERROR_UNKNOWN,
                 message: 'http.serverError.internalServerError',
@@ -344,6 +337,18 @@ export class UserPublicController {
     ): Promise<IResponse> {
         return await this.commandBus.execute(
             new UserResetPasswordCommand(payload)
+        );
+    }
+
+    @UserPublicPhoneConfirmDoc()
+    @Response('user.confirmPhone')
+    @Transactional()
+    @Post('/phone-confirm')
+    async confirmPhone(
+        @Body() payload: UserPhoneConfirmDTO
+    ): Promise<IResponse> {
+        return await this.commandBus.execute(
+            new UserPhoneConfirmCommand(payload)
         );
     }
 }

@@ -11,6 +11,7 @@ import {
     IsNumber,
     IsOptional,
     IsString,
+    Matches,
     MaxLength,
     MinLength,
     ValidateIf,
@@ -214,7 +215,8 @@ export class UserDTO extends BaseDTO {
     @MaxLength(14)
     @ValidateIf((e) => e.mobileNumber !== '')
     @Type(() => String)
-    @MobileNumberAllowed()
+    @Matches(/^\+[1-9]\d{1,14}$/)
+    // @MobileNumberAllowed()
     mobileNumber?: string;
 
     @ApiPropertyOptional({

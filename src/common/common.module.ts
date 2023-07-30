@@ -144,6 +144,10 @@ import { NotificationModule } from './integrations/notification/notification.mod
                     .allow(null, '')
                     .uri()
                     .optional(),
+
+                TWILIO_ACCOUNT_SID: Joi.string().required(),
+                TWILIO_AUTH_TOKEN: Joi.string().required(),
+                TWILIO_VERIFICATION_SERVICE_SID: Joi.string().required(),
             }),
             validationOptions: {
                 allowUnknown: true,

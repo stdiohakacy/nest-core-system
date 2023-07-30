@@ -5,11 +5,16 @@ import { VerificationInstance } from 'twilio/lib/rest/verify/v2/service/verifica
 import { ITwilioService } from '../interfaces/twilio.service.interface';
 import { VerificationCheckInstance } from 'twilio/lib/rest/verify/v2/service/verificationCheck';
 import { UserRepository } from 'src/modules/user/repositories/user.repository';
+import {
+    MessageInstance,
+    MessageListInstanceCreateOptions,
+} from 'twilio/lib/rest/api/v2010/account/message';
 
 @Injectable()
 export default class TwilioService implements ITwilioService {
     private readonly client: Twilio;
     private serviceSid = '';
+    private senderPhoneNumber;
 
     constructor(private readonly configService: ConfigService) {
         const accountSid = this.configService.get<string>(
@@ -21,8 +26,32 @@ export default class TwilioService implements ITwilioService {
         this.serviceSid = this.configService.get<string>(
             'integration.sms.twilio.verificationServiceSid'
         );
+        this.senderPhoneNumber = this.configService.get<string>(
+            'integration.sms.twilio.senderPhoneNumber'
+        );
 
         this.client = new Twilio(accountSid, authToken);
+    }
+
+    async sendMessage(
+        receiverPhoneNumber: string | string[],
+        contentMessage: string
+    ) {
+        const receiverPhoneNumbers: string[] = Array.isArray(
+            receiverPhoneNumber
+        )
+            ? receiverPhoneNumber
+            : [receiverPhoneNumber];
+        return await Promise.all(
+            receiverPhoneNumbers.map(
+                async (phoneNumber) =>
+                    await this.client.messages.create({
+                        body: contentMessage,
+                        from: this.senderPhoneNumber,
+                        to: phoneNumber,
+                    } as MessageListInstanceCreateOptions)
+            )
+        );
     }
 
     async initPhoneNumberVerification(

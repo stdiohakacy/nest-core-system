@@ -13,7 +13,7 @@ import { Logger, NotFoundException } from '@nestjs/common';
 import {
     ENUM_MAIL_PROCESSOR_NAME,
     ENUM_MAIL_PROVIDER_TYPE,
-} from 'src/common/integrations/mail/constants/mail.enum.constant';
+} from '../../../../common/integrations/mail/constants/mail.enum.constant';
 import { IMailProcessor } from '../interfaces/mail.processor.interface';
 import { ENUM_MAIL_STATUS_CODE_ERROR } from '../constants/mail.status-code.constant';
 import { MAIL_QUEUE_NAME } from '../constants/mail.constant';

@@ -6,4 +6,4 @@ import { TwilioModule } from './twilio/twilio.module';
     providers: [],
     exports: [TwilioModule],
 })
-export class SMSModule {}
+export class SMSCommonModule {}

@@ -1,10 +1,10 @@
 import { UpdateResult, DeleteResult, Repository, InsertResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import { BaseRepository } from 'src/common/base/repository/base.repository';
-import { DeviceEntity } from 'src/modules/notification/entities/device.entity';
+import { BaseRepository } from '../../../../../common/base/repository/base.repository';
+import { DeviceEntity } from '../../../../../modules/notification/entities/device.entity';
 import { INotificationFCMDeviceRepository } from '../interfaces/notification.fcm.device.repository.interface';
-import { PaginationListDTO } from 'src/common/pagination/dtos/pagination.list.dto';
+import { PaginationListDTO } from '../../../../../common/pagination/dtos/pagination.list.dto';
 
 @Injectable()
 export class NotificationFCMDeviceRepository

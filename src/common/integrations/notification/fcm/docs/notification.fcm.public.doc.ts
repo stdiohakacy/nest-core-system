@@ -4,7 +4,7 @@ import {
     Doc,
     DocRequest,
     DocResponse,
-} from 'src/common/doc/decorators/doc.decorator';
+} from '../../../../../common/doc/decorators/doc.decorator';
 
 export function NotificationFCMPublicRegisterDeviceDoc(): MethodDecorator {
     return applyDecorators(

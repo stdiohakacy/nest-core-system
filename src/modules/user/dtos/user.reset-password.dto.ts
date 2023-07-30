@@ -2,7 +2,7 @@ import { ApiProperty, PickType } from '@nestjs/swagger';
 import { UserDTO } from './user.dto';
 import { faker } from '@faker-js/faker';
 import { IsNotEmpty, MaxLength } from 'class-validator';
-import { IsPasswordStrong } from 'src/common/request/validations/request.is-password-strong.validation';
+import { IsPasswordStrong } from '../../../common/request/validations/request.is-password-strong.validation';
 
 export class UserResetPasswordDTO extends PickType(UserDTO, [
     'username',

@@ -6,4 +6,5 @@ export interface ITwilioService {
         phoneNumber: string,
         verificationCode: string
     ): Promise<void>;
+    sendMessage(receiverPhoneNumber: string | string[], contentMessage: string);
 }

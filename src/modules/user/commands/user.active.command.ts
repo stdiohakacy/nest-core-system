@@ -7,7 +7,7 @@ import {
 import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
 import { UserActiveDTO } from '../dtos/user.active.dto';
 import { UserRepository } from '../repositories/user.repository';
-import { HelperDateService } from 'src/common/helper/services/helper.date.service';
+import { HelperDateService } from '../../../common/helper/services/helper.date.service';
 
 export class UserActiveCommand implements ICommand {
     constructor(public readonly payload: UserActiveDTO) {}

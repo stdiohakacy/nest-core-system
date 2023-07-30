@@ -42,6 +42,7 @@ export default registerAs(
                 authToken: process.env.TWILIO_AUTH_TOKEN,
                 verificationServiceSid:
                     process.env.TWILIO_VERIFICATION_SERVICE_SID,
+                senderPhoneNumber: process.env.TWILIO_PHONE_NUMBER,
             },
         },
     })

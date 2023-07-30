@@ -11,6 +11,9 @@ import { UserPublicController } from '../../modules/user/controllers/user.public
 import { UserModule } from '../../modules/user/user.module';
 import { CqrsModule } from '@nestjs/cqrs';
 import { NotificationPublicController } from '../../common/integrations/notification/fcm/controllers/notification.fcm.public.controller';
+import { IntegrationModule } from '../../common/integrations/integration.module';
+import { SMSModule } from '../../modules/sms/sms.module';
+import { SMSPublicController } from '../../modules/sms/controllers/sms.public.controller';
 
 @Module({
     imports: [
@@ -21,6 +24,8 @@ import { NotificationPublicController } from '../../common/integrations/notifica
         SettingModule,
         LoggerModule,
         CqrsModule,
+        IntegrationModule,
+        SMSModule,
     ],
     exports: [
         TerminusModule,
@@ -37,6 +42,7 @@ import { NotificationPublicController } from '../../common/integrations/notifica
         SettingPublicController,
         UserPublicController,
         NotificationPublicController,
+        SMSPublicController,
     ],
     providers: [],
 })

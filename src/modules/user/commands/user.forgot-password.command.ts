@@ -10,7 +10,7 @@ import { HelperDateService } from '../../../common/helper/services/helper.date.s
 import { UserForgotPasswordDTO } from '../dtos/user.forgot-password.dto';
 import { randomBytes } from 'crypto';
 import { MailService } from '../../../common/integrations/mail/services/mail.service';
-import { IMailForgotPasswordParams } from 'src/common/integrations/mail/interfaces/mail.interface';
+import { IMailForgotPasswordParams } from '../../../common/integrations/mail/interfaces/mail.interface';
 import { ConfigService } from '@nestjs/config';
 
 export class UserForgotPasswordCommand implements ICommand {

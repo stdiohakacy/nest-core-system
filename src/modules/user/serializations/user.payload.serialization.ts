@@ -5,7 +5,6 @@ import { Exclude, Expose, Transform } from 'class-transformer';
 import { UserProfileSerialization } from './user.profile.serialization';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
-import { ENUM_RBAC_ROLE_TYPE } from 'src/common/rbac/constants/rbac.enum.role.constant';
 
 export class UserPayloadSerialization extends OmitType(
     UserProfileSerialization,

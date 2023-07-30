@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable, NestMiddleware } from '@nestjs/common';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
+import { IRequestApp } from '../../../../common/request/interfaces/request.interface';
 import { NextFunction, Response } from 'express';
 import { AccessTokenRepository } from '../../repositories/access-token.repository';
 import { ENUM_ACCESS_TOKEN_STATUS_CODE_ERROR } from '../../constants/access-token.status-code.constant';

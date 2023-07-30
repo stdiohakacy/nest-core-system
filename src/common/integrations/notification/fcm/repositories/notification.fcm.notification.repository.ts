@@ -1,9 +1,9 @@
 import { DeleteResult, Repository, InsertResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import { BaseRepository } from 'src/common/base/repository/base.repository';
-import { PaginationListDTO } from 'src/common/pagination/dtos/pagination.list.dto';
-import { NotificationEntity } from 'src/modules/notification/entities/notification.entity';
+import { BaseRepository } from '../../../../../common/base/repository/base.repository';
+import { PaginationListDTO } from '../../../../../common/pagination/dtos/pagination.list.dto';
+import { NotificationEntity } from '../../../../../modules/notification/entities/notification.entity';
 
 @Injectable()
 export class NotificationFCMNotificationRepository extends BaseRepository<NotificationEntity> {
@@ -13,7 +13,7 @@ export class NotificationFCMNotificationRepository extends BaseRepository<Notifi
     ) {
         super();
     }
-    
+
     findOneById(id: string) {
         throw new Error('Method not implemented.');
     }
@@ -32,5 +32,4 @@ export class NotificationFCMNotificationRepository extends BaseRepository<Notifi
     truncate(): Promise<DeleteResult> {
         throw new Error('Method not implemented.');
     }
-    
 }

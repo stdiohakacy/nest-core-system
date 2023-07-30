@@ -38,7 +38,7 @@ import { ENUM_API_KEY_STATUS_CODE_ERROR } from '../../../common/api-key/constant
 import { ENUM_FILE_EXCEL_MIME } from '../../../common/file/constants/file.enum.constant';
 import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../../common/pagination/constants/pagination.enum.constant';
 import { ResponsePagingSerialization } from '../../../common/response/serializations/response.paging.serialization';
-import { ENUM_RBAC_ROLE_STATUS_CODE_ERROR } from 'src/common/rbac/constants/rbac.role.status-code.constant';
+import { ENUM_RBAC_ROLE_STATUS_CODE_ERROR } from '../../../common/rbac/constants/rbac.role.status-code.constant';
 
 export function DocDefault<T>(options: IDocDefaultOptions): MethodDecorator {
     const docs = [];

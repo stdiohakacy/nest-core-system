@@ -16,7 +16,6 @@ import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import { UserEntity } from '../entities/user.entity';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../../../common/auth/services/auth.service';
-import { SettingService } from '../../../common/setting/services/setting.service';
 import {
     UserPublicActiveDoc,
     UserPublicForgotPasswordDoc,
@@ -29,10 +28,7 @@ import { Response } from '../../../common/response/decorators/response.decorator
 import { UserLoginSerialization } from '../serializations/user.login.serialization';
 import { UserLoginDTO } from '../dtos/user.login.dto';
 import { IResponse } from '../../../common/response/interfaces/response.interface';
-import {
-    ENUM_USER_STATUS_CODE_ERROR,
-    ENUM_USER_STATUS_CODE_SUCCESS,
-} from '../constants/user.status-code.constant';
+import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { ENUM_AUTH_LOGIN_WITH } from '../../../common/auth/constants/auth.enum.constant';
 import { UserSignUpDTO } from '../dtos/user.sign-up.dto';
@@ -88,59 +84,59 @@ export class UserPublicController {
         @Body()
         payload: UserSignUpDTO
     ): Promise<void> {
-        const result = await this.twilioService.initPhoneNumberVerification(
-            payload.mobileNumber
+        const { email, mobileNumber, username, ...body } = payload;
+        const promises: Promise<any>[] = [this.userService.existByEmail(email)];
+        if (mobileNumber) {
+            promises.push(this.userService.existByMobileNumber(mobileNumber));
+        }
+        if (username) {
+            promises.push(this.userService.existByUsername(username));
+        }
+        const [emailExist, mobileNumberExist, usernameExist] =
+            await Promise.all(promises);
+        if (emailExist) {
+            throw new ConflictException({
+                statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_EMAIL_EXIST_ERROR,
+                message: 'user.error.emailExist',
+            });
+        } else if (mobileNumberExist) {
+            throw new ConflictException({
+                statusCode:
+                    ENUM_USER_STATUS_CODE_ERROR.USER_MOBILE_NUMBER_EXIST_ERROR,
+                message: 'user.error.mobileNumberExist',
+            });
+        } else if (usernameExist) {
+            throw new ConflictException({
+                statusCode:
+                    ENUM_USER_STATUS_CODE_ERROR.USER_USERNAME_EXISTS_ERROR,
+                message: 'user.error.usernameExist',
+            });
+        }
+        const password = await this.authService.createPassword(body.password);
+        const activeKey = randomBytes(32).toString('hex');
+        await this.userService.create(
+            {
+                username,
+                email,
+                mobileNumber,
+                signUpFrom: ENUM_USER_SIGN_UP_FROM.LOCAL,
+                activeKey,
+                ...body,
+            },
+            password
         );
-        console.log(result);
-        // const { email, mobileNumber, username, ...body } = payload;
-        // const promises: Promise<any>[] = [this.userService.existByEmail(email)];
-        // if (mobileNumber) {
-        //     promises.push(this.userService.existByMobileNumber(mobileNumber));
-        // }
-        // if (username) {
-        //     promises.push(this.userService.existByUsername(username));
-        // }
-        // const [emailExist, mobileNumberExist, usernameExist] =
-        //     await Promise.all(promises);
-        // if (emailExist) {
-        //     throw new ConflictException({
-        //         statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_EMAIL_EXIST_ERROR,
-        //         message: 'user.error.emailExist',
-        //     });
-        // } else if (mobileNumberExist) {
-        //     throw new ConflictException({
-        //         statusCode:
-        //             ENUM_USER_STATUS_CODE_ERROR.USER_MOBILE_NUMBER_EXIST_ERROR,
-        //         message: 'user.error.mobileNumberExist',
-        //     });
-        // } else if (usernameExist) {
-        //     throw new ConflictException({
-        //         statusCode:
-        //             ENUM_USER_STATUS_CODE_ERROR.USER_USERNAME_EXISTS_ERROR,
-        //         message: 'user.error.usernameExist',
-        //     });
-        // }
-        // const password = await this.authService.createPassword(body.password);
-        // const activeKey = randomBytes(32).toString('hex');
-        // await this.userService.create(
-        //     {
-        //         username,
-        //         email,
-        //         mobileNumber,
-        //         signUpFrom: ENUM_USER_SIGN_UP_FROM.LOCAL,
-        //         activeKey,
-        //         ...body,
-        //     },
-        //     password
+        const appProtocol = this.configService.get<string>('app.protocol');
+        const httpHost = this.configService.get<string>('app.http.host');
+        const httpPort = this.configService.get<string>('app.http.port');
+        const activationLink = `${appProtocol}://${httpHost}:${httpPort}/confirm-account?username=${payload.username}&key=${payload.activeKey}`;
+        this.mailService.sendAccountActivation({
+            activationLink,
+            name: `${payload.firstName} ${payload.lastName}`,
+        });
+        // const result = await this.twilioService.initPhoneNumberVerification(
+        //     payload.mobileNumber
         // );
-        // const appProtocol = this.configService.get<string>('app.protocol');
-        // const httpHost = this.configService.get<string>('app.http.host');
-        // const httpPort = this.configService.get<string>('app.http.port');
-        // const activationLink = `${appProtocol}://${httpHost}:${httpPort}/confirm-account?username=${payload.username}&key=${payload.activeKey}`;
-        // this.mailService.sendAccountActivation({
-        //     activationLink,
-        //     name: `${payload.firstName} ${payload.lastName}`,
-        // });
+        // console.log(result);
     }
 
     @ApiExcludeEndpoint()

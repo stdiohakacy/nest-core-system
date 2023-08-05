@@ -33,6 +33,10 @@
     "spell": "yarn spell:src && yarn spell:test",
     "spell:src": "cspell lint --config cspell.json src/**/*.ts --color --gitignore --no-must-find-files --no-summary --no-progress || true",
     "spell:test": "cspell lint --config cspell.json test/**/*.ts --color --gitignore --no-must-find-files --no-summary --no-progress || true",
+    "seed:post": "nestjs-command seed:post",
+    "rollback:post": "nestjs-command remove:post",
+    "seed": "yarn seed:post",
+    "rollback": "yarn rollback:post",
     "migration:generate": "yarn run typeorm migration:generate -d ormconfig",
     "migration:create": "yarn run typeorm migration:create -d ormconfig",
     "migration:run": "yarn run typeorm migration:run -d ormconfig"
@@ -40,6 +44,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.352.0",
     "@casl/ability": "^6.5.0",
+    "@elastic/elasticsearch": "^7.10.0",
     "@faker-js/faker": "^8.0.2",
     "@joi/date": "^2.1.0",
     "@nestjs-modules/mailer": "^1.9.1",
@@ -49,6 +54,7 @@
     "@nestjs/config": "^2.3.4",
     "@nestjs/core": "^9.4.3",
     "@nestjs/cqrs": "^10.0.3",
+    "@nestjs/elasticsearch": "^10.0.1",
     "@nestjs/jwt": "^10.0.3",
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.4.3",

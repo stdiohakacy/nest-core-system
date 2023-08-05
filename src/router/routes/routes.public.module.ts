@@ -14,6 +14,8 @@ import { NotificationPublicController } from '../../common/integrations/notifica
 import { IntegrationModule } from '../../common/integrations/integration.module';
 import { SMSModule } from '../../modules/sms/sms.module';
 import { SMSPublicController } from '../../modules/sms/controllers/sms.public.controller';
+import { PostModule } from '../../modules/post/post.module';
+import { PostPublicController } from '../../modules/post/controllers/post.public.controller';
 
 @Module({
     imports: [
@@ -26,6 +28,7 @@ import { SMSPublicController } from '../../modules/sms/controllers/sms.public.co
         CqrsModule,
         IntegrationModule,
         SMSModule,
+        PostModule,
     ],
     exports: [
         TerminusModule,
@@ -43,6 +46,7 @@ import { SMSPublicController } from '../../modules/sms/controllers/sms.public.co
         UserPublicController,
         NotificationPublicController,
         SMSPublicController,
+        PostPublicController,
     ],
     providers: [],
 })

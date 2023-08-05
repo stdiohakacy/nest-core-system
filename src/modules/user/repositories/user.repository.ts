@@ -1,5 +1,5 @@
 import { UserEntity } from '../entities/user.entity';
-import { UpdateResult, DeleteResult, Repository, InsertResult } from 'typeorm';
+import { DeleteResult, Repository, InsertResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { IUserRepository } from '../interfaces/user.repository.interface';

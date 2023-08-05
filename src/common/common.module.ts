@@ -24,6 +24,7 @@ import { AuthModule } from './auth/auth.module';
 import { IntegrationModule } from './integrations/integration.module';
 import { RBACCommonModule } from './rbac/rbac.module';
 import { NotificationModule } from './integrations/notification/notification.module';
+import { SearchModule } from './search/search.module';
 @Module({
     controllers: [],
     providers: [],
@@ -180,6 +181,7 @@ import { NotificationModule } from './integrations/notification/notification.mod
         IntegrationModule,
         RBACCommonModule,
         NotificationModule,
+        SearchModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],
@@ -194,6 +196,7 @@ import { NotificationModule } from './integrations/notification/notification.mod
         SettingModule,
         LoggerModule,
         ApiKeyModule,
+        SearchModule,
         IntegrationModule,
         RBACCommonModule,
         NotificationModule,

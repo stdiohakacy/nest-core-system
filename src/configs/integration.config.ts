@@ -3,6 +3,13 @@ import { registerAs } from '@nestjs/config';
 export default registerAs(
     'integration',
     (): Record<string, any> => ({
+        search: {
+            elasticsearch: {
+                node: process.env.ELASTICSEARCH_NODE || 'http://localhost:9200',
+                username: process.env.ELASTICSEARCH_USERNAME || 'elastic',
+                password: process.env.ELASTICSEARCH_PASSWORD || 'admin',
+            },
+        },
         storage: {
             redis: {
                 host: process.env.REDIS_HOST,

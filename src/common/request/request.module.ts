@@ -20,7 +20,6 @@ import { SafeStringConstraint } from './validations/request.safe-string.validati
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SettingModule } from '../setting/setting.module';
-import { CommonModule } from '../common.module';
 import { RequestTimeoutInterceptor } from './interceptors/request.timeout.interceptor';
 import { MinDateTodayConstraint } from './validations/request.min-date-today.validation';
 import { MobileNumberAllowedConstraint } from './validations/request.mobile-number-allowed.validation';

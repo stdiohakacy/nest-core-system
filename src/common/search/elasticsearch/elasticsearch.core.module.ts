@@ -1,8 +1,12 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Global, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
-import { ElasticsearchCoreService } from './services/elasticsearch.service';
+import { ElasticsearchCoreService } from './services/elasticsearch.core.service';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { ElasticsearchCoreExceptionFilter } from './filters/error.elasticsearch.core.filter';
+import { ElasticsearchCoreInterceptor } from './interceptors/elasticsearch.interceptor.core';
 
+@Global()
 @Module({
     imports: [
         ConfigModule,
@@ -24,7 +28,17 @@ import { ElasticsearchCoreService } from './services/elasticsearch.service';
             inject: [ConfigService],
         }),
     ],
-    providers: [ElasticsearchCoreService],
+    providers: [
+        ElasticsearchCoreService,
+        {
+            provide: APP_FILTER,
+            useClass: ElasticsearchCoreExceptionFilter,
+        },
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: ElasticsearchCoreInterceptor,
+        },
+    ],
     exports: [ElasticsearchModule, ElasticsearchCoreService],
 })
 export class ElasticsearchCoreModule implements OnModuleInit {

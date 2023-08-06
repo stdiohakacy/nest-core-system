@@ -1,4 +1,4 @@
-import { ElasticsearchCoreModule } from './elasticsearch/elasticsearch.module';
+import { ElasticsearchCoreModule } from './elasticsearch/elasticsearch.core.module';
 import { Module } from '@nestjs/common';
 
 @Module({
@@ -6,4 +6,4 @@ import { Module } from '@nestjs/common';
     providers: [],
     exports: [ElasticsearchCoreModule],
 })
-export class SearchModule {}
+export class SearchCoreModule {}

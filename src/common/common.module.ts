@@ -24,7 +24,7 @@ import { AuthModule } from './auth/auth.module';
 import { IntegrationModule } from './integrations/integration.module';
 import { RBACCommonModule } from './rbac/rbac.module';
 import { NotificationModule } from './integrations/notification/notification.module';
-import { SearchModule } from './search/search.module';
+import { SearchCoreModule } from './search/search.module';
 @Module({
     controllers: [],
     providers: [],
@@ -181,7 +181,7 @@ import { SearchModule } from './search/search.module';
         IntegrationModule,
         RBACCommonModule,
         NotificationModule,
-        SearchModule,
+        SearchCoreModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],
@@ -196,7 +196,7 @@ import { SearchModule } from './search/search.module';
         SettingModule,
         LoggerModule,
         ApiKeyModule,
-        SearchModule,
+        SearchCoreModule,
         IntegrationModule,
         RBACCommonModule,
         NotificationModule,

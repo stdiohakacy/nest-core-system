@@ -5,9 +5,6 @@ import { ConfigService } from '@nestjs/config';
 import { useContainer } from 'class-validator';
 import swaggerInit from './swagger';
 import { initializeTransactionalContext } from 'typeorm-transactional';
-import { ServiceAccount } from 'firebase-admin';
-import admin from 'firebase-admin';
-import path from 'path';
 
 async function bootstrap() {
     initializeTransactionalContext();

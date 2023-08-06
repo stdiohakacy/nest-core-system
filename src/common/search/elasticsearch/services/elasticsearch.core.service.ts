@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Client, ApiResponse, RequestParams } from '@elastic/elasticsearch';
-import { IElasticsearchCoreService } from '../../interfaces/elasticsearch.service.interface';
+import { IElasticsearchCoreService } from '../../interfaces/elasticsearch.service.core.interface';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()

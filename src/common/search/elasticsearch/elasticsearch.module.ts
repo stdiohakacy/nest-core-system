@@ -30,7 +30,7 @@ import { ElasticsearchCoreService } from './services/elasticsearch.service';
 export class ElasticsearchCoreModule implements OnModuleInit {
     constructor(private readonly esCoreService: ElasticsearchCoreService) {}
     async onModuleInit() {
-        const isPostIdxExist = await this.esCoreService.indexExist('posts');
+        const isPostIdxExist = await this.esCoreService.isIndexExist('posts');
 
         if (!isPostIdxExist) {
             const postIdxSetting = {

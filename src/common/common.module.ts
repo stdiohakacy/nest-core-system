@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import Joi from 'joi';
 import { ENUM_MESSAGE_LANGUAGE } from './message/constants/message.enum.constant';
@@ -24,7 +24,8 @@ import { AuthModule } from './auth/auth.module';
 import { IntegrationModule } from './integrations/integration.module';
 import { RBACCommonModule } from './rbac/rbac.module';
 import { NotificationModule } from './integrations/notification/notification.module';
-import { SearchCoreModule } from './search/search.module';
+import { SearchCoreModule } from './integrations/search/search.core.module';
+@Global()
 @Module({
     controllers: [],
     providers: [],
@@ -200,6 +201,7 @@ import { SearchCoreModule } from './search/search.module';
         IntegrationModule,
         RBACCommonModule,
         NotificationModule,
+        SearchCoreModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],

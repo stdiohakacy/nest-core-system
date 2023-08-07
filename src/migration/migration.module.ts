@@ -6,8 +6,8 @@ import { CommonModule } from '../common/common.module';
 import { MigrationApiKeySeed } from '../migration/seeds/migration.api-key.seed';
 import { MigrationSettingSeed } from '../migration/seeds/migration.setting.seed';
 import { UserModule } from '../modules/user/user.module';
-import { MigrationPostSeed } from './seeds/migration-post.seed';
-import { PostModule } from '../modules/post/post.module';
+import { MigrationCategorySeed } from './seeds/migration.category.seed';
+import { CategoryModule } from '../modules/category/category.module';
 
 @Module({
     imports: [
@@ -16,9 +16,13 @@ import { PostModule } from '../modules/post/post.module';
         ApiKeyModule,
         AuthModule,
         UserModule,
-        PostModule,
+        CategoryModule,
     ],
-    providers: [MigrationApiKeySeed, MigrationSettingSeed, MigrationPostSeed],
+    providers: [
+        MigrationApiKeySeed,
+        MigrationSettingSeed,
+        MigrationCategorySeed,
+    ],
     exports: [],
 })
 export class MigrationModule {}

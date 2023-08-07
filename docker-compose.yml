@@ -21,8 +21,8 @@ services:
         image: dpage/pgadmin4
         ports:
             - '8080:80'
-        volumes:
-            - /data/pgadmin:/root/.pgadmin
+        # volumes:
+        #     - /data/pgadmin:/root/.pgadmin
         env_file:
             - .env
         links:
@@ -124,15 +124,24 @@ services:
         volumes:
             - ./logstash-config:/usr/share/logstash/pipeline
         environment:
-            - ELASTICSEARCH_HOST=es01
-            # Set the Java options with increased thread stack size
-            - 'ES_JAVA_OPTS=-Xms512m -Xmx512m -Xss1m'
+            ELASTICSEARCH_HOSTS: 'http://es01:9200'
+            ES_JAVA_OPTS: '-Xms512m -Xmx512m -Xss1m'
+
         depends_on:
             - es01
             - es02
             - es03
         ports:
             - 5044:5044
+        networks:
+            - elk-network
+
+    filebeat:
+        image: docker.elastic.co/beats/filebeat:7.10.0
+        container_name: filebeat
+        volumes:
+            - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
+            - /var/lib/docker/containers:/var/lib/docker/containers:ro
         networks:
             - elk-network
 

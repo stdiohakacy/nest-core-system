@@ -55,6 +55,7 @@ import { UserLoginCommand } from '../commands/user.login.command';
 import TwilioService from '../../../common/integrations/sms/twilio/services/twilio.service';
 import { UserPhoneConfirmDTO } from '../dtos/user.phone-confirmation.dto';
 import { UserPhoneConfirmCommand } from '../commands/user.confirm-phone.command';
+import { LogstashService } from '../../../common/logger/services/logger.logstash.service';
 
 @ApiTags('modules.public.user')
 @Controller({ version: '1', path: '/user' })
@@ -65,7 +66,8 @@ export class UserPublicController {
         private readonly mailService: MailService,
         private readonly configService: ConfigService,
         private readonly commandBus: CommandBus,
-        private readonly twilioService: TwilioService
+        private readonly twilioService: TwilioService,
+        private readonly logstashService: LogstashService
     ) {}
 
     @UserPublicLoginDoc()

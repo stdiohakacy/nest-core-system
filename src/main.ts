@@ -26,6 +26,28 @@ async function bootstrap() {
         'app.versioning.enable'
     );
     const jobEnable: boolean = configService.get<boolean>('app.jobEnable');
+    const pgAdminHost = configService.get<string>('database.pgadmin.host');
+    const pgAdminPort = configService.get<string>('database.pgadmin.port');
+    const pgAdminUrl = `http://${pgAdminHost}:${pgAdminPort}}`;
+    const minioHost = configService.get<string>(
+        'integration.storage.minio.host'
+    );
+    const minioPortUI = configService.get<string>(
+        'integration.storage.minio.portUI'
+    );
+    const minioUrl = `http://${minioHost}:${minioPortUI}`;
+
+    const rmqHost = configService.get<string>('message-queue.rmq.host');
+    const rmqPortUI = configService.get<string>('message-queue.rmq.portUI');
+    const rmqUrl = `http://${rmqHost}:${rmqPortUI}`;
+
+    const kibanaHost = configService.get<string>(
+        'integration.search.kibana.host'
+    );
+    const kibanaPort = configService.get<string>(
+        'integration.search.kibana.port'
+    );
+    const kibanaUrl = `http://${kibanaHost}:${kibanaPort}`;
 
     const logger = new Logger();
     process.env.NODE_ENV = env;
@@ -70,6 +92,10 @@ async function bootstrap() {
         'NestApplication'
     );
     logger.log(`Database uri ${databaseUri}`, 'NestApplication');
+    logger.log(`PgAdmin4 UI URI - ${pgAdminUrl}`);
+    logger.log(`Minio UI URI - ${minioUrl}`);
+    logger.log(`RabbitMQ UI URI - ${rmqUrl}`);
+    logger.log(`Kibana UI URI - ${kibanaUrl}`);
 
     logger.log(`==========================================================`);
 }

@@ -9,6 +9,10 @@ export default registerAs(
         username: process.env?.DATABASE_USER,
         password: process?.env.DATABASE_PASSWORD,
         debug: process.env.DATABASE_DEBUG === 'true',
+        pgadmin: {
+            port: Number(process.env.PGADMIN_PORT) || 8080,
+            host: process.env.HTTP_HOST || 'localhost',
+        },
     })
 );
 

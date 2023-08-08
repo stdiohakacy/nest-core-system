@@ -8,6 +8,8 @@ import { MigrationSettingSeed } from '../migration/seeds/migration.setting.seed'
 import { UserModule } from '../modules/user/user.module';
 import { MigrationCategorySeed } from './seeds/migration.category.seed';
 import { CategoryModule } from '../modules/category/category.module';
+import { MigrationProductSeed } from './seeds/migration.product.seed';
+import { ProductModule } from '../modules/product/product.module';
 
 @Module({
     imports: [
@@ -17,11 +19,13 @@ import { CategoryModule } from '../modules/category/category.module';
         AuthModule,
         UserModule,
         CategoryModule,
+        ProductModule,
     ],
     providers: [
         MigrationApiKeySeed,
         MigrationSettingSeed,
         MigrationCategorySeed,
+        MigrationProductSeed,
     ],
     exports: [],
 })

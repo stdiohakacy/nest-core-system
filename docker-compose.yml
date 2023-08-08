@@ -118,6 +118,17 @@ services:
         networks:
             - elk-network
 
+    rabbitmq:
+        image: rabbitmq:management
+        container_name: rabbitmq
+        ports:
+            - '5672:5672' # RabbitMQ default port
+            - '15672:15672' # RabbitMQ management UI port
+        environment:
+            - RABBITMQ_DEFAULT_USER=rabbitmq # Replace with your desired username
+            - RABBITMQ_DEFAULT_PASS=admin # Replace with your desired password
+        volumes:
+            - rabbitmq_data:/var/lib/rabbitmq # Persist RabbitMQ data
 volumes:
     postgres:
         driver: local
@@ -130,6 +141,8 @@ volumes:
     elasticsearch_data02:
         driver: local
     elasticsearch_data03:
+        driver: local
+    rabbitmq_data:
         driver: local
 
 networks:

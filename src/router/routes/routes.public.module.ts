@@ -15,6 +15,8 @@ import { IntegrationModule } from '../../common/integrations/integration.module'
 import { SMSModule } from '../../modules/sms/sms.module';
 import { SMSPublicController } from '../../modules/sms/controllers/sms.public.controller';
 import { CategoryModule } from '../../modules/category/category.module';
+import { ProductPublicController } from '../../modules/product/controllers/product.public.controller';
+import { ProductModule } from '../../modules/product/product.module';
 
 @Module({
     imports: [
@@ -28,6 +30,7 @@ import { CategoryModule } from '../../modules/category/category.module';
         IntegrationModule,
         SMSModule,
         CategoryModule,
+        ProductModule,
     ],
     exports: [
         TerminusModule,
@@ -45,6 +48,7 @@ import { CategoryModule } from '../../modules/category/category.module';
         UserPublicController,
         NotificationPublicController,
         SMSPublicController,
+        ProductPublicController,
     ],
     providers: [],
 })

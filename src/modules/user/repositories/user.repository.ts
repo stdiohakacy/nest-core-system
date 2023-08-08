@@ -34,8 +34,8 @@ export class UserRepository
             order: _order,
         });
     }
-    async create(user: UserEntity): Promise<InsertResult> {
-        return await this.userRepo.insert(user);
+    async create(user: UserEntity): Promise<UserEntity> {
+        return await this.userRepo.save(user);
     }
     async update(user: Partial<UserEntity>) {
         return await this.userRepo.save(user);

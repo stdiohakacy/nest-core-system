@@ -33,8 +33,8 @@ export class NotificationFCMDeviceRepository
     findAll(find: Record<string, any>, pagination: PaginationListDTO) {
         throw new Error('Method not implemented.');
     }
-    async create(device: DeviceEntity): Promise<InsertResult> {
-        return await this.deviceRepo.insert(device);
+    async create(device: DeviceEntity): Promise<DeviceEntity> {
+        return await this.deviceRepo.save(device);
     }
     update(entity: Partial<DeviceEntity>): Promise<DeviceEntity> {
         throw new Error('Method not implemented.');

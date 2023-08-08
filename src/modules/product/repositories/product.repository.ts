@@ -3,41 +3,47 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
 import { BaseRepository } from '../../../common/base/repository/base.repository';
-import { SmsEntity } from '../entities/sms.entity';
-import { ISmsRepository } from '../interfaces/sms.repository.interface';
+import { ProductEntity } from '../entities/product.entity';
+import { IProductRepository } from '../interfaces/product.repository.interface';
 
 @Injectable()
-export class SmsRepository
-    extends BaseRepository<SmsEntity>
-    implements ISmsRepository
+//
+export class ProductRepository
+    extends BaseRepository<ProductEntity>
+    implements IProductRepository
 {
     constructor(
-        @InjectRepository(SmsEntity)
-        private readonly smsRepo: Repository<SmsEntity>
+        @InjectRepository(ProductEntity)
+        private readonly productRepo: Repository<ProductEntity>
     ) {
         super();
+    }
+
+    async createMany(products: any[]): Promise<void> {
+        await this.productRepo.save(this.productRepo.create(products));
     }
 
     findOneById(id: string) {
         throw new Error('Method not implemented.');
     }
+
     findAll(find: Record<string, any>, pagination: PaginationListDTO) {
         throw new Error('Method not implemented.');
     }
-    create(entity: SmsEntity): Promise<SmsEntity> {
-        throw new Error('Method not implemented.');
+
+    async create(product: ProductEntity): Promise<ProductEntity> {
+        return await this.productRepo.save(product);
     }
-    update(entity: Partial<SmsEntity>): Promise<SmsEntity> {
-        throw new Error('Method not implemented.');
-    }
-    delete(id: string): Promise<DeleteResult> {
-        throw new Error('Method not implemented.');
-    }
-    truncate(): Promise<DeleteResult> {
+
+    update(entity: Partial<ProductEntity>): Promise<ProductEntity> {
         throw new Error('Method not implemented.');
     }
 
-    async createMany(sms: SmsEntity[]): Promise<void> {
-        await this.smsRepo.save(sms);
+    delete(id: string): Promise<DeleteResult> {
+        throw new Error('Method not implemented.');
+    }
+
+    async truncate(): Promise<DeleteResult> {
+        return await this.productRepo.delete({});
     }
 }

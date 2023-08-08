@@ -30,8 +30,8 @@ export class CategoryRepository
         throw new Error('Method not implemented.');
     }
 
-    async create(category: CategoryEntity): Promise<InsertResult> {
-        return await this.categoryRepo.insert(category);
+    async create(category: CategoryEntity): Promise<CategoryEntity> {
+        return await this.categoryRepo.save(category);
     }
 
     update(entity: Partial<CategoryEntity>): Promise<CategoryEntity> {

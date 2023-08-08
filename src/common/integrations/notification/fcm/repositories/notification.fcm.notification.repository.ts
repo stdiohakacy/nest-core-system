@@ -20,8 +20,10 @@ export class NotificationFCMNotificationRepository extends BaseRepository<Notifi
     findAll(find: Record<string, any>, pagination: PaginationListDTO) {
         throw new Error('Method not implemented.');
     }
-    async create(notification: NotificationEntity): Promise<InsertResult> {
-        return await this.notificationRepo.insert(notification);
+    async create(
+        notification: NotificationEntity
+    ): Promise<NotificationEntity> {
+        return await this.notificationRepo.save(notification);
     }
     update(entity: Partial<NotificationEntity>): Promise<NotificationEntity> {
         throw new Error('Method not implemented.');

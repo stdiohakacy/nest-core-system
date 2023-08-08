@@ -57,8 +57,8 @@ export class AccessTokenRepository
         throw new Error('Method not implemented.');
     }
 
-    async create(accessToken: AccessTokenEntity): Promise<InsertResult> {
-        return await this.accessTokenRepo.insert(accessToken);
+    async create(accessToken: AccessTokenEntity): Promise<AccessTokenEntity> {
+        return await this.accessTokenRepo.save(accessToken);
     }
 
     update(

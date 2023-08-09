@@ -10,6 +10,7 @@ import { MigrationCategorySeed } from './seeds/migration.category.seed';
 import { CategoryModule } from '../modules/category/category.module';
 import { MigrationProductSeed } from './seeds/migration.product.seed';
 import { ProductModule } from '../modules/product/product.module';
+import { MigrationUserSeed } from './seeds/migration.user.seed';
 
 @Module({
     imports: [
@@ -26,6 +27,7 @@ import { ProductModule } from '../modules/product/product.module';
         MigrationSettingSeed,
         MigrationCategorySeed,
         MigrationProductSeed,
+        MigrationUserSeed,
     ],
     exports: [],
 })

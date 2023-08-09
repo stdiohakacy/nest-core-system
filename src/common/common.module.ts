@@ -26,6 +26,7 @@ import { RBACCommonModule } from './rbac/rbac.module';
 import { NotificationModule } from './integrations/notification/notification.module';
 import { SearchCoreModule } from './integrations/search/search.core.module';
 import { MessageQueueModule } from './message-queue/message-queue.module';
+import { SocketModule } from './socket/socket.module';
 @Global()
 @Module({
     controllers: [],
@@ -185,6 +186,7 @@ import { MessageQueueModule } from './message-queue/message-queue.module';
         NotificationModule,
         SearchCoreModule,
         MessageQueueModule,
+        SocketModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],
@@ -205,6 +207,7 @@ import { MessageQueueModule } from './message-queue/message-queue.module';
         NotificationModule,
         SearchCoreModule,
         MessageQueueModule,
+        SocketModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],

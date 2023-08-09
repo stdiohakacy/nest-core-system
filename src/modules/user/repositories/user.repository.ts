@@ -18,6 +18,10 @@ export class UserRepository
         super();
     }
 
+    async createMany(users: any[]): Promise<void> {
+        await this.userRepo.save(this.userRepo.create(users));
+    }
+
     async findOneByUsername(username: string): Promise<UserEntity> {
         return await this.userRepo.findOneBy({ username });
     }

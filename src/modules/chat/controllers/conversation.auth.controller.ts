@@ -15,8 +15,14 @@ import { QueryBus } from '@nestjs/cqrs';
 import { ConversationListByUserQuery } from '../queries/conversation.list-by-user.query';
 import { ConversationListSerialization } from '../serializations/conversation.list.serialization';
 import { ConversationAuthListByUserDoc } from './conversation.auth.doc';
+import { AuthJwtAccessProtected } from '../../../common/auth/decorators/auth.jwt.decorator';
+import {
+    GetUser,
+    UserProtected,
+} from '../../../modules/user/decorators/user.decorator';
+import { UserEntity } from '../../../modules/user/entities/user.entity';
 
-@ApiTags('modules.auth.conversation')
+@ApiTags('modules.auth.chat')
 @Controller({ version: '1', path: '/conversations' })
 export class ConversationAuthController {
     constructor(private readonly queryBus: QueryBus) {}
@@ -25,8 +31,11 @@ export class ConversationAuthController {
     @ResponsePaging('conversation.listByUser', {
         serialization: ConversationListSerialization,
     })
+    @UserProtected()
+    @AuthJwtAccessProtected()
     @Get('/')
-    async list(
+    async listByUser(
+        @GetUser() userAuth: UserEntity,
         @PaginationQuery(
             CONVERSATION_DEFAULT_PER_PAGE,
             CONVERSATION_DEFAULT_ORDER_BY,
@@ -44,7 +53,7 @@ export class ConversationAuthController {
             _order,
         } as PaginationListDTO;
         return await this.queryBus.execute(
-            new ConversationListByUserQuery(find, pagination)
+            new ConversationListByUserQuery(userAuth.id, find, pagination)
         );
     }
 }

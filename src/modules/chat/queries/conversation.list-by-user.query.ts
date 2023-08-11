@@ -5,6 +5,7 @@ import { PaginationService } from '../../../common/pagination/services/paginatio
 
 export class ConversationListByUserQuery implements IQuery {
     constructor(
+        public readonly userId: string,
         public readonly find: Record<string, any>,
         public readonly pagination: PaginationListDTO
     ) {}
@@ -19,7 +20,8 @@ export class ConversationListByUserHandler
         private readonly paginationService: PaginationService
     ) {}
 
-    async execute({ find, pagination }: ConversationListByUserQuery) {
+    async execute({ userId, find, pagination }: ConversationListByUserQuery) {
+        find.userId = userId;
         const [conversations, total] =
             await this.conversationRepo.findAllAndCount(find, pagination);
         const totalPage = this.paginationService.totalPage(

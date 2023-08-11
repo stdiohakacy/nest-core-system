@@ -15,13 +15,14 @@ export class MigrationConversationSeed {
     @Command({ command: 'seed:conversation', describe: 'seeds conversations' })
     async seeds(): Promise<void> {
         const users = await this.userRepo.find({ take: 2 });
+        const admin = await this.userRepo.findOneByUsername('admin');
 
         const createConversation = (user: UserEntity) => ({
             id: faker.string.uuid(),
             name: `${user.firstName} ${user.lastName}`,
             lastMessage: 'Hello',
             lastTime: faker.date.recent(),
-            userId: user.id,
+            userId: admin.id,
         });
 
         try {

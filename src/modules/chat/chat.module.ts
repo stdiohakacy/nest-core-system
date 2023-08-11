@@ -1,22 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from '../user/entities/user.entity';
-import { DirectMessageEntity } from './entities/direct-message.entity';
-import { GroupMessageEntity } from './entities/group-message.entity';
-import { GroupEntity } from './entities/group.entity';
-import { UserGroupEntity } from './entities/user-group.entity';
+import { ConversationEntity } from './entities/conversation.entity';
+import { ConversationListByUserHandler } from './queries/conversation.list-by-user.query';
+import { ConversationRepository } from './repositories/conversation.repository';
 
+const chatQueryHandlers = [ConversationListByUserHandler];
+const repositories = [ConversationRepository];
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([
-            UserEntity,
-            DirectMessageEntity,
-            GroupMessageEntity,
-            GroupEntity,
-            UserGroupEntity,
-        ]),
-    ],
-    exports: [],
-    providers: [],
+    imports: [TypeOrmModule.forFeature([ConversationEntity])],
+    providers: [...chatQueryHandlers, ...repositories],
+    exports: [...chatQueryHandlers, ...repositories],
 })
 export class ChatModule {}

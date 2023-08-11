@@ -282,21 +282,5 @@ export class UserAuthController {
         file: IFile
     ): Promise<void> {
         return await this.commandBus.execute(new UserUploadMinioCommand(file));
-        // const filename: string = file.originalname;
-        // const content: Buffer = file.buffer;
-        // const mime: string = filename
-        //     .substring(filename.lastIndexOf('.') + 1, filename.length)
-        //     .toLowerCase();
-
-        // const path = await this.userService.createPhotoFilename();
-
-        // const aws: AwsS3Serialization = await this.awsS3Service.putItemInBucket(
-        //     `${path.filename}.${mime}`,
-        //     content,
-        //     {
-        //         path: `${path.path}/${user.id}`,
-        //     }
-        // );
-        // await this.userService.updatePhoto(user.id, aws);
     }
 }

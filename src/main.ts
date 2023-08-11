@@ -5,7 +5,6 @@ import { ConfigService } from '@nestjs/config';
 import { useContainer } from 'class-validator';
 import swaggerInit from './swagger';
 import { initializeTransactionalContext } from 'typeorm-transactional';
-
 async function bootstrap() {
     initializeTransactionalContext();
     const app: NestApplication = await NestFactory.create(AppModule);

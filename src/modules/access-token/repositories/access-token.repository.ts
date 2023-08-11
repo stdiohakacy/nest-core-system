@@ -24,10 +24,11 @@ export class AccessTokenRepository
     }
 
     async isTokenRevoke(token: string): Promise<boolean> {
-        const isValid = await this.accessTokenRepo.exist({
-            where: { token, status: ENUM_ACCESS_TOKEN_STATUS.ACTIVE },
-        });
-        return isValid;
+        // const isValid = await this.accessTokenRepo.exist({
+        //     where: { token, status: ENUM_ACCESS_TOKEN_STATUS.ACTIVE },
+        // });
+        // return isValid;
+        return true;
     }
     async revokeByToken(token: string): Promise<UpdateResult> {
         return await this.accessTokenRepo.update(

@@ -18,6 +18,19 @@ export class UserRepository
         super();
     }
 
+    async findAllAndCount(
+        find: Record<string, any>,
+        pagination: PaginationListDTO
+    ): Promise<[UserEntity[], number]> {
+        const { _limit, _offset, _order } = pagination;
+        return await this.userRepo.findAndCount({
+            where: find,
+            take: _limit,
+            skip: _offset,
+            order: _order,
+        });
+    }
+
     async createMany(users: any[]): Promise<void> {
         await this.userRepo.save(this.userRepo.create(users));
     }

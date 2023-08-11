@@ -8,7 +8,6 @@ import { connect } from 'amqplib';
         {
             provide: 'RABBITMQ_CONNECTION',
             useFactory: async () => {
-                // const amqp = require('amqplib');
                 const connection = await connect({
                     hostname: process.env.RMQ_HOST || 'localhost',
                     port: Number(process.env.RMQ_PORT) || 5672,

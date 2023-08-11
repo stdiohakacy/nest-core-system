@@ -9,7 +9,7 @@ import {
 import { Server, Socket } from 'socket.io';
 import { ENUM_SOCKET_MESSAGE_KEY } from './constants/socket.enum.constant';
 
-@WebSocketGateway()
+@WebSocketGateway({ cors: true })
 export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer()
     server: Server;

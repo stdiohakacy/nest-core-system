@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
+import { CqrsModule } from '@nestjs/cqrs';
 import { AuthModule } from '../../common/auth/auth.module';
 import { AwsModule } from '../../common/aws/aws.module';
 import { LoggerModule } from '../../common/logger/logger.module';
 import { SettingModule } from '../../common/setting/setting.module';
 import { UserAuthController } from '../../modules/user/controllers/user.auth.controller';
 import { UserModule } from '../../modules/user/user.module';
-import { CqrsModule } from '@nestjs/cqrs';
+import { ChatModule } from '../../modules/chat/chat.module';
+import { ConversationAuthController } from 'src/modules/chat/controllers/conversation.auth.controller';
 
 @Module({
     imports: [
@@ -15,8 +17,9 @@ import { CqrsModule } from '@nestjs/cqrs';
         LoggerModule,
         SettingModule,
         CqrsModule,
+        ChatModule,
     ],
-    controllers: [UserAuthController],
+    controllers: [UserAuthController, ConversationAuthController],
     providers: [],
     exports: [UserModule, AuthModule, AwsModule, LoggerModule, SettingModule],
 })

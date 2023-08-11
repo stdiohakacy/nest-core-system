@@ -1,5 +1,5 @@
 import { UserEntity } from '../entities/user.entity';
-import { DeleteResult, Repository, InsertResult } from 'typeorm';
+import { DeleteResult, Repository, FindManyOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { IUserRepository } from '../interfaces/user.repository.interface';
@@ -42,14 +42,11 @@ export class UserRepository
     async findOneById(id: string) {
         return await this.userRepo.findOneBy({ id });
     }
-    async findAll(find: Record<string, any>, pagination: PaginationListDTO) {
-        const { _limit, _offset, _order } = pagination;
-        return await this.userRepo.find({
-            where: find,
-            take: _limit,
-            skip: _offset,
-            order: _order,
-        });
+    findAll(find: Record<string, any>, pagination: PaginationListDTO) {
+        throw new Error('Method not implemented.');
+    }
+    async find(options?: FindManyOptions<UserEntity>) {
+        return await this.userRepo.find(options);
     }
     async create(user: UserEntity): Promise<UserEntity> {
         return await this.userRepo.save(user);

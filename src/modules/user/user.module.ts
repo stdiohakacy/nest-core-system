@@ -34,13 +34,12 @@ const repositories = [UserRepository];
         AccessTokenModule,
         SettingModule,
     ],
+    providers: [...commandHandlers, ...repositories, UserService],
     exports: [
         UserService,
         IntegrationModule,
         AccessTokenModule,
         ...repositories,
     ],
-    providers: [...commandHandlers, ...repositories, UserService],
-    controllers: [],
 })
 export class UserModule {}

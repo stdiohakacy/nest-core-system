@@ -11,6 +11,8 @@ import { CategoryModule } from '../modules/category/category.module';
 import { MigrationProductSeed } from './seeds/migration.product.seed';
 import { ProductModule } from '../modules/product/product.module';
 import { MigrationUserSeed } from './seeds/migration.user.seed';
+import { MigrationConversationSeed } from './seeds/migartion.conversation.seed';
+import { ChatModule } from '../modules/chat/chat.module';
 
 @Module({
     imports: [
@@ -21,6 +23,7 @@ import { MigrationUserSeed } from './seeds/migration.user.seed';
         UserModule,
         CategoryModule,
         ProductModule,
+        ChatModule,
     ],
     providers: [
         MigrationApiKeySeed,
@@ -28,6 +31,7 @@ import { MigrationUserSeed } from './seeds/migration.user.seed';
         MigrationCategorySeed,
         MigrationProductSeed,
         MigrationUserSeed,
+        MigrationConversationSeed,
     ],
     exports: [],
 })

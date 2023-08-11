@@ -44,13 +44,18 @@ export class ConversationRepository
     create(entity: ConversationEntity): Promise<ConversationEntity> {
         throw new Error('Method not implemented.');
     }
+    async createMany(conversations: any[]): Promise<void> {
+        await this.conversationRepo.save(
+            this.conversationRepo.create(conversations)
+        );
+    }
     update(entity: Partial<ConversationEntity>): Promise<ConversationEntity> {
         throw new Error('Method not implemented.');
     }
     delete(id: string): Promise<DeleteResult> {
         throw new Error('Method not implemented.');
     }
-    truncate(): Promise<DeleteResult> {
-        throw new Error('Method not implemented.');
+    async truncate(): Promise<DeleteResult> {
+        return await this.conversationRepo.delete({});
     }
 }

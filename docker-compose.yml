@@ -108,27 +108,27 @@ services:
         networks:
             - elk-network
 
-    kibana:
-        image: docker.elastic.co/kibana/kibana:7.9.1
-        container_name: kibana
-        environment:
-            ELASTICSEARCH_HOSTS: 'http://es01:9200'
-        ports:
-            - '5601:5601'
-        networks:
-            - elk-network
+    # kibana:
+    #     image: docker.elastic.co/kibana/kibana:7.9.1
+    #     container_name: kibana
+    #     environment:
+    #         ELASTICSEARCH_HOSTS: 'http://es01:9200'
+    #     ports:
+    #         - '5601:5601'
+    #     networks:
+    #         - elk-network
 
     rabbitmq:
         image: rabbitmq:management
         container_name: rabbitmq
         ports:
-            - '5672:5672' # RabbitMQ default port
-            - '15672:15672' # RabbitMQ management UI port
+            - '5672:5672'
+            - '15672:15672'
         environment:
-            - RABBITMQ_DEFAULT_USER=rabbitmq # Replace with your desired username
-            - RABBITMQ_DEFAULT_PASS=admin # Replace with your desired password
+            - RABBITMQ_DEFAULT_USER=rabbitmq
+            - RABBITMQ_DEFAULT_PASS=admin
         volumes:
-            - rabbitmq_data:/var/lib/rabbitmq # Persist RabbitMQ data
+            - rabbitmq_data:/var/lib/rabbitmq
 volumes:
     postgres:
         driver: local

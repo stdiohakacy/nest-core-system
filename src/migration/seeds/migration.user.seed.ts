@@ -39,9 +39,49 @@ export class MigrationUserSeed {
         });
 
         try {
-            await this.userRepo.createMany(
-                Array.from({ length: 20 }, createUser)
-            );
+            await this.userRepo.createMany([
+                ...Array.from({ length: 20 }, createUser),
+                ...[
+                    {
+                        username: 'admin',
+                        firstName: 'Admin',
+                        lastName: 'Admin',
+                        mobileNumber: faker.phone.number(),
+                        email: faker.internet.email(),
+                        password: passwordHash,
+                        passwordExpired: passwordExpired,
+                        passwordCreated: passwordCreated,
+                        passwordAttempt: 0,
+                        signUpDate: faker.date.recent(),
+                        signUpFrom: ENUM_USER_SIGN_UP_FROM.LOCAL,
+                        salt,
+                        isActive: true,
+                        inactivePermanent: false,
+                        inactiveDate: faker.date.recent(),
+                        blocked: false,
+                        isPhoneConfirmation: true,
+                    },
+                    {
+                        username: 'user',
+                        firstName: 'User',
+                        lastName: 'Normal',
+                        mobileNumber: faker.phone.number(),
+                        email: faker.internet.email(),
+                        password: passwordHash,
+                        passwordExpired: passwordExpired,
+                        passwordCreated: passwordCreated,
+                        passwordAttempt: 0,
+                        signUpDate: faker.date.recent(),
+                        signUpFrom: ENUM_USER_SIGN_UP_FROM.LOCAL,
+                        salt,
+                        isActive: true,
+                        inactivePermanent: false,
+                        inactiveDate: faker.date.recent(),
+                        blocked: false,
+                        isPhoneConfirmation: true,
+                    },
+                ],
+            ]);
         } catch (err: any) {
             throw new Error(err.message);
         }

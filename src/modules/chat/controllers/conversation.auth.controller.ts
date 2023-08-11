@@ -1,5 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { QueryBus } from '@nestjs/cqrs';
 import { PaginationQuery } from '../../../common/pagination/decorators/pagination.decorator';
 import { ResponsePaging } from '../../../common/response/decorators/response.decorator';
 import {
@@ -11,10 +12,10 @@ import {
 } from '../constants/conversation.list.constant';
 import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
 import { IResponsePaging } from '../../../common/response/interfaces/response.interface';
-import { QueryBus } from '@nestjs/cqrs';
+
 import { ConversationListByUserQuery } from '../queries/conversation.list-by-user.query';
 import { ConversationListSerialization } from '../serializations/conversation.list.serialization';
-import { ConversationAuthListByUserDoc } from './conversation.auth.doc';
+import { ConversationAuthListByUserDoc } from '../docs/conversation.auth.doc';
 import { AuthJwtAccessProtected } from '../../../common/auth/decorators/auth.jwt.decorator';
 import {
     GetUser,

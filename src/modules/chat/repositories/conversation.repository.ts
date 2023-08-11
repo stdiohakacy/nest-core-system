@@ -18,10 +18,6 @@ export class ConversationRepository
         super();
     }
 
-    async findByUserId(userId: string): Promise<ConversationEntity[]> {
-        return await this.conversationRepo.find({ where: { userId } });
-    }
-
     async findAllAndCount(
         find: Record<string, any>,
         pagination: PaginationListDTO
@@ -41,8 +37,10 @@ export class ConversationRepository
     findAll(find: Record<string, any>, pagination: PaginationListDTO) {
         throw new Error('Method not implemented.');
     }
-    create(entity: ConversationEntity): Promise<ConversationEntity> {
-        throw new Error('Method not implemented.');
+    async create(
+        conversation: ConversationEntity
+    ): Promise<ConversationEntity> {
+        return await this.conversationRepo.save(conversation);
     }
     async createMany(conversations: any[]): Promise<void> {
         await this.conversationRepo.save(
@@ -57,5 +55,8 @@ export class ConversationRepository
     }
     async truncate(): Promise<DeleteResult> {
         return await this.conversationRepo.delete({});
+    }
+    async findOne(): Promise<ConversationEntity> {
+        return await this.conversationRepo.findOne({});
     }
 }

@@ -14,7 +14,7 @@ import { DeviceEntity } from '../../../modules/notification/entities/device.enti
 import { NotificationEntity } from '../../../modules/notification/entities/notification.entity';
 import { VirtualColumn } from '../../../common/decorators/virtual-column.decorator';
 import { MessageEntity } from '../../../modules/chat/entities/message.entity';
-import { ConversationEntity } from '../../../modules/chat/entities/conversation.entity';
+import { UserConversationEntity } from '../../../modules/chat/entities/user-conversation.entity';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
     username?: string;
@@ -156,8 +156,11 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
     @OneToMany(() => MessageEntity, (messages) => messages.fromUser)
     messages: MessageEntity[];
 
-    @OneToMany(() => ConversationEntity, (conversations) => conversations.user)
-    conversations: ConversationEntity[];
+    @OneToMany(
+        () => UserConversationEntity,
+        (userConversations) => userConversations.user
+    )
+    userConversations: UserConversationEntity[];
 
     active(data: any) {
         this.isActive = true;

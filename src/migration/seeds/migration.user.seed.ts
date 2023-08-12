@@ -22,7 +22,8 @@ export class MigrationUserSeed {
         email: string,
         passwordHash: string,
         passwordExpired: Date,
-        passwordCreated: Date
+        passwordCreated: Date,
+        salt: string
     ): UserEntity {
         const user = new UserEntity();
 
@@ -34,6 +35,7 @@ export class MigrationUserSeed {
         user.password = passwordHash;
         user.passwordExpired = passwordExpired;
         user.passwordCreated = passwordCreated;
+        user.salt = salt;
         user.passwordAttempt = 0;
         user.signUpDate = faker.date.recent();
         user.signUpFrom = ENUM_USER_SIGN_UP_FROM.LOCAL;
@@ -59,7 +61,8 @@ export class MigrationUserSeed {
             faker.internet.email(),
             passwordHash,
             passwordExpired,
-            passwordCreated
+            passwordCreated,
+            salt
         );
 
         const admin = this.createUser(
@@ -70,7 +73,8 @@ export class MigrationUserSeed {
             faker.internet.email(),
             passwordHash,
             passwordExpired,
-            passwordCreated
+            passwordCreated,
+            salt
         );
 
         const users = Array.from({ length: 20 }).map(() => {
@@ -82,7 +86,8 @@ export class MigrationUserSeed {
                 faker.internet.email(),
                 passwordHash,
                 passwordExpired,
-                passwordCreated
+                passwordCreated,
+                salt
             );
 
             return user;

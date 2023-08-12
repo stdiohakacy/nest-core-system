@@ -2,7 +2,6 @@ import { DeleteResult, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
-import { BaseRepository } from '../../../common/base/repository/base.repository';
 import { UserEntity } from '../entities/user.entity';
 import {
     CoreRepository,

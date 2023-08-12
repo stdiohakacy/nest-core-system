@@ -4,8 +4,10 @@ import { faker } from '@faker-js/faker';
 import { ConversationRepository } from '../../modules/chat/repositories/conversation.repository';
 import { UserRepository } from '../../modules/user/repositories/user.repository';
 import { ConversationEntity } from '../../modules/chat/entities/conversation.entity';
-import { UserConversationRepository } from '../../modules/chat/repositories/user-conversation.repository';
 import { MessageRepository } from '../../modules/chat/repositories/message.repository';
+import { MessageEntity } from '../../modules/chat/entities/message.entity';
+import { UserConversationRepository } from '../../modules/chat/repositories/user-conversation.repository';
+import { UserConversationEntity } from '../../modules/chat/entities/user-conversation.entity';
 
 @Injectable()
 export class MigrationConversationSeed {
@@ -21,7 +23,7 @@ export class MigrationConversationSeed {
         const admin = await this.userRepo.findOneByUsername('admin');
         const user = await this.userRepo.findOneByUsername('user');
 
-        const conversation = await this.conversationRepo.create(
+        const conversation = await this.conversationRepo.createGet(
             new ConversationEntity()
         );
 
@@ -42,9 +44,22 @@ export class MigrationConversationSeed {
                 lastMessage: faker.lorem.sentence(),
                 lastTime: faker.date.recent(),
             },
-        ];
+        ].map((data) => {
+            const { id, userId, conversationId, name, lastMessage, lastTime } =
+                data;
+            const userConversation = new UserConversationEntity();
 
-        await this.userConversationRepo.createMany(userConversations);
+            userConversation.id = id;
+            userConversation.userId = userId;
+            userConversation.conversationId = conversationId;
+            userConversation.name = name;
+            userConversation.lastMessage = lastMessage;
+            userConversation.lastTime = lastTime;
+
+            return userConversation;
+        });
+
+        await this.userConversationRepo.createMultiple(userConversations);
 
         const messages = [
             {
@@ -59,8 +74,19 @@ export class MigrationConversationSeed {
                 fromUserId: admin.id,
                 conversationId: conversation.id,
             },
-        ];
-        await this.messageRepo.createMany(messages);
+        ].map((data) => {
+            const message = new MessageEntity();
+            const { id, content, fromUserId, conversationId } = data;
+
+            message.id = id;
+            message.content = content;
+            message.fromUserId = fromUserId;
+            message.conversationId = conversationId;
+
+            return message;
+        });
+
+        await this.messageRepo.createMultiple(messages);
     }
 
     @Command({
@@ -69,8 +95,14 @@ export class MigrationConversationSeed {
     })
     async remove(): Promise<void> {
         try {
-            await this.conversationRepo.truncate();
-            await this.userConversationRepo.truncate();
+            const conversationIds = (await this.conversationRepo.findAll()).map(
+                (conversation) => conversation.id
+            );
+            await this.conversationRepo.deleteMultiple(conversationIds);
+            const userConversationIds = (
+                await this.userConversationRepo.findAll()
+            ).map((userConversation) => userConversation.id);
+            await this.userConversationRepo.deleteMultiple(userConversationIds);
         } catch (err: any) {
             throw new Error(err.message);
         }

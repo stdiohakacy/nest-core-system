@@ -22,16 +22,17 @@ export class ConversationListByUserHandler
 
     async execute({ userId, find, pagination }: ConversationListByUserQuery) {
         find.userId = userId;
-        const [conversations, total] =
-            await this.conversationRepo.findAllAndCount(find, pagination);
-        const totalPage = this.paginationService.totalPage(
-            total,
-            pagination._limit
-        );
 
-        return {
-            _pagination: { total, totalPage },
-            data: conversations,
-        };
+        // const [conversations, total] =
+        //     await this.conversationRepo.findAllAndCount(find, pagination);
+        // const totalPage = this.paginationService.totalPage(
+        //     total,
+        //     pagination._limit
+        // );
+
+        // return {
+        //     _pagination: { total, totalPage },
+        //     data: conversations,
+        // };
     }
 }

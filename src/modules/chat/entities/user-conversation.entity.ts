@@ -1,11 +1,9 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import {
     BaseEntity,
     IBaseEntity,
 } from '../../../common/base/entity/base.entity';
 import { UseDTO } from '../../../common/decorators/use-dto.decorator';
-import { ConversationDTO } from '../dtos/conversation.dto';
-import { MessageEntity } from './message.entity';
 import { UserEntity } from '../../../modules/user/entities/user.entity';
 import { UserConversationDTO } from '../dtos/user-conversation.dto';
 import { ConversationEntity } from './conversation.entity';

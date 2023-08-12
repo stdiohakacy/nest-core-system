@@ -33,6 +33,6 @@ export class UserPhoneConfirmHandler
         );
 
         user.confirmedPhone();
-        await this.userRepo.update(user);
+        await this.userRepo.update(user.id, user);
     }
 }

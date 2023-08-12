@@ -27,6 +27,6 @@ export class SmsSendHandler implements ICommandHandler<SmsSendCommand> {
             return smsEntity;
         });
 
-        await this.smsRepo.createMany(smsEntities);
+        await this.smsRepo.createMultiple(smsEntities);
     }
 }

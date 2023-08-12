@@ -71,6 +71,6 @@ export class UserResetPasswordHandler
             passwordCreated,
         });
 
-        await this.userRepo.update(user);
+        await this.userRepo.update(user.id, user);
     }
 }

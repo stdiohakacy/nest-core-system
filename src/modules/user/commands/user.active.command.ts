@@ -50,6 +50,6 @@ export class UserActiveHandler implements ICommandHandler<UserActiveCommand> {
             });
         }
         user.active({ activatedAt: this.helperDateService.create() });
-        await this.userRepo.update(user);
+        await this.userRepo.update(user.id, user);
     }
 }

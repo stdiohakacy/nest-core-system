@@ -6,12 +6,12 @@ import {
 } from '@nestjs/common';
 import { DeviceRegisterDTO } from '../dtos/notification.fcm.device-register.dto';
 import { UserEntity } from '../../../../../modules/user/entities/user.entity';
-import { NotificationFCMDeviceRepository } from '../repositories/notification.fcm.device.repository';
+import { DeviceRepository } from '../repositories/notification.fcm.device.repository';
 import { DeviceEntity } from '../../../../../modules/notification/entities/device.entity';
 import { IResult } from 'ua-parser-js';
 import { FCMService } from '../services/notification.fcm.service';
-import { NotificationFCMNotificationRepository } from '../repositories/notification.fcm.notification.repository';
-import { NotificationEntity } from 'src/modules/notification/entities/notification.entity';
+import { NotificationRepository } from '../repositories/notification.fcm.notification.repository';
+import { NotificationEntity } from '../../../../../modules/notification/entities/notification.entity';
 
 export class DeviceRegisterCommand implements ICommand {
     constructor(
@@ -25,8 +25,8 @@ export class DeviceRegisterHandler
     implements ICommandHandler<DeviceRegisterCommand>
 {
     constructor(
-        private readonly deviceRepo: NotificationFCMDeviceRepository,
-        private readonly notificationRepo: NotificationFCMNotificationRepository,
+        private readonly deviceRepo: DeviceRepository,
+        private readonly notificationRepo: NotificationRepository,
         private readonly fcmService: FCMService
     ) {}
     async execute({ payload, userAgent }: DeviceRegisterCommand) {

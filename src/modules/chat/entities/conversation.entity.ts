@@ -1,22 +1,14 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-import {
-    BaseEntity,
-    IBaseEntity,
-} from '../../../common/base/entity/base.entity';
+import { Entity, OneToMany } from 'typeorm';
+import { BaseEntity } from '../../../common/base/entity/base.entity';
 import { UseDTO } from '../../../common/decorators/use-dto.decorator';
 import { ConversationDTO } from '../dtos/conversation.dto';
 import { MessageEntity } from './message.entity';
-import { UserEntity } from '../../../modules/user/entities/user.entity';
 import { UserConversationEntity } from './user-conversation.entity';
-
-export interface IConversationEntity extends IBaseEntity<ConversationDTO> {}
 
 @Entity({ name: 'conversations' })
 @UseDTO(ConversationDTO)
-export class ConversationEntity
-    extends BaseEntity<ConversationDTO>
-    implements IConversationEntity
-{
+export class ConversationEntity extends BaseEntity<ConversationDTO> {
+    
     /* Relationships */
 
     @OneToMany(() => MessageEntity, (messages) => messages.conversation)

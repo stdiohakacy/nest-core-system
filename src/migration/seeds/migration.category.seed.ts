@@ -2,6 +2,7 @@ import { Command } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
 import { CategoryRepository } from '../../modules/category/repositories/category.repository';
 import { faker } from '@faker-js/faker';
+import { CategoryEntity } from '../../modules/category/entities/category.entity';
 
 @Injectable()
 export class MigrationCategorySeed {
@@ -9,30 +10,30 @@ export class MigrationCategorySeed {
 
     @Command({ command: 'seed:category', describe: 'seeds categories' })
     async seeds(): Promise<void> {
-        const createCategory = () => ({
-            id: faker.string.uuid(),
-            name: faker.lorem.sentence(),
-            description: faker.lorem.paragraphs(),
-        });
         try {
-            await this.categoryRepo.createMany(
-                Array.from({ length: 10 }, createCategory)
-            );
-        } catch (err: any) {
+            const categories = Array.from({ length: 10 }).map(() => {
+                const category = new CategoryEntity();
+                category.id = faker.string.uuid();
+                category.name = faker.lorem.sentence();
+                category.description = faker.lorem.paragraphs();
+                return category;
+            });
+
+            await this.categoryRepo.createMultiple(categories);
+        } catch (err) {
             throw new Error(err.message);
         }
-
-        return;
     }
 
     @Command({ command: 'remove:category', describe: 'remove categories' })
     async remove(): Promise<void> {
         try {
-            await this.categoryRepo.truncate();
+            const categoryIds = (await this.categoryRepo.findAll()).map(
+                (category) => category.id
+            );
+            await this.categoryRepo.deleteMultiple(categoryIds);
         } catch (err: any) {
             throw new Error(err.message);
         }
-
-        return;
     }
 }

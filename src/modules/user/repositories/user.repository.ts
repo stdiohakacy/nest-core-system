@@ -1,14 +1,21 @@
-import { UserEntity } from '../entities/user.entity';
-import { DeleteResult, Repository, FindManyOptions } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import { IUserRepository } from '../interfaces/user.repository.interface';
 import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
 import { BaseRepository } from '../../../common/base/repository/base.repository';
+import { UserEntity } from '../entities/user.entity';
+import {
+    CoreRepository,
+    SelectFilterListQuery,
+    SelectFilterPaginationQuery,
+    SelectFilterQuery,
+    SelectSortQuery,
+} from '../../../common/base/repository/core.repository';
+import { IUserRepository } from '../interfaces/user.repository.interface';
 
 @Injectable()
 export class UserRepository
-    extends BaseRepository<UserEntity>
+    extends CoreRepository<UserEntity>
     implements IUserRepository
 {
     constructor(
@@ -18,51 +25,214 @@ export class UserRepository
         super();
     }
 
-    async findAllAndCount(
-        find: Record<string, any>,
-        pagination: PaginationListDTO
-    ): Promise<[UserEntity[], number]> {
-        const { _limit, _offset, _order } = pagination;
-        return await this.userRepo.findAndCount({
-            where: find,
-            take: _limit,
-            skip: _offset,
-            order: _order,
-        });
-    }
-
-    async createMany(users: any[]): Promise<void> {
-        await this.userRepo.save(this.userRepo.create(users));
+    async findOneById(id: string): Promise<UserEntity> {
+        return await this.userRepo.findOne({ where: { id } });
     }
 
     async findOneByUsername(username: string): Promise<UserEntity> {
-        return await this.userRepo.findOneBy({ username });
-    }
-
-    async findOneById(id: string) {
-        return await this.userRepo.findOneBy({ id });
-    }
-    findAll(find: Record<string, any>, pagination: PaginationListDTO) {
-        throw new Error('Method not implemented.');
-    }
-    async find(options?: FindManyOptions<UserEntity>) {
-        return await this.userRepo.find(options);
-    }
-    async create(user: UserEntity): Promise<UserEntity> {
-        return await this.userRepo.save(user);
-    }
-    async update(user: Partial<UserEntity>) {
-        return await this.userRepo.save(user);
-    }
-    async delete(id: string): Promise<DeleteResult> {
-        return await this.userRepo.delete(id);
-    }
-    async truncate(): Promise<DeleteResult> {
-        return await this.userRepo.delete({});
+        return await this.userRepo.findOne({ where: { username } });
     }
 
     async findOneByEmail(email: string): Promise<UserEntity> {
-        return await this.userRepo.findOneBy({ email });
+        return await this.userRepo.findOne({ where: { email } });
+    }
+
+    handleSortQuery(query: any, sorts?: SelectSortQuery<UserEntity>[]): void {
+        if (sorts) {
+            sorts.forEach((sort) => {
+                let field = '';
+                if (sort.field === 'createdAt') {
+                    field = `user.createdAt`;
+                } else if (sort.field === 'updatedAt') {
+                    field = `user.updatedAt`;
+                }
+
+                if (field) {
+                    query.addOrderBy(field, sort.type);
+                }
+            });
+        }
+    }
+
+    async findAll(
+        filter?: SelectFilterListQuery<UserEntity>
+    ): Promise<UserEntity[]> {
+        const query = this.userRepo.createQueryBuilder('user');
+        this.handleSortQuery(query, filter?.sorts);
+        const list = await query.getMany();
+        return list;
+    }
+
+    async find(
+        filter: SelectFilterPaginationQuery<UserEntity>
+    ): Promise<UserEntity[]> {
+        const query = this.userRepo.createQueryBuilder('user');
+        this.handleSortQuery(query, filter.sorts);
+        query.skip(filter.skip);
+        query.take(filter.limit);
+        const list = await query.getMany();
+        return list;
+    }
+
+    async findOne(_filter: SelectFilterQuery<UserEntity>): Promise<UserEntity> {
+        const query = this.userRepo.createQueryBuilder('user');
+        const result = await query.getOne();
+        return result;
+    }
+
+    async findAndCount(
+        filter: SelectFilterPaginationQuery<UserEntity>
+    ): Promise<[UserEntity[], number]> {
+        const query = this.userRepo.createQueryBuilder('user');
+        this.handleSortQuery(query, filter.sorts);
+        query.skip(filter.skip);
+        query.take(filter.limit);
+        const result = await query.getManyAndCount();
+        return result;
+    }
+
+    async count(_filter: SelectFilterQuery<UserEntity>): Promise<number> {
+        const query = this.userRepo.createQueryBuilder('user');
+        return await query.getCount();
+    }
+
+    async get(
+        id: string,
+        _relations?: string[] | (keyof UserEntity)[]
+    ): Promise<UserEntity> {
+        const query = this.userRepo.createQueryBuilder('user').whereInIds(id);
+        const result = await query.getOne();
+        return result;
+    }
+
+    async create(data: UserEntity): Promise<string> {
+        const result = await this.userRepo
+            .createQueryBuilder('user')
+            .insert()
+            .values(data)
+            .execute();
+        return result.identifiers[0].id;
+    }
+
+    async createGet(
+        data: UserEntity,
+        _relations?: string[] | (keyof UserEntity)[]
+    ): Promise<UserEntity> {
+        const result = await this.userRepo
+            .createQueryBuilder('user')
+            .insert()
+            .values(data)
+            .execute();
+        const sms = await this.get(result.identifiers[0].id, _relations);
+        return sms!;
+    }
+
+    async createMultiple(list: UserEntity[]): Promise<string[]> {
+        const result = await this.userRepo
+            .createQueryBuilder('user')
+            .insert()
+            .values(list)
+            .execute();
+        return result.identifiers.map((identifier) => identifier.id);
+    }
+
+    async update(id: string, data: UserEntity): Promise<boolean> {
+        const result = await this.userRepo
+            .createQueryBuilder('user')
+            .update(data)
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async updateGet(
+        id: string,
+        data: UserEntity,
+        _relations?: string[] | (keyof UserEntity)[]
+    ): Promise<UserEntity> {
+        const result = await this.userRepo
+            .createQueryBuilder('user')
+            .update(data)
+            .whereInIds(id)
+            .execute();
+
+        if (!result.affected) {
+            return;
+        }
+        const sms = await this.get(id, _relations);
+        return sms;
+    }
+
+    async updateFields(
+        id: string,
+        data: UserEntity,
+        fields: (keyof UserEntity)[]
+    ): Promise<boolean> {
+        const obj = {} as any;
+        fields.forEach((field) => {
+            obj[field] = data[field as any];
+        });
+
+        const result = await this.userRepo
+            .createQueryBuilder('user')
+            .update(obj)
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async delete(id: string): Promise<boolean> {
+        const result = await this.userRepo
+            .createQueryBuilder('user')
+            .delete()
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async deleteMultiple(ids: string[]): Promise<boolean> {
+        const result = await this.userRepo
+            .createQueryBuilder('user')
+            .delete()
+            .whereInIds(ids)
+            .execute();
+        return !!result.affected && result.affected === ids.length;
+    }
+
+    async softDelete(id: string): Promise<boolean> {
+        const result = await this.userRepo
+            .createQueryBuilder('user')
+            .softDelete()
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async softDeleteMultiple(ids: string[]): Promise<boolean> {
+        const result = await this.userRepo
+            .createQueryBuilder('user')
+            .softDelete()
+            .whereInIds(ids)
+            .execute();
+        return !!result.affected && result.affected === ids.length;
+    }
+
+    async restore(id: string): Promise<boolean> {
+        const result = await this.userRepo
+            .createQueryBuilder('user')
+            .restore()
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async restoreMultiple(ids: string[]): Promise<boolean> {
+        const result = await this.userRepo
+            .createQueryBuilder('user')
+            .restore()
+            .whereInIds(ids)
+            .execute();
+        return !!result.affected && result.affected === ids.length;
     }
 
     async joinWithRBAC(id: string): Promise<UserEntity> {

@@ -1,16 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { BaseRepository } from 'src/common/base/repository/base.repository';
-import { PaginationListDTO } from 'src/common/pagination/dtos/pagination.list.dto';
-import { DeleteResult, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from '@nestjs/common';
 import { MessageEntity } from '../entities/message.entity';
-import { IMessageRepository } from '../interfaces/message.repository.interface';
+import {
+    CoreRepository,
+    SelectFilterListQuery,
+    SelectFilterPaginationQuery,
+    SelectFilterQuery,
+    SelectSortQuery,
+} from '../../../common/base/repository/core.repository';
 
 @Injectable()
-export class MessageRepository
-    extends BaseRepository<MessageEntity>
-    implements IMessageRepository
-{
+export class MessageRepository extends CoreRepository<MessageEntity> {
     constructor(
         @InjectRepository(MessageEntity)
         private readonly messageRepo: Repository<MessageEntity>
@@ -18,26 +19,208 @@ export class MessageRepository
         super();
     }
 
-    async createMany(messages: any[]): Promise<void> {
-        await this.messageRepo.save(this.messageRepo.create(messages));
+    handleSortQuery(
+        query: any,
+        sorts?: SelectSortQuery<MessageEntity>[]
+    ): void {
+        if (sorts) {
+            sorts.forEach((sort) => {
+                let field = '';
+                if (sort.field === 'createdAt') {
+                    field = `product.createdAt`;
+                } else if (sort.field === 'updatedAt') {
+                    field = `product.updatedAt`;
+                }
+
+                if (field) {
+                    query.addOrderBy(field, sort.type);
+                }
+            });
+        }
     }
 
-    findOneById(id: string) {
-        throw new Error('Method not implemented.');
+    async findAll(
+        filter: SelectFilterListQuery<MessageEntity>
+    ): Promise<MessageEntity[]> {
+        const query = this.messageRepo.createQueryBuilder('message');
+        this.handleSortQuery(query, filter.sorts);
+        const list = await query.getMany();
+        return list;
     }
-    findAll(find: Record<string, any>, pagination: PaginationListDTO) {
-        throw new Error('Method not implemented.');
+
+    async find(
+        filter: SelectFilterPaginationQuery<MessageEntity>
+    ): Promise<MessageEntity[]> {
+        const query = this.messageRepo.createQueryBuilder('message');
+        this.handleSortQuery(query, filter.sorts);
+        query.skip(filter.skip);
+        query.take(filter.limit);
+        const list = await query.getMany();
+        return list;
     }
-    create(entity: MessageEntity): Promise<MessageEntity> {
-        throw new Error('Method not implemented.');
+
+    async findOne(
+        _filter: SelectFilterQuery<MessageEntity>
+    ): Promise<MessageEntity> {
+        const query = this.messageRepo.createQueryBuilder('message');
+        const result = await query.getOne();
+        return result;
     }
-    update(entity: Partial<MessageEntity>): Promise<MessageEntity> {
-        throw new Error('Method not implemented.');
+
+    async findAndCount(
+        filter: SelectFilterPaginationQuery<MessageEntity>
+    ): Promise<[MessageEntity[], number]> {
+        const query = this.messageRepo.createQueryBuilder('message');
+        this.handleSortQuery(query, filter.sorts);
+        query.skip(filter.skip);
+        query.take(filter.limit);
+        const result = await query.getManyAndCount();
+        return result;
     }
-    delete(id: string): Promise<DeleteResult> {
-        throw new Error('Method not implemented.');
+
+    async count(_filter: SelectFilterQuery<MessageEntity>): Promise<number> {
+        const query = this.messageRepo.createQueryBuilder('message');
+        return await query.getCount();
     }
-    truncate(): Promise<DeleteResult> {
-        throw new Error('Method not implemented.');
+
+    async get(
+        id: string,
+        _relations?: string[] | (keyof MessageEntity)[]
+    ): Promise<MessageEntity> {
+        const query = this.messageRepo
+            .createQueryBuilder('message')
+            .whereInIds(id);
+        const result = await query.getOne();
+        return result;
+    }
+
+    async create(data: MessageEntity): Promise<string> {
+        const result = await this.messageRepo
+            .createQueryBuilder('message')
+            .insert()
+            .values(data)
+            .execute();
+        return result.identifiers[0].id;
+    }
+
+    async createGet(
+        data: MessageEntity,
+        _relations?: string[] | (keyof MessageEntity)[]
+    ): Promise<MessageEntity> {
+        const result = await this.messageRepo
+            .createQueryBuilder('message')
+            .insert()
+            .values(data)
+            .execute();
+        const product = await this.get(result.identifiers[0].id, _relations);
+        return product!;
+    }
+
+    async createMultiple(list: MessageEntity[]): Promise<string[]> {
+        const result = await this.messageRepo
+            .createQueryBuilder('message')
+            .insert()
+            .values(list)
+            .execute();
+        return result.identifiers.map((identifier) => identifier.id);
+    }
+
+    async update(id: string, data: MessageEntity): Promise<boolean> {
+        const result = await this.messageRepo
+            .createQueryBuilder('message')
+            .update(data)
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async updateGet(
+        id: string,
+        data: MessageEntity,
+        _relations?: string[] | (keyof MessageEntity)[]
+    ): Promise<MessageEntity> {
+        const result = await this.messageRepo
+            .createQueryBuilder('message')
+            .update(data)
+            .whereInIds(id)
+            .execute();
+
+        if (!result.affected) {
+            return;
+        }
+        const product = await this.get(id, _relations);
+        return product;
+    }
+
+    async updateFields(
+        id: string,
+        data: MessageEntity,
+        fields: (keyof MessageEntity)[]
+    ): Promise<boolean> {
+        const obj = {} as any;
+        fields.forEach((field) => {
+            obj[field] = data[field as any];
+        });
+
+        const result = await this.messageRepo
+            .createQueryBuilder('message')
+            .update(obj)
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async delete(id: string): Promise<boolean> {
+        const result = await this.messageRepo
+            .createQueryBuilder('message')
+            .delete()
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async deleteMultiple(ids: string[]): Promise<boolean> {
+        const result = await this.messageRepo
+            .createQueryBuilder('message')
+            .delete()
+            .whereInIds(ids)
+            .execute();
+        return !!result.affected && result.affected === ids.length;
+    }
+
+    async softDelete(id: string): Promise<boolean> {
+        const result = await this.messageRepo
+            .createQueryBuilder('message')
+            .softDelete()
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async softDeleteMultiple(ids: string[]): Promise<boolean> {
+        const result = await this.messageRepo
+            .createQueryBuilder('message')
+            .softDelete()
+            .whereInIds(ids)
+            .execute();
+        return !!result.affected && result.affected === ids.length;
+    }
+
+    async restore(id: string): Promise<boolean> {
+        const result = await this.messageRepo
+            .createQueryBuilder('message')
+            .restore()
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async restoreMultiple(ids: string[]): Promise<boolean> {
+        const result = await this.messageRepo
+            .createQueryBuilder('message')
+            .restore()
+            .whereInIds(ids)
+            .execute();
+        return !!result.affected && result.affected === ids.length;
     }
 }

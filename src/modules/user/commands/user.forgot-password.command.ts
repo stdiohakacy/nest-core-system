@@ -1,17 +1,13 @@
 import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
-import {
-    BadRequestException,
-    ForbiddenException,
-    NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { randomBytes } from 'crypto';
 import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
 import { UserRepository } from '../repositories/user.repository';
 import { HelperDateService } from '../../../common/helper/services/helper.date.service';
 import { UserForgotPasswordDTO } from '../dtos/user.forgot-password.dto';
-import { randomBytes } from 'crypto';
 import { MailService } from '../../../common/integrations/mail/services/mail.service';
 import { IMailForgotPasswordParams } from '../../../common/integrations/mail/interfaces/mail.interface';
-import { ConfigService } from '@nestjs/config';
 
 export class UserForgotPasswordCommand implements ICommand {
     constructor(public readonly payload: UserForgotPasswordDTO) {}
@@ -54,7 +50,7 @@ export class UserForgotPasswordHandler
         const httpPort = this.configService.get<string>('app.http.port');
         const resetPasswordLink = `${appProtocol}://${httpHost}:${httpPort}/reset-password?username=${user.username}&key=${forgotKey}`;
 
-        const userUpdated = await this.userRepo.update(user);
+        const userUpdated = await this.userRepo.update(user.id, user);
         this.mailService.sendForgotPassword({
             name: `${user.firstName} ${user.lastName}`,
             resetPasswordLink,

@@ -1,18 +1,15 @@
 import { Module } from '@nestjs/common';
-import { NotificationFCMDeviceRepository } from './repositories/notification.fcm.device.repository';
+import { DeviceRepository } from './repositories/notification.fcm.device.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeviceEntity } from '../../../../modules/notification/entities/device.entity';
 import { DeviceRegisterHandler } from './commands/notification.device-register.command';
 import { FCMService } from './services/notification.fcm.service';
-import { NotificationFCMNotificationRepository } from './repositories/notification.fcm.notification.repository';
+import { NotificationRepository } from './repositories/notification.fcm.notification.repository';
 import { NotificationEntity } from '../../../../modules/notification/entities/notification.entity';
 import admin from 'firebase-admin';
 
 const commandHandlers = [DeviceRegisterHandler];
-const repositories = [
-    NotificationFCMDeviceRepository,
-    NotificationFCMNotificationRepository,
-];
+const repositories = [DeviceRepository, NotificationRepository];
 
 @Module({
     imports: [TypeOrmModule.forFeature([DeviceEntity, NotificationEntity])],

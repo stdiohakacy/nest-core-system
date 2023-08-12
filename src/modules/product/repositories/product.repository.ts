@@ -1,17 +1,17 @@
-import { DeleteResult, Repository, InsertResult } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
-import { BaseRepository } from '../../../common/base/repository/base.repository';
+import {
+    CoreRepository,
+    SelectFilterListQuery,
+    SelectFilterPaginationQuery,
+    SelectFilterQuery,
+    SelectSortQuery,
+} from '../../../common/base/repository/core.repository';
 import { ProductEntity } from '../entities/product.entity';
-import { IProductRepository } from '../interfaces/product.repository.interface';
 
 @Injectable()
-//
-export class ProductRepository
-    extends BaseRepository<ProductEntity>
-    implements IProductRepository
-{
+export class ProductRepository extends CoreRepository<ProductEntity> {
     constructor(
         @InjectRepository(ProductEntity)
         private readonly productRepo: Repository<ProductEntity>
@@ -19,31 +19,207 @@ export class ProductRepository
         super();
     }
 
-    async createMany(products: any[]): Promise<void> {
-        await this.productRepo.save(this.productRepo.create(products));
+    handleSortQuery(
+        query: any,
+        sorts?: SelectSortQuery<ProductEntity>[]
+    ): void {
+        if (sorts) {
+            sorts.forEach((sort) => {
+                let field = '';
+                if (sort.field === 'createdAt') {
+                    field = `product.createdAt`;
+                } else if (sort.field === 'updatedAt') {
+                    field = `product.updatedAt`;
+                }
+                if (field) {
+                    query.addOrderBy(field, sort.type);
+                }
+            });
+        }
     }
 
-    findOneById(id: string) {
-        throw new Error('Method not implemented.');
+    async findAll(
+        filter?: SelectFilterListQuery<ProductEntity>
+    ): Promise<ProductEntity[]> {
+        const query = this.productRepo.createQueryBuilder('product');
+        this.handleSortQuery(query, filter.sorts);
+        const list = await query.getMany();
+        return list;
     }
 
-    findAll(find: Record<string, any>, pagination: PaginationListDTO) {
-        throw new Error('Method not implemented.');
+    async find(
+        filter: SelectFilterPaginationQuery<ProductEntity>
+    ): Promise<ProductEntity[]> {
+        const query = this.productRepo.createQueryBuilder('product');
+        this.handleSortQuery(query, filter.sorts);
+        query.skip(filter.skip);
+        query.take(filter.limit);
+        const list = await query.getMany();
+        return list;
     }
 
-    async create(product: ProductEntity): Promise<ProductEntity> {
-        return await this.productRepo.save(product);
+    async findOne(
+        _filter: SelectFilterQuery<ProductEntity>
+    ): Promise<ProductEntity> {
+        const query = this.productRepo.createQueryBuilder('product');
+        const result = await query.getOne();
+        return result;
     }
 
-    update(entity: Partial<ProductEntity>): Promise<ProductEntity> {
-        throw new Error('Method not implemented.');
+    async findAndCount(
+        filter: SelectFilterPaginationQuery<ProductEntity>
+    ): Promise<[ProductEntity[], number]> {
+        const query = this.productRepo.createQueryBuilder('product');
+        this.handleSortQuery(query, filter.sorts);
+        query.skip(filter.skip);
+        query.take(filter.limit);
+        const result = await query.getManyAndCount();
+        return result;
     }
 
-    delete(id: string): Promise<DeleteResult> {
-        throw new Error('Method not implemented.');
+    async count(_filter: SelectFilterQuery<ProductEntity>): Promise<number> {
+        const query = this.productRepo.createQueryBuilder('product');
+        return await query.getCount();
     }
 
-    async truncate(): Promise<DeleteResult> {
-        return await this.productRepo.delete({});
+    async get(
+        id: string,
+        _relations?: string[] | (keyof ProductEntity)[]
+    ): Promise<ProductEntity> {
+        const query = this.productRepo
+            .createQueryBuilder('product')
+            .whereInIds(id);
+        const result = await query.getOne();
+        return result;
+    }
+
+    async create(data: ProductEntity): Promise<string> {
+        const result = await this.productRepo
+            .createQueryBuilder('product')
+            .insert()
+            .values(data)
+            .execute();
+        return result.identifiers[0].id;
+    }
+
+    async createGet(
+        data: ProductEntity,
+        _relations?: string[] | (keyof ProductEntity)[]
+    ): Promise<ProductEntity> {
+        const result = await this.productRepo
+            .createQueryBuilder('product')
+            .insert()
+            .values(data)
+            .execute();
+        const product = await this.get(result.identifiers[0].id, _relations);
+        return product!;
+    }
+
+    async createMultiple(list: ProductEntity[]): Promise<string[]> {
+        const result = await this.productRepo
+            .createQueryBuilder('product')
+            .insert()
+            .values(list)
+            .execute();
+        return result.identifiers.map((identifier) => identifier.id);
+    }
+
+    async update(id: string, data: ProductEntity): Promise<boolean> {
+        const result = await this.productRepo
+            .createQueryBuilder('product')
+            .update(data)
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async updateGet(
+        id: string,
+        data: ProductEntity,
+        _relations?: string[] | (keyof ProductEntity)[]
+    ): Promise<ProductEntity> {
+        const result = await this.productRepo
+            .createQueryBuilder('product')
+            .update(data)
+            .whereInIds(id)
+            .execute();
+
+        if (!result.affected) {
+            return;
+        }
+        const product = await this.get(id, _relations);
+        return product;
+    }
+
+    async updateFields(
+        id: string,
+        data: ProductEntity,
+        fields: (keyof ProductEntity)[]
+    ): Promise<boolean> {
+        const obj = {} as any;
+        fields.forEach((field) => {
+            obj[field] = data[field as any];
+        });
+
+        const result = await this.productRepo
+            .createQueryBuilder('product')
+            .update(obj)
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async delete(id: string): Promise<boolean> {
+        const result = await this.productRepo
+            .createQueryBuilder('product')
+            .delete()
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async deleteMultiple(ids: string[]): Promise<boolean> {
+        const result = await this.productRepo
+            .createQueryBuilder('product')
+            .delete()
+            .whereInIds(ids)
+            .execute();
+        return !!result.affected && result.affected === ids.length;
+    }
+
+    async softDelete(id: string): Promise<boolean> {
+        const result = await this.productRepo
+            .createQueryBuilder('product')
+            .softDelete()
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async softDeleteMultiple(ids: string[]): Promise<boolean> {
+        const result = await this.productRepo
+            .createQueryBuilder('product')
+            .softDelete()
+            .whereInIds(ids)
+            .execute();
+        return !!result.affected && result.affected === ids.length;
+    }
+
+    async restore(id: string): Promise<boolean> {
+        const result = await this.productRepo
+            .createQueryBuilder('product')
+            .restore()
+            .whereInIds(id)
+            .execute();
+        return !!result.affected;
+    }
+
+    async restoreMultiple(ids: string[]): Promise<boolean> {
+        const result = await this.productRepo
+            .createQueryBuilder('product')
+            .restore()
+            .whereInIds(ids)
+            .execute();
+        return !!result.affected && result.affected === ids.length;
     }
 }

@@ -19,7 +19,7 @@ import { ENUM_AUTH_LOGIN_WITH } from '../../../common/auth/constants/auth.enum.c
 import { AccessTokenEntity } from '../../../modules/access-token/entities/access-token.entity';
 import { AccessTokenRepository } from '../../../modules/access-token/repositories/access-token.repository';
 import { instanceToPlain } from 'class-transformer';
-import { NotificationFCMDeviceRepository } from '../../../common/integrations/notification/fcm/repositories/notification.fcm.device.repository';
+import { DeviceRepository } from '../../../common/integrations/notification/fcm/repositories/notification.fcm.device.repository';
 import { DeviceEntity } from '../../../modules/notification/entities/device.entity';
 import { FCMService } from '../../../common/integrations/notification/fcm/services/notification.fcm.service';
 

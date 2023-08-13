@@ -31,7 +31,7 @@ import { MessageListSerialization } from '../serializations/message.list.seriali
 import { MessageAuthListByConversationDoc } from '../docs/message.auth.doc';
 
 @ApiTags('modules.auth.chat')
-@Controller({ version: '1', path: '/conversations' })
+@Controller({ version: '1', path: '/chat' })
 export class ConversationAuthController {
     constructor(private readonly queryBus: QueryBus) {}
 

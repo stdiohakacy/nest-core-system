@@ -2,6 +2,11 @@ import { QueryHandler, IQuery, IQueryHandler } from '@nestjs/cqrs';
 import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
 import { ConversationRepository } from '../repositories/conversation.repository';
 import { PaginationService } from '../../../common/pagination/services/pagination.service';
+import { UserRepository } from '../../../modules/user/repositories/user.repository';
+import { SelectFilterPaginationQuery } from 'src/common/base/repository/core.repository';
+import { UserEntity } from 'src/modules/user/entities/user.entity';
+import { UserConversationRepository } from '../repositories/user-conversation.repository';
+import { UserConversationEntity } from '../entities/user-conversation.entity';
 
 export class ConversationListByUserQuery implements IQuery {
     constructor(
@@ -17,22 +22,26 @@ export class ConversationListByUserHandler
 {
     constructor(
         private readonly conversationRepo: ConversationRepository,
-        private readonly paginationService: PaginationService
+        private readonly paginationService: PaginationService,
+        private readonly userConversationRepo: UserConversationRepository
     ) {}
 
     async execute({ userId, find, pagination }: ConversationListByUserQuery) {
-        find.userId = userId;
+        const filter: SelectFilterPaginationQuery<UserConversationEntity> = {
+            limit: pagination._limit,
+            skip: pagination._offset,
+            conditionals: [{ userId }],
+        };
+        const [userConversations, total] =
+            await this.userConversationRepo.findAndCount(filter);
 
-        // const [conversations, total] =
-        //     await this.conversationRepo.findAllAndCount(find, pagination);
-        // const totalPage = this.paginationService.totalPage(
-        //     total,
-        //     pagination._limit
-        // );
-
-        // return {
-        //     _pagination: { total, totalPage },
-        //     data: conversations,
-        // };
+        const totalPage = this.paginationService.totalPage(
+            total,
+            pagination._limit
+        );
+        return {
+            _pagination: { total, totalPage },
+            data: userConversations,
+        };
     }
 }

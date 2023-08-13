@@ -7,6 +7,7 @@ import { UserConversationEntity } from './entities/user-conversation.entity';
 import { UserConversationRepository } from './repositories/user-conversation.repository';
 import { MessageEntity } from './entities/message.entity';
 import { MessageRepository } from './repositories/message.repository';
+import { UserModule } from '../user/user.module';
 
 const chatQueryHandlers = [ConversationListByUserHandler];
 const repositories = [
@@ -21,6 +22,7 @@ const repositories = [
             UserConversationEntity,
             MessageEntity,
         ]),
+        UserModule,
     ],
     providers: [...chatQueryHandlers, ...repositories],
     exports: [...chatQueryHandlers, ...repositories],

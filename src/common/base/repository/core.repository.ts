@@ -26,6 +26,7 @@ export type SelectFilterListQuery<T> = SelectFilterQuery<T> & {
 export type SelectFilterPaginationQuery<T> = SelectFilterListQuery<T> & {
     skip: number;
     limit: number;
+    conditionals?: Record<string, any>[];
 };
 
 export type UpdateFieldQuery<T> = Extract<keyof T, string>;

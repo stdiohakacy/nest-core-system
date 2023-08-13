@@ -86,8 +86,22 @@ export class UserRepository
         this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
-        const result = await query.getManyAndCount();
-        return result;
+
+        if (filter?.conditionals?.length) {
+            filter.conditionals.forEach((conditional) => {
+                const columnName = Object.keys(conditional)[0];
+                const parameterName = conditional[columnName];
+                const objParameter = {};
+                objParameter[`${columnName}`] = parameterName;
+                query.andWhere(
+                    `"user"."${columnName}" = :${columnName}`,
+                    objParameter
+                );
+            });
+        }
+
+        const [result, count] = await query.getManyAndCount();
+        return [result, count];
     }
 
     async count(_filter: SelectFilterQuery<UserEntity>): Promise<number> {

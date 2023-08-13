@@ -28,7 +28,6 @@ export function PaginationSearchPipe(
                 search: searchText,
                 availableSearch,
             };
-
             return {
                 ...value,
                 _search: search,

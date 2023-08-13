@@ -77,6 +77,20 @@ export class UserConversationRepository extends CoreRepository<UserConversationE
         this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
+
+        if (filter?.conditionals?.length) {
+            filter.conditionals.forEach((conditional) => {
+                const columnName = Object.keys(conditional)[0];
+                const parameterName = conditional[columnName];
+                const objParameter = {};
+                objParameter[`${columnName}`] = parameterName;
+                query.andWhere(
+                    `"userConversation"."${columnName}" = :${columnName}`,
+                    objParameter
+                );
+            });
+        }
+
         const result = await query.getManyAndCount();
         return result;
     }

@@ -22,6 +22,7 @@ import {
     UserProtected,
 } from '../../../modules/user/decorators/user.decorator';
 import { UserEntity } from '../../../modules/user/entities/user.entity';
+import util from 'util';
 
 @ApiTags('modules.auth.chat')
 @Controller({ version: '1', path: '/conversations' })

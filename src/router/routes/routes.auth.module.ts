@@ -7,7 +7,7 @@ import { SettingModule } from '../../common/setting/setting.module';
 import { UserAuthController } from '../../modules/user/controllers/user.auth.controller';
 import { UserModule } from '../../modules/user/user.module';
 import { ChatModule } from '../../modules/chat/chat.module';
-import { ConversationAuthController } from 'src/modules/chat/controllers/conversation.auth.controller';
+import { ConversationAuthController } from 'src/modules/chat/controllers/chat.auth.controller';
 
 @Module({
     imports: [

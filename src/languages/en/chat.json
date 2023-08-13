@@ -1,0 +1,8 @@
+{
+    "conversation": {
+        "listByUser": "Success get list conversations by user"
+    },
+    "message": {
+        "listByConversation": "Success get list messages by conversation"
+    }
+}

@@ -9,14 +9,43 @@ import {
     SelectFilterQuery,
     SelectSortQuery,
 } from '../../../common/base/repository/core.repository';
+import { IMessageRepository } from '../interfaces/message.repository.interface';
 
 @Injectable()
-export class MessageRepository extends CoreRepository<MessageEntity> {
+export class MessageRepository
+    extends CoreRepository<MessageEntity>
+    implements IMessageRepository
+{
     constructor(
         @InjectRepository(MessageEntity)
         private readonly messageRepo: Repository<MessageEntity>
     ) {
         super();
+    }
+
+    // async getByConversation(conversationId: string): Promise<MessageEntity[]> {
+    //     const messages = await this.messageRepo
+    //         .createQueryBuilder('message')
+    //         .where('message.conversationId = :conversationId', {
+    //             conversationId,
+    //         })
+    //         .getMany();
+    //     return messages;
+    // }
+
+    async getByConversation(
+        filter: SelectFilterPaginationQuery<MessageEntity>,
+        conversationId: string
+    ): Promise<[MessageEntity[], number]> {
+        const query = this.messageRepo.createQueryBuilder('message');
+        this.handleSortQuery(query, filter.sorts);
+        query.skip(filter.skip);
+        query.take(filter.limit);
+        query.where('message.conversationId = :conversationId', {
+            conversationId,
+        });
+        const result = await query.getManyAndCount();
+        return result;
     }
 
     handleSortQuery(

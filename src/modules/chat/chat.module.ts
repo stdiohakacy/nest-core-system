@@ -8,8 +8,12 @@ import { UserConversationRepository } from './repositories/user-conversation.rep
 import { MessageEntity } from './entities/message.entity';
 import { MessageRepository } from './repositories/message.repository';
 import { UserModule } from '../user/user.module';
+import { MessageListByConversationHandler } from './queries/message.list-by-conversation.query';
 
-const chatQueryHandlers = [ConversationListByUserHandler];
+const chatQueryHandlers = [
+    ConversationListByUserHandler,
+    MessageListByConversationHandler,
+];
 const repositories = [
     ConversationRepository,
     UserConversationRepository,

@@ -11,7 +11,6 @@ import { ENUM_SOCKET_MESSAGE_KEY } from './constants/socket.enum.constant';
 import { MessageCreateDTO } from '../../modules/chat/dtos/message.create.dto';
 import { CommandBus } from '@nestjs/cqrs';
 import { MessageCreateCommand } from 'src/modules/chat/commands/message.create.command';
-import { MessageEntity } from 'src/modules/chat/entities/message.entity';
 
 @WebSocketGateway({ cors: true })
 export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {

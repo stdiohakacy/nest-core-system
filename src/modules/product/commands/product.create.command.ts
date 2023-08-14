@@ -34,7 +34,6 @@ export class ProductCreateHandler
         const productCreated = await this.productRepo.create(productEntity);
         const exchangeName = `${PRODUCT_ES_INDEX_NAME}.${ENUM_BASE_OPERATION_TYPE.INSERT}`;
         const routingKey = `${PRODUCT_ES_INDEX_NAME}.${ENUM_BASE_OPERATION_TYPE.INSERT}`;
-        RMQ_ES_SYNC_QUEUE_NAME;
 
         const message = {
             entity: PRODUCT_ES_INDEX_NAME,

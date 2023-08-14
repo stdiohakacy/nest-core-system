@@ -4,6 +4,7 @@ import { SelectFilterPaginationQuery } from '../../../common/base/repository/cor
 import { MessageEntity } from '../entities/message.entity';
 import { PaginationService } from '../../../common/pagination/services/pagination.service';
 import { PaginationListDTO } from '../../../common/pagination/dtos/pagination.list.dto';
+import { instanceToPlain } from 'class-transformer';
 
 export class MessageListByConversationQuery implements IQuery {
     constructor(
@@ -38,9 +39,9 @@ export class MessageListByConversationHandler
             total,
             pagination._limit
         );
-        return {
+        return instanceToPlain({
             _pagination: { total, totalPage },
             data: messages,
-        };
+        });
     }
 }

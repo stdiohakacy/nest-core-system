@@ -141,8 +141,8 @@ export class MessageRepository
             .insert()
             .values(data)
             .execute();
-        const product = await this.get(result.identifiers[0].id, _relations);
-        return product!;
+        const message = await this.get(result.identifiers[0].id, _relations);
+        return message!;
     }
 
     async createMultiple(list: MessageEntity[]): Promise<string[]> {

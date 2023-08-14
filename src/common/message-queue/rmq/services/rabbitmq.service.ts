@@ -8,6 +8,17 @@ export class RabbitMQService {
         @Inject('RABBITMQ_CONNECTION') private readonly connection: Connection
     ) {}
 
+    async ping(queueName: string) {
+        try {
+            const channel = await this.connection.createChannel();
+            await channel.checkQueue(queueName);
+            await channel.close();
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async publishMessage(
         exchange: string,
         routingKey: string,

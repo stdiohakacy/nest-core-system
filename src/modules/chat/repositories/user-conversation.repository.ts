@@ -9,6 +9,7 @@ import {
     SelectSortQuery,
 } from '../../../common/base/repository/core.repository';
 import { UserConversationEntity } from '../entities/user-conversation.entity';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from 'src/common/pagination/constants/pagination.enum.constant';
 
 @Injectable()
 export class UserConversationRepository extends CoreRepository<UserConversationEntity> {
@@ -43,7 +44,7 @@ export class UserConversationRepository extends CoreRepository<UserConversationE
     ): Promise<UserConversationEntity[]> {
         const query =
             this.userConversationRepo.createQueryBuilder('userConversation');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         const list = await query.getMany();
         return list;
     }
@@ -53,7 +54,7 @@ export class UserConversationRepository extends CoreRepository<UserConversationE
     ): Promise<UserConversationEntity[]> {
         const query =
             this.userConversationRepo.createQueryBuilder('userConversation');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const list = await query.getMany();
@@ -74,10 +75,13 @@ export class UserConversationRepository extends CoreRepository<UserConversationE
     ): Promise<[UserConversationEntity[], number]> {
         const query =
             this.userConversationRepo.createQueryBuilder('userConversation');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
-
+        query.orderBy(
+            'userConversation.createdAt',
+            ENUM_PAGINATION_ORDER_DIRECTION_TYPE.ASC
+        );
         if (filter?.conditionals?.length) {
             filter.conditionals.forEach((conditional) => {
                 const columnName = Object.keys(conditional)[0];

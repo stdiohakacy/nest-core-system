@@ -42,7 +42,7 @@ export class CategoryRepository extends CoreRepository<CategoryEntity> {
         filter?: SelectFilterListQuery<CategoryEntity>
     ): Promise<CategoryEntity[]> {
         const query = this.categoryRepo.createQueryBuilder('category');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         const list = await query.getMany();
         return list;
     }
@@ -51,7 +51,7 @@ export class CategoryRepository extends CoreRepository<CategoryEntity> {
         filter: SelectFilterPaginationQuery<CategoryEntity>
     ): Promise<CategoryEntity[]> {
         const query = this.categoryRepo.createQueryBuilder('category');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const list = await query.getMany();
@@ -70,7 +70,7 @@ export class CategoryRepository extends CoreRepository<CategoryEntity> {
         filter: SelectFilterPaginationQuery<CategoryEntity>
     ): Promise<[CategoryEntity[], number]> {
         const query = this.categoryRepo.createQueryBuilder('category');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const result = await query.getManyAndCount();

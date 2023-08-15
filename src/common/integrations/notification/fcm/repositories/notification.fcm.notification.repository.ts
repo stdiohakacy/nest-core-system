@@ -42,7 +42,7 @@ export class NotificationRepository extends CoreRepository<NotificationEntity> {
         filter: SelectFilterListQuery<NotificationEntity>
     ): Promise<NotificationEntity[]> {
         const query = this.smsRepo.createQueryBuilder('sms');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         const list = await query.getMany();
         return list;
     }
@@ -51,7 +51,7 @@ export class NotificationRepository extends CoreRepository<NotificationEntity> {
         filter: SelectFilterPaginationQuery<NotificationEntity>
     ): Promise<NotificationEntity[]> {
         const query = this.smsRepo.createQueryBuilder('sms');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const list = await query.getMany();
@@ -70,7 +70,7 @@ export class NotificationRepository extends CoreRepository<NotificationEntity> {
         filter: SelectFilterPaginationQuery<NotificationEntity>
     ): Promise<[NotificationEntity[], number]> {
         const query = this.smsRepo.createQueryBuilder('sms');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const result = await query.getManyAndCount();

@@ -20,7 +20,7 @@ export type SelectFilterQuery<T> = {
 };
 
 export type SelectFilterListQuery<T> = SelectFilterQuery<T> & {
-    sorts?: SelectSortQuery<T>[];
+    // sorts?: SelectSortQuery<T>[];
 };
 
 export type SelectFilterPaginationQuery<T> = SelectFilterListQuery<T> & {
@@ -32,8 +32,6 @@ export type SelectFilterPaginationQuery<T> = SelectFilterListQuery<T> & {
 export type UpdateFieldQuery<T> = Extract<keyof T, string>;
 
 export abstract class CoreRepository<T> {
-    abstract handleSortQuery(query, sorts?: SelectSortQuery<T>[]): void;
-
     abstract findAll(filter: SelectFilterListQuery<T>): Promise<T[]>;
 
     abstract find(filter: SelectFilterPaginationQuery<T>): Promise<T[]>;

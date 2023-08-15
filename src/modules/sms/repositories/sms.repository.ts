@@ -19,27 +19,11 @@ export class SmsRepository extends CoreRepository<SmsEntity> {
         super();
     }
 
-    handleSortQuery(query: any, sorts?: SelectSortQuery<SmsEntity>[]): void {
-        if (sorts) {
-            sorts.forEach((sort) => {
-                let field = '';
-                if (sort.field === 'createdAt') {
-                    field = `sms.createdAt`;
-                } else if (sort.field === 'updatedAt') {
-                    field = `sms.updatedAt`;
-                }
-                if (field) {
-                    query.addOrderBy(field, sort.type);
-                }
-            });
-        }
-    }
-
     async findAll(
         filter: SelectFilterListQuery<SmsEntity>
     ): Promise<SmsEntity[]> {
         const query = this.smsRepo.createQueryBuilder('sms');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         const list = await query.getMany();
         return list;
     }
@@ -48,7 +32,7 @@ export class SmsRepository extends CoreRepository<SmsEntity> {
         filter: SelectFilterPaginationQuery<SmsEntity>
     ): Promise<SmsEntity[]> {
         const query = this.smsRepo.createQueryBuilder('sms');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const list = await query.getMany();
@@ -65,7 +49,7 @@ export class SmsRepository extends CoreRepository<SmsEntity> {
         filter: SelectFilterPaginationQuery<SmsEntity>
     ): Promise<[SmsEntity[], number]> {
         const query = this.smsRepo.createQueryBuilder('sms');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const result = await query.getManyAndCount();

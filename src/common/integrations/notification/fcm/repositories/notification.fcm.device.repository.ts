@@ -32,27 +32,11 @@ export class DeviceRepository
         return !!device;
     }
 
-    handleSortQuery(query: any, sorts?: SelectSortQuery<DeviceEntity>[]): void {
-        if (sorts) {
-            sorts.forEach((sort) => {
-                let field = '';
-                if (sort.field === 'createdAt') {
-                    field = `device.createdAt`;
-                } else if (sort.field === 'updatedAt') {
-                    field = `device.updatedAt`;
-                }
-                if (field) {
-                    query.addOrderBy(field, sort.type);
-                }
-            });
-        }
-    }
-
     async findAll(
         filter: SelectFilterListQuery<DeviceEntity>
     ): Promise<DeviceEntity[]> {
         const query = this.deviceRepo.createQueryBuilder('device');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         const list = await query.getMany();
         return list;
     }
@@ -61,7 +45,7 @@ export class DeviceRepository
         filter: SelectFilterPaginationQuery<DeviceEntity>
     ): Promise<DeviceEntity[]> {
         const query = this.deviceRepo.createQueryBuilder('device');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const list = await query.getMany();
@@ -80,7 +64,7 @@ export class DeviceRepository
         filter: SelectFilterPaginationQuery<DeviceEntity>
     ): Promise<[DeviceEntity[], number]> {
         const query = this.deviceRepo.createQueryBuilder('device');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const result = await query.getManyAndCount();

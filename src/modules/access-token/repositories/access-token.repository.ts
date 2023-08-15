@@ -79,7 +79,7 @@ export class AccessTokenRepository
         filter: SelectFilterListQuery<AccessTokenEntity>
     ): Promise<AccessTokenEntity[]> {
         const query = this.accessTokenRepo.createQueryBuilder('accessToken');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         const list = await query.getMany();
         return list;
     }
@@ -88,7 +88,7 @@ export class AccessTokenRepository
         filter: SelectFilterPaginationQuery<AccessTokenEntity>
     ): Promise<AccessTokenEntity[]> {
         const query = this.accessTokenRepo.createQueryBuilder('accessToken');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const list = await query.getMany();
@@ -107,7 +107,7 @@ export class AccessTokenRepository
         filter: SelectFilterPaginationQuery<AccessTokenEntity>
     ): Promise<[AccessTokenEntity[], number]> {
         const query = this.accessTokenRepo.createQueryBuilder('accessToken');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const result = await query.getManyAndCount();

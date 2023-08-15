@@ -10,6 +10,7 @@ import {
     SelectSortQuery,
 } from '../../../common/base/repository/core.repository';
 import { IMessageRepository } from '../interfaces/message.repository.interface';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../../common/pagination/constants/pagination.enum.constant';
 
 @Injectable()
 export class MessageRepository
@@ -38,7 +39,7 @@ export class MessageRepository
         conversationId: string
     ): Promise<[MessageEntity[], number]> {
         const query = this.messageRepo.createQueryBuilder('message');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         query.where('message.conversationId = :conversationId', {
@@ -72,7 +73,7 @@ export class MessageRepository
         filter: SelectFilterListQuery<MessageEntity>
     ): Promise<MessageEntity[]> {
         const query = this.messageRepo.createQueryBuilder('message');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         const list = await query.getMany();
         return list;
     }
@@ -81,7 +82,7 @@ export class MessageRepository
         filter: SelectFilterPaginationQuery<MessageEntity>
     ): Promise<MessageEntity[]> {
         const query = this.messageRepo.createQueryBuilder('message');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const list = await query.getMany();
@@ -100,9 +101,13 @@ export class MessageRepository
         filter: SelectFilterPaginationQuery<MessageEntity>
     ): Promise<[MessageEntity[], number]> {
         const query = this.messageRepo.createQueryBuilder('message');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
+        query.orderBy(
+            'message.createdAt',
+            ENUM_PAGINATION_ORDER_DIRECTION_TYPE.DESC
+        );
         const result = await query.getManyAndCount();
         return result;
     }

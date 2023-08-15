@@ -42,7 +42,7 @@ export class ProductRepository extends CoreRepository<ProductEntity> {
         filter?: SelectFilterListQuery<ProductEntity>
     ): Promise<ProductEntity[]> {
         const query = this.productRepo.createQueryBuilder('product');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         const list = await query.getMany();
         return list;
     }
@@ -51,7 +51,7 @@ export class ProductRepository extends CoreRepository<ProductEntity> {
         filter: SelectFilterPaginationQuery<ProductEntity>
     ): Promise<ProductEntity[]> {
         const query = this.productRepo.createQueryBuilder('product');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const list = await query.getMany();
@@ -70,7 +70,7 @@ export class ProductRepository extends CoreRepository<ProductEntity> {
         filter: SelectFilterPaginationQuery<ProductEntity>
     ): Promise<[ProductEntity[], number]> {
         const query = this.productRepo.createQueryBuilder('product');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const result = await query.getManyAndCount();

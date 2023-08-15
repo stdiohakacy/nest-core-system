@@ -36,28 +36,11 @@ export class UserRepository
         return await this.userRepo.findOne({ where: { email } });
     }
 
-    handleSortQuery(query: any, sorts?: SelectSortQuery<UserEntity>[]): void {
-        if (sorts) {
-            sorts.forEach((sort) => {
-                let field = '';
-                if (sort.field === 'createdAt') {
-                    field = `user.createdAt`;
-                } else if (sort.field === 'updatedAt') {
-                    field = `user.updatedAt`;
-                }
-
-                if (field) {
-                    query.addOrderBy(field, sort.type);
-                }
-            });
-        }
-    }
-
     async findAll(
         filter?: SelectFilterListQuery<UserEntity>
     ): Promise<UserEntity[]> {
         const query = this.userRepo.createQueryBuilder('user');
-        this.handleSortQuery(query, filter?.sorts);
+        // this.handleSortQuery(query, filter?.sorts);
         const list = await query.getMany();
         return list;
     }
@@ -66,7 +49,7 @@ export class UserRepository
         filter: SelectFilterPaginationQuery<UserEntity>
     ): Promise<UserEntity[]> {
         const query = this.userRepo.createQueryBuilder('user');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
         const list = await query.getMany();
@@ -83,7 +66,7 @@ export class UserRepository
         filter: SelectFilterPaginationQuery<UserEntity>
     ): Promise<[UserEntity[], number]> {
         const query = this.userRepo.createQueryBuilder('user');
-        this.handleSortQuery(query, filter.sorts);
+        // this.handleSortQuery(query, filter.sorts);
         query.skip(filter.skip);
         query.take(filter.limit);
 

@@ -7,6 +7,7 @@ import { SelectFilterPaginationQuery } from 'src/common/base/repository/core.rep
 import { UserEntity } from 'src/modules/user/entities/user.entity';
 import { UserConversationRepository } from '../repositories/user-conversation.repository';
 import { UserConversationEntity } from '../entities/user-conversation.entity';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from 'src/common/pagination/constants/pagination.enum.constant';
 
 export class ConversationListByUserQuery implements IQuery {
     constructor(
@@ -21,7 +22,6 @@ export class ConversationListByUserHandler
     implements IQueryHandler<ConversationListByUserQuery>
 {
     constructor(
-        private readonly conversationRepo: ConversationRepository,
         private readonly paginationService: PaginationService,
         private readonly userConversationRepo: UserConversationRepository
     ) {}
@@ -32,6 +32,7 @@ export class ConversationListByUserHandler
             skip: pagination._offset,
             conditionals: [{ userId }],
         };
+
         const [userConversations, total] =
             await this.userConversationRepo.findAndCount(filter);
 

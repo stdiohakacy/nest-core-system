@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Socket } from 'socket.io';
+import { AuthenticatedSocket } from './socket-state.adapter';
 
 @Injectable()
 export class SocketStateService {
@@ -23,13 +24,11 @@ export class SocketStateService {
         return true;
     }
 
-    public add(userId: string, socket: Socket): boolean {
+    public add(userId: string, socket: AuthenticatedSocket): boolean {
         const existingSockets = this.socketState.get(userId) || [];
-
         const sockets = [...existingSockets, socket];
-
         this.socketState.set(userId, sockets);
-
+        console.log(this.socketState);
         return true;
     }
 

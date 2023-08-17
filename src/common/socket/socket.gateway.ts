@@ -19,11 +19,13 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
     server: Server;
 
     handleConnection(client: Socket) {
-        this.server.emit('connected', `Client ${client.id} connected`);
+        console.log(`Client ${client.id} connected!`);
+        // this.server.emit('connect', `Client ${client.id} connected`);
     }
 
     handleDisconnect(client: Socket) {
-        this.server.emit('disconnected', `Client ${client.id} disconnected`);
+        console.log(`Client ${client.id} disconnected!`);
+        // this.server.emit('disconnect', `Client ${client.id} disconnected`);
     }
 
     @SubscribeMessage(ENUM_SOCKET_MESSAGE_KEY.JOIN_CONVERSATION)

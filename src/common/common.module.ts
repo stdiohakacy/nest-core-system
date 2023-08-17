@@ -27,6 +27,7 @@ import { NotificationModule } from './integrations/notification/notification.mod
 import { SearchCoreModule } from './integrations/search/search.core.module';
 import { MessageQueueModule } from './message-queue/message-queue.module';
 import { SocketModule } from './socket/socket.module';
+import { PubsubModule } from './pub-sub/pub-sub.module';
 @Global()
 @Module({
     controllers: [],
@@ -187,6 +188,7 @@ import { SocketModule } from './socket/socket.module';
         SearchCoreModule,
         MessageQueueModule,
         SocketModule,
+        PubsubModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],
@@ -208,6 +210,7 @@ import { SocketModule } from './socket/socket.module';
         SearchCoreModule,
         MessageQueueModule,
         SocketModule,
+        PubsubModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],

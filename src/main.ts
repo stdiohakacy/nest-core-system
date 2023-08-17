@@ -5,13 +5,15 @@ import { ConfigService } from '@nestjs/config';
 import { useContainer } from 'class-validator';
 import swaggerInit from './swagger';
 import { initializeTransactionalContext } from 'typeorm-transactional';
+import { initAdapters } from './adapters.init';
+
 async function bootstrap() {
     initializeTransactionalContext();
     const app: NestApplication = await NestFactory.create(AppModule);
+    initAdapters(app);
     const configService = app.get(ConfigService);
     const databaseUri: string = configService.get<string>('database.host');
     const env: string = configService.get<string>('app.env');
-    // const host: string = configService.get<string>('app.http.host');
     const port: number = configService.get<number>('app.http.port');
     const globalPrefix: string = configService.get<string>('app.globalPrefix');
     const versioningPrefix: string = configService.get<string>(

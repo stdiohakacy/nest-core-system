@@ -14,18 +14,27 @@ import { MessageCreateCommand } from 'src/modules/chat/commands/message.create.c
 
 @WebSocketGateway({ cors: true })
 export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
-    constructor(private readonly commandBus: CommandBus) {}
+    // constructor(private readonly commandBus: CommandBus) {}
+    constructor(private readonly commandBus: CommandBus) {
+        // this.socketStateAdapter.bindClientConnect(this.server, (data) => {
+        //     console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+        //     console.log(data);
+        //     console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+        // });
+    }
     @WebSocketServer()
     server: Server;
 
     handleConnection(client: Socket) {
         console.log(`Client ${client.id} connected!`);
-        // this.server.emit('connect', `Client ${client.id} connected`);
+        console.log(client);
+        // this.socketStateAdapter.bindClientConnect(this.server, (data) => {
+        //     console.log(data);
+        // });
     }
 
     handleDisconnect(client: Socket) {
         console.log(`Client ${client.id} disconnected!`);
-        // this.server.emit('disconnect', `Client ${client.id} disconnected`);
     }
 
     @SubscribeMessage(ENUM_SOCKET_MESSAGE_KEY.JOIN_CONVERSATION)

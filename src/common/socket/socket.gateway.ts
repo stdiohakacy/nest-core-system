@@ -1,4 +1,4 @@
-// socket.gateway.ts
+// client.gateway.ts
 import {
     WebSocketGateway,
     WebSocketServer,
@@ -7,43 +7,48 @@ import {
     OnGatewayDisconnect,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { ENUM_SOCKET_MESSAGE_KEY } from './constants/socket.enum.constant';
 import { MessageCreateDTO } from '../../modules/chat/dtos/message.create.dto';
 import { CommandBus } from '@nestjs/cqrs';
-import { MessageCreateCommand } from 'src/modules/chat/commands/message.create.command';
+import { MessageCreateCommand } from '../../modules/chat/commands/message.create.command';
+import { AuthenticatedSocket } from '../pub-sub/socket-state/socket-state.adapter';
+import { ENUM_SOCKET_MESSAGE_KEY } from './constants/socket.enum.constant';
+import { SocketStateService } from '../pub-sub/socket-state/socket-state.service';
+import { UseInterceptors } from '@nestjs/common';
+import { RedisPropagatorInterceptor } from '../pub-sub/redis-propagator/redis-propagator.interceptor';
 
+@UseInterceptors(RedisPropagatorInterceptor)
 @WebSocketGateway({ cors: true })
 export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
-    // constructor(private readonly commandBus: CommandBus) {}
-    constructor(private readonly commandBus: CommandBus) {
-        // this.socketStateAdapter.bindClientConnect(this.server, (data) => {
-        //     console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-        //     console.log(data);
-        //     console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-        // });
-    }
+    constructor(
+        private readonly commandBus: CommandBus,
+        private readonly socketStateService: SocketStateService
+    ) {}
     @WebSocketServer()
     server: Server;
 
-    handleConnection(client: Socket) {
+    handleConnection(client: AuthenticatedSocket) {
         console.log(`Client ${client.id} connected!`);
-        console.log(client);
-        // this.socketStateAdapter.bindClientConnect(this.server, (data) => {
-        //     console.log(data);
-        // });
+        if (client.auth) {
+            this.socketStateService.add(client.auth.userId, client);
+        }
     }
 
-    handleDisconnect(client: Socket) {
+    handleDisconnect(client: AuthenticatedSocket) {
         console.log(`Client ${client.id} disconnected!`);
+        this.socketStateService.remove(client.auth.userId, client);
+        client.removeAllListeners('disconnect');
     }
 
     @SubscribeMessage(ENUM_SOCKET_MESSAGE_KEY.JOIN_CONVERSATION)
-    joinConversation(client: Socket, conversationId: string) {
+    joinConversation(client: AuthenticatedSocket, conversationId: string) {
         client.join(conversationId);
     }
 
     @SubscribeMessage(ENUM_SOCKET_MESSAGE_KEY.CREATE_MESSAGE)
-    async createMessage(client: Socket, message: MessageCreateDTO) {
+    async createMessage(
+        client: AuthenticatedSocket,
+        message: MessageCreateDTO
+    ) {
         const messageCreated = await this.commandBus.execute(
             new MessageCreateCommand(message)
         );

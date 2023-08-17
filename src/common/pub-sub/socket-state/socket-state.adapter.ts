@@ -48,11 +48,8 @@ export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
             }
 
             try {
-                // socket.auth = {
-                //     userId: tokenPayload.user.id,
-                // };
                 socket.auth = {
-                    userId: '123',
+                    userId: tokenPayload.data.id,
                 };
 
                 return next();
@@ -62,21 +59,5 @@ export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
         });
 
         return server;
-    }
-
-    public bindClientConnect(server: Server, callback: Function): void {
-        server.on('connection', (socket: AuthenticatedSocket) => {
-            if (socket.auth) {
-                this.socketStateService.add(socket.auth.userId, socket);
-
-                socket.on('disconnect', () => {
-                    this.socketStateService.remove(socket.auth.userId, socket);
-
-                    socket.removeAllListeners('disconnect');
-                });
-            }
-
-            callback(socket);
-        });
     }
 }

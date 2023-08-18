@@ -6,14 +6,16 @@ import { AuthenticatedSocket } from './socket-state.adapter';
 export class SocketStateService {
     private socketState = new Map<string, Socket[]>();
 
-    public remove(userId: string, socket: Socket): boolean {
+    remove(userId: string, socket: Socket): boolean {
         const existingSockets = this.socketState.get(userId);
 
         if (!existingSockets) {
             return true;
         }
 
-        const sockets = existingSockets.filter((s) => s.id !== socket.id);
+        const sockets = existingSockets.filter(
+            (socket) => socket.id !== socket.id
+        );
 
         if (!sockets.length) {
             this.socketState.delete(userId);
@@ -24,20 +26,20 @@ export class SocketStateService {
         return true;
     }
 
-    public add(userId: string, socket: AuthenticatedSocket): boolean {
+    add(userId: string, socket: AuthenticatedSocket): boolean {
         const existingSockets = this.socketState.get(userId) || [];
         const sockets = [...existingSockets, socket];
         this.socketState.set(userId, sockets);
         return true;
     }
 
-    public get(userId: string): Socket[] {
+    get(userId: string): Socket[] {
         return this.socketState.get(userId) || [];
     }
 
-    public getAll(): Socket[] {
-        const all = [];
-        this.socketState.forEach((sockets) => all.push(sockets));
-        return all;
+    getAll(): Socket[] {
+        const sockets = [];
+        this.socketState.forEach((socket) => sockets.push(socket));
+        return sockets;
     }
 }

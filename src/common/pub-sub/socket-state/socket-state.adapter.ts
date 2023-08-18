@@ -19,8 +19,7 @@ export interface AuthenticatedSocket extends Socket {
 
 export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
     constructor(
-        private readonly app: INestApplicationContext,
-        private readonly socketStateService: SocketStateService,
+        public readonly app: INestApplicationContext,
         private readonly redisPropagatorService: RedisPropagatorService
     ) {
         super(app);

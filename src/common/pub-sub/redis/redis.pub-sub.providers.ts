@@ -4,7 +4,7 @@ import Redis from 'ioredis';
 import {
     REDIS_PUBLISHER_CLIENT,
     REDIS_SUBSCRIBER_CLIENT,
-} from './redis.constants';
+} from './redis.pub-sub.constant';
 
 export type RedisClient = Redis;
 

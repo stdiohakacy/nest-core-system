@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { tap } from 'rxjs/operators';
 import { Server } from 'socket.io';
-import { RedisSocketEventEmitDTO } from './dto/socket-event-emit.dto';
-import { RedisSocketEventSendDTO } from './dto/socket-event-send.dto';
+import { RedisSocketEventEmitDTO } from './dto/redis.socket.event-emit.dto';
+import { RedisSocketEventSendDTO } from './dto/redis.socket.event-send.dto';
 import {
     REDIS_SOCKET_EVENT_EMIT_ALL_NAME,
     REDIS_SOCKET_EVENT_EMIT_AUTHENTICATED_NAME,
     REDIS_SOCKET_EVENT_SEND_NAME,
-} from './redis-propagator.constants';
+} from './redis.propagator.constants';
 import { SocketStateService } from '../socket-state/socket-state.service';
-import { RedisService } from '../redis/redis.service';
+import { RedisService } from '../redis/redis.pub-sub.service';
 
 @Injectable()
 export class RedisPropagatorService {
@@ -37,7 +37,6 @@ export class RedisPropagatorService {
 
     public injectSocketServer(server: Server): RedisPropagatorService {
         this.socketServer = server;
-
         return this;
     }
 
@@ -60,19 +59,15 @@ export class RedisPropagatorService {
         eventInfo: RedisSocketEventEmitDTO
     ): void => {
         const { event, data } = eventInfo;
-
-        return this.socketStateService
-            .getAll()
-            .forEach((socket) => socket.emit(event, data));
+        const sockets = this.socketStateService.getAll().flat();
+        if (sockets?.length) {
+            sockets.forEach((socket) => socket.emit(event, data));
+        }
     };
 
     public propagateEvent(eventInfo: RedisSocketEventSendDTO): boolean {
-        if (!eventInfo.userId) {
-            return false;
-        }
-
+        if (!eventInfo.userId) return false;
         this.redisService.publish(REDIS_SOCKET_EVENT_SEND_NAME, eventInfo);
-
         return true;
     }
 
@@ -81,13 +76,11 @@ export class RedisPropagatorService {
             REDIS_SOCKET_EVENT_EMIT_AUTHENTICATED_NAME,
             eventInfo
         );
-
         return true;
     }
 
     public emitToAll(eventInfo: RedisSocketEventEmitDTO): boolean {
         this.redisService.publish(REDIS_SOCKET_EVENT_EMIT_ALL_NAME, eventInfo);
-
         return true;
     }
 }

@@ -14,14 +14,16 @@ import { AuthenticatedSocket } from '../pub-sub/socket-state/socket-state.adapte
 import { ENUM_SOCKET_MESSAGE_KEY } from './constants/socket.enum.constant';
 import { SocketStateService } from '../pub-sub/socket-state/socket-state.service';
 import { UseInterceptors } from '@nestjs/common';
-import { RedisPropagatorInterceptor } from '../pub-sub/redis-propagator/redis-propagator.interceptor';
+import { RedisPropagatorInterceptor } from '../pub-sub/redis-propagator/redis.propagator.interceptor';
+import { RedisPropagatorService } from '../pub-sub/redis-propagator/redis.propagator.service';
 
 @UseInterceptors(RedisPropagatorInterceptor)
 @WebSocketGateway({ cors: true })
 export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
     constructor(
         private readonly commandBus: CommandBus,
-        private readonly socketStateService: SocketStateService
+        private readonly socketStateService: SocketStateService,
+        private readonly redisPropagatorService: RedisPropagatorService
     ) {}
     @WebSocketServer()
     server: Server;
@@ -53,8 +55,9 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
             new MessageCreateCommand(message)
         );
 
-        this.server
-            .to(message.conversationId)
-            .emit(ENUM_SOCKET_MESSAGE_KEY.CREATED_MESSAGE, messageCreated);
+        this.redisPropagatorService.emitToAuthenticated({
+            event: ENUM_SOCKET_MESSAGE_KEY.CREATED_MESSAGE,
+            data: messageCreated,
+        });
     }
 }

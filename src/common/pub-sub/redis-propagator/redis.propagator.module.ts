@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { RedisPropagatorService } from './redis-propagator.service';
-import { RedisModule } from '../redis/redis.module';
+import { RedisPropagatorService } from './redis.propagator.service';
+import { RedisModule } from '../redis/redis.pub-sub.module';
 import { SocketStateService } from '../socket-state/socket-state.service';
 
 @Module({

@@ -5,9 +5,9 @@ import { filter, map } from 'rxjs/operators';
 import {
     REDIS_PUBLISHER_CLIENT,
     REDIS_SUBSCRIBER_CLIENT,
-} from './redis.constants';
-import { RedisClient } from './redis.providers';
-import { RedisSocketEventSendDTO } from '../redis-propagator/dto/socket-event-send.dto';
+} from './redis.pub-sub.constant';
+import { RedisClient } from './redis.pub-sub.providers';
+import { RedisSocketEventSendDTO } from '../redis-propagator/dto/redis.socket.event-send.dto';
 
 export interface RedisSubscribeMessage {
     readonly message: string;

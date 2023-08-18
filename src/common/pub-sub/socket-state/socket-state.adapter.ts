@@ -6,7 +6,7 @@ import {
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { ServerOptions, Socket, Server } from 'socket.io';
 import { SocketStateService } from './socket-state.service';
-import { RedisPropagatorService } from '../redis-propagator/redis-propagator.service';
+import { RedisPropagatorService } from '../redis-propagator/redis.propagator.service';
 import jwt from 'jsonwebtoken';
 
 interface TokenPayload {

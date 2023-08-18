@@ -28,7 +28,6 @@ export class SocketStateService {
         const existingSockets = this.socketState.get(userId) || [];
         const sockets = [...existingSockets, socket];
         this.socketState.set(userId, sockets);
-        console.log(this.socketState);
         return true;
     }
 
@@ -38,9 +37,7 @@ export class SocketStateService {
 
     public getAll(): Socket[] {
         const all = [];
-
         this.socketState.forEach((sockets) => all.push(sockets));
-
         return all;
     }
 }

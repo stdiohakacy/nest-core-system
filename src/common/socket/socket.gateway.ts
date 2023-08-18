@@ -31,13 +31,13 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
     handleConnection(client: AuthenticatedSocket) {
         console.log(`Client ${client.id} connected!`);
         if (client.auth) {
-            this.socketStateService.add(client.auth.userId, client);
+            this.socketStateService.add(client?.auth?.userId, client);
         }
     }
 
     handleDisconnect(client: AuthenticatedSocket) {
         console.log(`Client ${client.id} disconnected!`);
-        this.socketStateService.remove(client.auth.userId, client);
+        this.socketStateService.remove(client?.auth?.userId, client);
         client.removeAllListeners('disconnect');
     }
 

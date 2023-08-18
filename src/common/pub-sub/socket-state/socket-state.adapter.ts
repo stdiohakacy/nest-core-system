@@ -38,23 +38,15 @@ export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
         this.redisPropagatorService.injectSocketServer(server);
 
         server.use(async (socket: AuthenticatedSocket, next) => {
-            const token = socket?.handshake?.query?.token as string;
-            const tokenPayload: any = await this.tokenParsed(token);
-
+            const token = (socket?.handshake?.query?.token as string) || '';
             if (!token) {
                 socket.auth = null;
                 return next();
             }
 
-            try {
-                socket.auth = {
-                    userId: tokenPayload.data.id,
-                };
-
-                return next();
-            } catch (e) {
-                return next(e);
-            }
+            const tokenPayload: any = await this.tokenParsed(token);
+            socket.auth = { userId: tokenPayload.data.id };
+            return next();
         });
 
         return server;

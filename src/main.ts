@@ -6,6 +6,7 @@ import { useContainer } from 'class-validator';
 import swaggerInit from './swagger';
 import { initializeTransactionalContext } from 'typeorm-transactional';
 import { initAdapters } from './adapters.init';
+import { AppClusterService } from './cluster';
 
 async function bootstrap() {
     initializeTransactionalContext();
@@ -101,4 +102,4 @@ async function bootstrap() {
     logger.log(`==========================================================`);
 }
 
-bootstrap();
+AppClusterService.clusterize(bootstrap);

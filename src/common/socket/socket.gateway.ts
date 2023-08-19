@@ -5,6 +5,7 @@ import {
     SubscribeMessage,
     OnGatewayConnection,
     OnGatewayDisconnect,
+    MessageBody,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { MessageCreateDTO } from '../../modules/chat/dtos/message.create.dto';
@@ -48,8 +49,8 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @SubscribeMessage(ENUM_SOCKET_MESSAGE_KEY.CREATE_MESSAGE)
     async createMessage(
-        client: AuthenticatedSocket,
-        message: MessageCreateDTO
+        @MessageBody() message: MessageCreateDTO,
+        client: AuthenticatedSocket
     ) {
         const messageCreated = await this.commandBus.execute(
             new MessageCreateCommand(message)

@@ -8,6 +8,7 @@ import { MessageRepository } from '../../modules/chat/repositories/message.repos
 import { MessageEntity } from '../../modules/chat/entities/message.entity';
 import { UserConversationRepository } from '../../modules/chat/repositories/user-conversation.repository';
 import { UserConversationEntity } from '../../modules/chat/entities/user-conversation.entity';
+import { ENUM_MESSAGE_STATUS } from '../../modules/chat/constants/message.enum.constant';
 
 @Injectable()
 export class MigrationConversationSeed {

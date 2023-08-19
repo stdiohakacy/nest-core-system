@@ -12,8 +12,8 @@ export const redisProviders: Provider[] = [
     {
         useFactory: (): RedisClient => {
             return new Redis({
-                host: 'localhost',
-                port: 6379,
+                host: process.env.REDIS_HOST || 'localhost',
+                port: Number(process.env.REDIS_PORT) || 6379,
             });
         },
         provide: REDIS_SUBSCRIBER_CLIENT,
@@ -21,8 +21,8 @@ export const redisProviders: Provider[] = [
     {
         useFactory: (): RedisClient => {
             return new Redis({
-                host: 'localhost',
-                port: 6379,
+                host: process.env.REDIS_HOST || 'localhost',
+                port: Number(process.env.REDIS_PORT) || 6379,
             });
         },
         provide: REDIS_PUBLISHER_CLIENT,

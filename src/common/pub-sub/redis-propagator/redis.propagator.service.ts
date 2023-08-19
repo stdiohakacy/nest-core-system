@@ -10,9 +10,10 @@ import {
 } from './redis.propagator.constants';
 import { SocketStateService } from '../socket-state/socket-state.service';
 import { RedisService } from '../redis/redis.pub-sub.service';
+import { IRedisPropagatorService } from './redis.propagator.service.interface';
 
 @Injectable()
-export class RedisPropagatorService {
+export class RedisPropagatorService implements IRedisPropagatorService {
     private socketServer: Server;
 
     public constructor(
@@ -40,6 +41,25 @@ export class RedisPropagatorService {
         return this;
     }
 
+    public propagateEvent(eventInfo: RedisSocketEventSendDTO): boolean {
+        if (!eventInfo.userId) return false;
+        this.redisService.publish(REDIS_SOCKET_EVENT_SEND_NAME, eventInfo);
+        return true;
+    }
+
+    public emitToAuthenticated(eventInfo: RedisSocketEventEmitDTO): boolean {
+        this.redisService.publish(
+            REDIS_SOCKET_EVENT_EMIT_AUTHENTICATED_NAME,
+            eventInfo
+        );
+        return true;
+    }
+
+    public emitToAll(eventInfo: RedisSocketEventEmitDTO): boolean {
+        this.redisService.publish(REDIS_SOCKET_EVENT_EMIT_ALL_NAME, eventInfo);
+        return true;
+    }
+
     private consumeSendEvent = (eventInfo: RedisSocketEventSendDTO): void => {
         const { userId, event, data, socketId } = eventInfo;
 
@@ -64,23 +84,4 @@ export class RedisPropagatorService {
             sockets.forEach((socket) => socket.emit(event, data));
         }
     };
-
-    public propagateEvent(eventInfo: RedisSocketEventSendDTO): boolean {
-        if (!eventInfo.userId) return false;
-        this.redisService.publish(REDIS_SOCKET_EVENT_SEND_NAME, eventInfo);
-        return true;
-    }
-
-    public emitToAuthenticated(eventInfo: RedisSocketEventEmitDTO): boolean {
-        this.redisService.publish(
-            REDIS_SOCKET_EVENT_EMIT_AUTHENTICATED_NAME,
-            eventInfo
-        );
-        return true;
-    }
-
-    public emitToAll(eventInfo: RedisSocketEventEmitDTO): boolean {
-        this.redisService.publish(REDIS_SOCKET_EVENT_EMIT_ALL_NAME, eventInfo);
-        return true;
-    }
 }

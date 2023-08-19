@@ -8,15 +8,10 @@ export class SocketStateService {
 
     remove(userId: string, socket: Socket): boolean {
         const existingSockets = this.socketState.get(userId);
-
-        if (!existingSockets) {
-            return true;
-        }
-
+        if (!existingSockets) return true;
         const sockets = existingSockets.filter(
             (socket) => socket.id !== socket.id
         );
-
         if (!sockets.length) {
             this.socketState.delete(userId);
         } else {

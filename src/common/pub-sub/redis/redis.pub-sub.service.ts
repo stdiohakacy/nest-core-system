@@ -8,6 +8,7 @@ import {
 } from './redis.pub-sub.constant';
 import { RedisClient } from './redis.pub-sub.providers';
 import { RedisSocketEventSendDTO } from '../redis-propagator/dto/redis.socket.event-send.dto';
+import { IRedisService } from './redis.pub-sub.service.interface';
 
 export interface RedisSubscribeMessage {
     readonly message: string;
@@ -15,7 +16,7 @@ export interface RedisSubscribeMessage {
 }
 
 @Injectable()
-export class RedisService {
+export class RedisService implements IRedisService {
     public constructor(
         @Inject(REDIS_SUBSCRIBER_CLIENT)
         private readonly redisSubscriberClient: RedisClient,

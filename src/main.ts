@@ -21,8 +21,6 @@ async function bootstrap() {
         'app.versioning.prefix'
     );
     const version: string = configService.get<string>('app.versioning.version');
-
-    // enable
     const httpEnable: boolean = configService.get<boolean>('app.http.enable');
     const versionEnable: string = configService.get<string>(
         'app.versioning.enable'
@@ -38,11 +36,9 @@ async function bootstrap() {
         'integration.storage.minio.portUI'
     );
     const minioUrl = `http://${minioHost}:${minioPortUI}`;
-
     const rmqHost = configService.get<string>('message-queue.rmq.host');
     const rmqPortUI = configService.get<string>('message-queue.rmq.portUI');
     const rmqUrl = `http://${rmqHost}:${rmqPortUI}`;
-
     const kibanaHost = configService.get<string>(
         'integration.search.kibana.host'
     );
@@ -50,10 +46,10 @@ async function bootstrap() {
         'integration.search.kibana.port'
     );
     const kibanaUrl = `http://${kibanaHost}:${kibanaPort}`;
-
+    const isGraphQLEnable = configService.get<boolean>('graphql.isEnable');
+    const graphQLUrl = configService.get<string>('graphql.url');
     const logger = new Logger();
     process.env.NODE_ENV = env;
-
     // Global
     app.setGlobalPrefix(globalPrefix);
     useContainer(app.select(AppModule), { fallbackOnErrors: true });
@@ -73,33 +69,35 @@ async function bootstrap() {
     // Listen
     await app.listen(port);
 
-    logger.log(`==========================================================`);
-
-    logger.log(`Environment Variable`, 'NestApplication');
+    // logger.log(`Environment Variable`, 'NestApplication');
     // logger.log(JSON.parse(JSON.stringify(process.env)), 'NestApplication');
-
-    logger.log(`==========================================================`);
-
-    logger.log(`Job is ${jobEnable}`, 'NestApplication');
+    logger.log(`Job is ${jobEnable}`);
     logger.log(
         `Http is ${httpEnable}, ${
             httpEnable ? 'routes registered' : 'no routes registered'
-        }`,
-        'NestApplication'
+        }`
     );
-    logger.log(`Http versioning is ${versionEnable}`, 'NestApplication');
-
-    logger.log(
-        `Http Server running on ${await app.getUrl()}`,
-        'NestApplication'
-    );
-    logger.log(`Database uri ${databaseUri}`, 'NestApplication');
-    logger.log(`PgAdmin4 UI URI - ${pgAdminUrl}`);
-    logger.log(`Minio UI URI - ${minioUrl}`);
-    logger.log(`RabbitMQ UI URI - ${rmqUrl}`);
-    logger.log(`Kibana UI URI - ${kibanaUrl}`);
-
     logger.log(`==========================================================`);
+    logger.log(`Http versioning is ${versionEnable}`);
+    logger.log(`==========================================================`);
+    logger.log(`Http Server running on ${await app.getUrl()}`);
+    logger.log(`==========================================================`);
+    logger.log(`Postgres URI ${databaseUri}`);
+    logger.log(`==========================================================`);
+    logger.log(`PgAdmin4 UI URI - ${pgAdminUrl}`);
+    logger.log(`==========================================================`);
+    logger.log(`Minio UI URI - ${minioUrl}`);
+    logger.log(`==========================================================`);
+    logger.log(`RabbitMQ UI URI - ${rmqUrl}`);
+    logger.log(`==========================================================`);
+    logger.log(`Kibana UI URI - ${kibanaUrl}`);
+    logger.log(`==========================================================`);
+    if (isGraphQLEnable) {
+        logger.log(`GraphQL UI URI - ${graphQLUrl}`);
+        logger.log(
+            `==========================================================`
+        );
+    }
 }
 
 AppClusterService.clusterize(bootstrap);

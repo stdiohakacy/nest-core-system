@@ -39,6 +39,6 @@ const services = [
 export class ElasticsearchCoreModule implements OnModuleInit {
     constructor(private readonly esCoreIdxService: ESCoreIndexService) {}
     async onModuleInit() {
-        await this.esCoreIdxService.initIndices();
+        // await this.esCoreIdxService.initIndices();
     }
 }

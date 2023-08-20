@@ -1,0 +1,33 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input GetOneInput {
+  where: JSON!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type Mutation {
+  create(input: PostInput!): PostEntity!
+  createMany(input: [PostInput!]!): [PostEntity!]!
+  delete(id: String!): JSON!
+  update(id: String!, input: PostInput!): PostEntity!
+}
+
+type PostEntity {
+  content: String!
+  title: String!
+}
+
+input PostInput {
+  content: String!
+  title: String!
+}
+
+type Query {
+  getOne(input: GetOneInput!): PostEntity!
+}

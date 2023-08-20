@@ -11,6 +11,7 @@ import DebuggerConfig from './debugger.config';
 import MessageConfig from './message.config';
 import IntegrationConfig from './integration.config';
 import MessageQueueConfig from './message-queue.config';
+import GraphQLConfig from './graphql.config';
 
 export default [
     AppConfig,
@@ -26,4 +27,5 @@ export default [
     MessageConfig,
     IntegrationConfig,
     MessageQueueConfig,
+    GraphQLConfig,
 ];
